@@ -75,7 +75,15 @@ We welcome contributions from all developers! If you want to contribute:
 4. **Push** to your forked repository
 5. **Submit a Pull Request** 🚀
 
-> Please adhere to our coding standards and PR guidelines.
+### 📌 Pull Request Guidelines
+To ensure a smooth collaboration, please follow these PR guidelines:
+- **Use meaningful branch names** (e.g., `fix/login-bug`, `feature/add-search-bar`).
+- **Write clear commit messages** that describe your changes concisely.
+- **Follow coding standards** and ensure your code is formatted properly.
+- **Test your changes** before submitting the PR.
+- **Reference related issues** in your PR description (e.g., `Closes #123`).
+- **Keep PRs focused** on a single feature or fix.
+- **Engage in code reviews** by addressing feedback and making necessary changes.
 
 ---
 
