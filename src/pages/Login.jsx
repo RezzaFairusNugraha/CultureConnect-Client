@@ -1,31 +1,22 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { login } from "../api/index";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
     setError("");
 
     try {
-      const response = await fetch("http://localhost:5000/auth/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.error || "Login gagal");
-      }
-
-      localStorage.setItem("token", data.token); // Simpan token
+      const data = await login(email, password);
+      localStorage.setItem("token", data.token);
       alert("Login berhasil!");
-      window.location.href = "/dashboard"; // Redirect ke dashboard
+      navigate("/dashboard");
     } catch (err) {
       setError(err.message);
     }
@@ -55,12 +46,12 @@ const Login = () => {
         <button type="submit" className="w-full p-2 bg-blue-500 text-white rounded cursor-pointer">
           Login
         </button>
-      <p className="mt-4 text-center">
-        Belum punya akun?{" "}
-        <Link to="/register" className="text-blue-500">
-          Daftar
-        </Link>
-      </p>
+        <p className="mt-4 text-center">
+          Belum punya akun?{" "}
+          <Link to="/register" className="text-blue-500">
+            Daftar
+          </Link>
+        </p>
       </form>
     </div>
   );

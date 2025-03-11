@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { fetchDashboardData } from "../api/index";
 
 const Dashboard = () => {
   const [data, setData] = useState(null);
@@ -9,22 +10,12 @@ const Dashboard = () => {
       const token = localStorage.getItem("token");
 
       if (!token) {
-        window.location.href = "/"; // Balikin ke login kalau nggak ada token
+        window.location.href = "/";
         return;
       }
 
       try {
-        const response = await fetch("http://localhost:5000/dashboard", {
-          method: "GET",
-          headers: { Authorization: `Bearer ${token}` },
-        });
-
-        const result = await response.json();
-
-        if (!response.ok) {
-          throw new Error(result.error || "Gagal mengambil data");
-        }
-
+        const result = await fetchDashboardData(token);
         setData(result);
       } catch (err) {
         setError(err.message);
