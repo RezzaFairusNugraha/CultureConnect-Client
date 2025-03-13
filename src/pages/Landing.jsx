@@ -1,13 +1,62 @@
+import Layout from "../components/Layout/CommonLayout";
+
 const Landing = () => {
     return(
         <>
-            <h1>Home</h1>
-            <a href="/login">
-                <button>Login</button>
-            </a>
-            <a href="/register">
-                <button>Register</button>
-            </a>
+            <Layout>
+            <p>Selamat Datang di Aplikasi CRUD</p>
+            <p>Selamat Datang di Aplikasi CRUD</p>
+            <p>Selamat Datang di Aplikasi CRUD</p>
+            <p>Selamat Datang di Aplikasi CRUD</p>
+            <p>Selamat Datang di Aplikasi CRUD</p>
+            <p>Selamat Datang di Aplikasi CRUD</p>
+            <p>Selamat Datang di Aplikasi CRUD</p>
+            <p>Selamat Datang di Aplikasi CRUD</p>
+            <p>Selamat Datang di Aplikasi CRUD</p>
+            <p>Selamat Datang di Aplikasi CRUD</p>
+            <p>Selamat Datang di Aplikasi CRUD</p>
+            <p>Selamat Datang di Aplikasi CRUD</p>
+            <p>Selamat Datang di Aplikasi CRUD</p>
+            <p>Selamat Datang di Aplikasi CRUD</p>
+            <p>Selamat Datang di Aplikasi CRUD</p>
+            <p>Selamat Datang di Aplikasi CRUD</p>
+            <p>Selamat Datang di Aplikasi CRUD</p>
+            <p>Selamat Datang di Aplikasi CRUD</p>
+            <p>Selamat Datang di Aplikasi CRUD</p>
+            <p>Selamat Datang di Aplikasi CRUD</p>
+            <p>Selamat Datang di Aplikasi CRUD</p>
+            <p>Selamat Datang di Aplikasi CRUD</p>
+            <p>Selamat Datang di Aplikasi CRUD</p>
+            <p>Selamat Datang di Aplikasi CRUD</p>
+            <p>Selamat Datang di Aplikasi CRUD</p>
+            <p>Selamat Datang di Aplikasi CRUD</p>
+            <p>Selamat Datang di Aplikasi CRUD</p>
+            <p>Selamat Datang di Aplikasi CRUD</p>
+            <p>Selamat Datang di Aplikasi CRUD</p>
+            <p>Selamat Datang di Aplikasi CRUD</p>
+            <p>Selamat Datang di Aplikasi CRUD</p>
+            <p>Selamat Datang di Aplikasi CRUD</p>
+            <p>Selamat Datang di Aplikasi CRUD</p>
+            <p>Selamat Datang di Aplikasi CRUD</p>
+            <p>Selamat Datang di Aplikasi CRUD</p>
+            <p>Selamat Datang di Aplikasi CRUD</p>
+            <p>Selamat Datang di Aplikasi CRUD</p>
+            <p>Selamat Datang di Aplikasi CRUD</p>
+            <p>Selamat Datang di Aplikasi CRUD</p>
+            <p>Selamat Datang di Aplikasi CRUD</p>
+            <p>Selamat Datang di Aplikasi CRUD</p>
+            <p>Selamat Datang di Aplikasi CRUD</p>
+            <p>Selamat Datang di Aplikasi CRUD</p>
+            <p>Selamat Datang di Aplikasi CRUD</p>
+            <p>Selamat Datang di Aplikasi CRUD</p>
+            <p>Selamat Datang di Aplikasi CRUD</p>
+            <p>Selamat Datang di Aplikasi CRUD</p>
+            <p>Selamat Datang di Aplikasi CRUD</p>
+            <p>Selamat Datang di Aplikasi CRUD</p>
+            <p>Selamat Datang di Aplikasi CRUD</p>
+            <p>Selamat Datang di Aplikasi CRUD</p>
+            <p>Selamat Datang di Aplikasi CRUD</p>
+            </Layout>
         </>
     )
 }
