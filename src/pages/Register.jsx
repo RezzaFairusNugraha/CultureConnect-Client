@@ -31,54 +31,6 @@ const Register = () => {
   };
 
   return (
-    // <div className="flex justify-center items-center h-screen">
-    //   <form
-    //     onSubmit={handleSubmit}
-    //     className="p-6 bg-white rounded shadow-md w-80"
-    //   >
-    //     <h2 className="text-xl font-bold mb-4">Register</h2>
-    //     {error && <p className="text-red-500">{error}</p>}
-    //     <input
-    //       type="text"
-    //       name="name"
-    //       placeholder="Nama"
-    //       value={form.name}
-    //       onChange={handleChange}
-    //       className="border p-2 w-full mb-2"
-    //       required
-    //     />
-    //     <input
-    //       type="email"
-    //       name="email"
-    //       placeholder="Email"
-    //       value={form.email}
-    //       onChange={handleChange}
-    //       className="border p-2 w-full mb-2"
-    //       required
-    //     />
-    //     <input
-    //       type="password"
-    //       name="password"
-    //       placeholder="Password"
-    //       value={form.password}
-    //       onChange={handleChange}
-    //       className="border p-2 w-full mb-2"
-    //       required
-    //     />
-    //     <button
-    //       type="submit"
-    //       className="bg-blue-500 text-white p-2 w-full rounded"
-    //     >
-    //       Register
-    //     </button>
-    //     <p className="mt-4 text-center">
-    //       Sudah punya akun?{" "}
-    //       <Link to="/login" className="text-blue-500">
-    //         Login
-    //       </Link>
-    //     </p>
-    //   </form>
-    // </div>
     <div className="w-full h-screen flex items-center justify-center bg-sky-200">
       <div className="w-[90%] max-w-sm md:max-w-md lg:max-w-md p-5 bg-[#e8e6fb] flex-col flex items-center gap-3 rounded-xl shadow-slate-500 shadow-lg">
         <img src="/logo.png" alt="logo" className="w-12 md:w-14" />
