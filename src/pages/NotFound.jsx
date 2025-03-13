@@ -12,7 +12,9 @@ function NotFound() {
                 <h2 className="mb-2 text-[50px] font-bold leading-none text-black sm:text-[80px] md:text-[100px]">
                   404
                 </h2>
-                <h4 className="mb-3 text-[22px] font-semibold leading-tight text-black"></h4>
+                <h4 className="mb-3 text-[22px] font-semibold leading-tight text-black">
+                  Oops! That page cant be found
+                </h4>
                 <p className="mb-8 text-lg text-black">
                   The page you are looking for it maybe deleted
                 </p>
