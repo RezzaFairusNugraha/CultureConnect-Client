@@ -1,6 +1,6 @@
 import Layout from "../components/Layout/CommonLayout";
 import HeroImage from "../assets/images/Hero.png";
-import AboutImage from "../assets/images/About.png";
+import AboutImage from "../assets/images/ASET PAGE 2.png";
 import PurchasePertama from "../assets/images/ASET PAGE 3.png";
 import PurchaseKedua from "../assets/images/ASET PAGE 4.png";
 import PurchaseTiga from "../assets/images/ASET PAGE 5.png";
