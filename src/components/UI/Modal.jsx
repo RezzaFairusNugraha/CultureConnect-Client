@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { motion } from "framer-motion";
 import { login } from "../../api"; // Pastikan fungsi login tersedia
 
 const Modal = ({ isOpen, onClose }) => {
@@ -29,7 +28,7 @@ const Modal = ({ isOpen, onClose }) => {
     <>
       <div
         className="fixed inset-0 flex items-center justify-center z-50 bg-black/30 backdrop-blur-md"
-        onClick={onClose} 
+        onClick={onClose}
       >
         {/* Animasi Modal */}
         <motion.div
