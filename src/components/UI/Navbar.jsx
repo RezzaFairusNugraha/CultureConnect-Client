@@ -6,7 +6,7 @@ const Navbar = () => {
   const [isModalOpen, setModalOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setMenuOpen] = useState(false);
-  const menuRef = useRef(null); 
+  const menuRef = useRef(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -42,7 +42,10 @@ const Navbar = () => {
       >
         <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center py-4">
           <div className="text-2xl font-bold text-[#1E2A59]">
-            <a href="/" className="hover:opacity-80 transition-opacity duration-300">
+            <a
+              href="/"
+              className="hover:opacity-80 transition-opacity duration-300"
+            >
               CultureConnect.
             </a>
           </div>
@@ -86,7 +89,9 @@ const Navbar = () => {
       <div
         ref={menuRef}
         className={`fixed top-16 left-0 w-full bg-white shadow-md p-6 flex flex-col space-y-4 transition-all duration-300 ease-in-out transform z-50 ${
-          isMenuOpen ? "translate-y-0 opacity-100" : "-translate-y-10 opacity-0 pointer-events-none"
+          isMenuOpen
+            ? "translate-y-0 opacity-100"
+            : "-translate-y-10 opacity-0 pointer-events-none"
         }`}
       >
         {["Home", "About", "Contact"].map((item) => (
@@ -106,17 +111,21 @@ const Navbar = () => {
         </a>
         <button
           onClick={() => setModalOpen(true)}
-          className="text-white bg-[#1E2A59] hover:bg-[#3A4D7D] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 transition duration-300 ease-in-out flex items-center justify-center"
+          className="w-full text-white bg-[#1E2A59] hover:bg-[#14203F] focus:ring-[#14203F] focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5"
         >
           Masuk
         </button>
       </div>
 
       {isModalOpen && (
-        <Modal 
-          isOpen={isModalOpen} 
-          onClose={() => setModalOpen(false)} 
-          linkTo={{ text: "Belum punya akun?", href: "/register", label: "Daftar sekarang" }}
+        <Modal
+          isOpen={isModalOpen}
+          onClose={() => setModalOpen(false)}
+          linkTo={{
+            text: "Belum punya akun?",
+            href: "/register",
+            label: "Daftar sekarang",
+          }}
         />
       )}
     </>

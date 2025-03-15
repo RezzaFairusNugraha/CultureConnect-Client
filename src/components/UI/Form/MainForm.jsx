@@ -11,7 +11,7 @@ const MainForm = ({ title, children, linkTo }) => {
           <div className="text-center mt-6 text-sm">
             <p className="text-xs md:text-sm text-gray-500 text-center">
               {linkTo.text}{" "}
-              <span className="text-blue-700 border border-l-0 border-t-0 border-r-0 border-blue-700">
+              <span className="text-[#1E2A59] border border-l-0 border-t-0 border-r-0 border-[#14203F]">
                 <strong>
                   <Link to={linkTo.href}>{linkTo.label}</Link>
                 </strong>

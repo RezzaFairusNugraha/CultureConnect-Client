@@ -3,7 +3,7 @@ import { HiOutlineLightBulb, HiOutlineDocumentText } from "react-icons/hi";
 
 const About = () => {
   return (
-    <section className="homePage pb-10" data-aos="fade-up-left">
+    <section className="homePage pb-10 overflow-hidden" data-aos="fade-up">
       <div className="container mx-auto px-5 lg:px-20">
         <div className="about grid md:grid-cols-2 grid-cols-1 items-center pt-10 gap-12">
           {/* Bagian Gambar */}
@@ -27,13 +27,10 @@ const About = () => {
               aliquam nostrum?
             </p>
 
-            {/* Cards */}
-            <div className="flex gap-6 flex-wrap">
+            {/* Cards dalam grid dua kolom */}
+            <div className="grid grid-cols-2 gap-6">
               {/* CARD 1 */}
-              <div
-                className="w-64 p-5 bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-all duration-300 ease-in-out"
-                data-aos="flip-left"
-              >
+              <div className="p-5 bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-all duration-300 ease-in-out">
                 <HiOutlineLightBulb className="w-12 h-12 text-[#1E2A59] mb-4" />
                 <h5 className="mb-2 text-xl font-semibold text-gray-900">
                   Butuh Bantuan?
@@ -44,10 +41,7 @@ const About = () => {
               </div>
 
               {/* CARD 2 */}
-              <div
-                className="w-64 p-5 bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-all duration-300 ease-in-out"
-                data-aos="flip-right"
-              >
+              <div className="p-5 bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-all duration-300 ease-in-out">
                 <HiOutlineDocumentText className="w-12 h-12 text-[#1E2A59] mb-4" />
                 <h5 className="mb-2 text-xl font-semibold text-gray-900">
                   Panduan Lengkap
