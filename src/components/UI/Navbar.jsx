@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Modal from "./Modal";
 import { FaBars, FaTimes } from "react-icons/fa";
 
@@ -6,6 +6,7 @@ const Navbar = () => {
   const [isModalOpen, setModalOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setMenuOpen] = useState(false);
+  const menuRef = useRef(null); 
 
   useEffect(() => {
     const handleScroll = () => {
@@ -16,60 +17,75 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setMenuOpen(false);
+      }
+    };
+
+    if (isMenuOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [isMenuOpen]);
+
   return (
     <>
       <nav
-        className={`fixed w-full flex justify-between items-center p-4 px-6 md:px-20 z-50 transition-all duration-300 ease-in-out ${
-          isScrolled || isMenuOpen
-            ? "bg-white shadow-md opacity-100"
-            : "bg-transparent opacity-90"
+        className={`fixed w-full z-50 transition-all duration-300 ease-in-out ${
+          isScrolled || isMenuOpen ? "bg-white shadow-md" : "bg-transparent"
         }`}
       >
-        <div className="text-2xl font-bold text-blue-800">
-          <a href="#" className="hover:opacity-80 transition-opacity duration-300">
-            CultureConnect.
-          </a>
-        </div>
-
-        <div className="hidden md:flex space-x-6 text-blue-600 font-medium">
-          {["Home", "About", "Contact"].map((item) => (
-            <a
-              key={item}
-              href="#"
-              className="hover:text-blue-800 transition-colors duration-300"
-            >
-              {item}
+        <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center py-4">
+          <div className="text-2xl font-bold text-[#1E2A59]">
+            <a href="/" className="hover:opacity-80 transition-opacity duration-300">
+              CultureConnect.
             </a>
-          ))}
-        </div>
+          </div>
 
-        <div className="hidden md:flex space-x-4">
-          <a
-            href="/register"
-            className="border border-blue-900 text-blue-800 px-4 py-2 rounded-md hover:bg-blue-800 hover:text-white transition duration-300 ease-in-out"
-          >
-            Daftar
-          </a>
+          <div className="hidden md:flex space-x-6 text-[#1E2A59] font-medium">
+            {["Home", "About", "Contact"].map((item) => (
+              <a
+                key={item}
+                href="#"
+                className="hover:text-[#3A4D7D] transition-colors duration-300"
+              >
+                {item}
+              </a>
+            ))}
+          </div>
+
+          <div className="hidden md:flex space-x-4">
+            <a
+              href="/register"
+              className="border border-[#1E2A59] text-[#1E2A59] px-4 py-2 rounded-md hover:bg-[#1E2A59] hover:text-white transition duration-300 ease-in-out"
+            >
+              Daftar
+            </a>
+            <button
+              onClick={() => setModalOpen(true)}
+              className="text-white bg-[#1E2A59] hover:bg-[#3A4D7D] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 transition duration-300 ease-in-out"
+            >
+              Masuk
+            </button>
+          </div>
+
           <button
-            onClick={() => setModalOpen(true)}
-            className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 transition duration-300 ease-in-out"
+            className="md:hidden text-[#1E2A59] transition-transform duration-300"
+            onClick={() => setMenuOpen(!isMenuOpen)}
           >
-            Masuk
+            {isMenuOpen ? <FaTimes size={28} /> : <FaBars size={28} />}
           </button>
         </div>
-
-        {/* Mobile Menu Button */}
-        <button
-          className="md:hidden text-blue-800 transition-transform duration-300"
-          onClick={() => setMenuOpen(!isMenuOpen)}
-        >
-          {isMenuOpen ? <FaTimes size={28} /> : <FaBars size={28} />}
-        </button>
       </nav>
 
-      {/* Mobile Menu */}
       <div
-        className={`fixed top-16 left-0 w-full bg-white shadow-md p-6 flex flex-col space-y-4 transition-all duration-300 ease-in-out transform ${
+        ref={menuRef}
+        className={`fixed top-16 left-0 w-full bg-white shadow-md p-6 flex flex-col space-y-4 transition-all duration-300 ease-in-out transform z-50 ${
           isMenuOpen ? "translate-y-0 opacity-100" : "-translate-y-10 opacity-0 pointer-events-none"
         }`}
       >
@@ -77,20 +93,20 @@ const Navbar = () => {
           <a
             key={item}
             href="#"
-            className="text-blue-600 font-medium hover:text-blue-800 transition-colors duration-300"
+            className="text-[#1E2A59] font-medium hover:text-[#3A4D7D] transition-colors duration-300"
           >
             {item}
           </a>
         ))}
         <a
           href="/register"
-          className="border border-blue-900 text-blue-800 px-4 py-2 rounded-md hover:bg-blue-800 hover:text-white transition duration-300 ease-in-out"
+          className="border border-[#1E2A59] text-[#1E2A59] px-4 py-2 rounded-md hover:bg-[#1E2A59] hover:text-white transition duration-300 ease-in-out text-center"
         >
           Daftar
         </a>
         <button
           onClick={() => setModalOpen(true)}
-          className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 transition duration-300 ease-in-out"
+          className="text-white bg-[#1E2A59] hover:bg-[#3A4D7D] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 transition duration-300 ease-in-out flex items-center justify-center"
         >
           Masuk
         </button>

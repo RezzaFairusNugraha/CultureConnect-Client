@@ -1,35 +1,34 @@
 const HeroSection = () => {
   return (
-    <>
+    <section className="flex items-center justify-center min-h-screen bg-[#f8f9ff] py-15 px-6">
       <div
-        className="hero items-center pt-10 text-center mt-40 mb-10"
-        data-aos="zoom-in-up"
+        className="text-center max-w-3xl"
+        data-aos="zoom-in"
       >
-        <div className="box">
-          <h1 className="lg:text-5xl/tight text-3xl font-medium mb-7">
-            Daftarkan Usahamu sekarang
-          </h1>
-          <p className="text-base/8 mb-7">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt iure,
-            suscipit quia labore voluptas dolore mollitia? Excepturi mollitia
-            reiciendis molestias qui magni commodi incidunt, aliquam cumque,
-            sapiente asperiores iste rem.
-          </p>
-          <h1 className="lg:text-5xl/tight text-3xl font-medium mb-3">
-            Bersama Menjelajah
-          </h1>
-          <p className="text-base/8 mb-20">CultureConnect</p>
-          <p className="text-base/8 mb-3">Daftarkan Sekarang</p>
-          <a
-            data-aos="zoom-in"
-            href="#"
-            className="bg-[#1447e6]  border-sky-300 hover:bg-sky-800 transition-all py-2 px-15 text-white shadow hover:shadow-black rounded-bl"
-          >
-            Daftar
-          </a>
-        </div>
+        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-gray-900 mb-6">
+          Daftarkan Usahamu Sekarang
+        </h1>
+        <p className="text-gray-600 text-lg leading-relaxed mb-6">
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt iure,
+          suscipit quia labore voluptas dolore mollitia? Excepturi mollitia
+          reiciendis molestias qui magni commodi incidunt, aliquam cumque,
+          sapiente asperiores iste rem.
+        </p>
+
+        <h2 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-gray-900 mb-3">
+          Bersama Menjelajah
+        </h2>
+        <p className="text-lg text-[#1E2A59] font-medium mb-8">CultureConnect</p>
+
+        <p className="text-gray-700 text-lg mb-4 font-medium">Daftarkan Sekarang</p>
+        <a
+          href="#"
+          className="bg-[#1E2A59] hover:bg-[#14203F] transition-all py-3 px-10 text-white font-semibold shadow-md hover:shadow-lg rounded-md"
+        >
+          Daftar
+        </a>
       </div>
-    </>
+    </section>
   );
 };
 
