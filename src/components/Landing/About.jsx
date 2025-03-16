@@ -1,52 +1,54 @@
-import AboutImage from "/images/About.png";
+import AboutImage from "/images/Ilustrasi-budaya-nusantara.png";
 import { HiOutlineLightBulb, HiOutlineDocumentText } from "react-icons/hi";
 
 const About = () => {
   return (
-    <section className="homePage pb-10 overflow-hidden" data-aos="fade-up">
-      <div className="container mx-auto px-5 lg:px-20">
-        <div className="about grid md:grid-cols-2 grid-cols-1 items-center pt-10 gap-12">
+    <section className="homePage pb-16 overflow-hidden bg-gray-50">
+      <div className="container mx-auto px-10 md:px-12 lg:px-20">
+        <div className="grid xl:grid-cols-2 grid-cols-1 items-center pt-16 gap-12" data-aos="fade-up">
+          
           {/* Bagian Gambar */}
-          <div className="box flex justify-center">
+          <div className="flex justify-center">
             <img
               data-aos="fade-up-right"
               src={AboutImage}
-              alt="Hero Image"
-              className="md:w-full w-[400px] mx-auto md:m-0"
+              alt="Ilustrasi Budaya Nusantara"
+              className="w-full max-w-[400px] md:max-w-full mx-auto rounded-lg"
             />
           </div>
 
-          {/* Bagian Teks dan Card */}
-          <div className="box">
-            <h1 className="text-4xl md:text-5xl font-bold mb-7 leading-tight text-gray-900">
-              Mari temukan pengalaman hebat bersama kami
+          {/* Bagian Teks & Card */}
+          <div>
+            <h1 className="text-xl sm:text-3xl md:text-4xl font-bold mb-6 leading-tight text-gray-900">
+              Temukan pengalaman hebat bersama kami
             </h1>
-            <p className="text-lg leading-relaxed mb-7 text-gray-700">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eligendi
-              alias est necessitatibus soluta facere quisquam dolore rerum hic
-              aliquam nostrum?
+            <p className="text-md leading-relaxed mb-8 text-gray-700">
+              Jelajahi keunikan budaya dan kelezatan kuliner khas daerah bersama kami. 
+              Temukan cerita di balik setiap tempat yang Anda kunjungi dan rasakan 
+              pengalaman yang tak terlupakan di setiap perjalanan Anda.
             </p>
 
-            {/* Cards dalam grid dua kolom */}
-            <div className="grid grid-cols-2 gap-6">
+            {/* Cards dalam Grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              
               {/* CARD 1 */}
-              <div className="p-5 bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-all duration-300 ease-in-out">
-                <HiOutlineLightBulb className="w-12 h-12 text-[#1E2A59] mb-4" />
-                <h5 className="mb-2 text-xl font-semibold text-gray-900">
+              <div className="p-6 bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-all duration-300 ease-in-out">
+                <HiOutlineLightBulb className="w-12 h-12 text-primary mb-4" />
+                <h5 className="text-xl font-semibold text-gray-900">
                   Butuh Bantuan?
                 </h5>
-                <p className="text-base text-gray-600">
+                <p className="text-gray-600">
                   Lihat panduan langkah demi langkah untuk klaim manfaat mingguan.
                 </p>
               </div>
 
               {/* CARD 2 */}
-              <div className="p-5 bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-all duration-300 ease-in-out">
-                <HiOutlineDocumentText className="w-12 h-12 text-[#1E2A59] mb-4" />
-                <h5 className="mb-2 text-xl font-semibold text-gray-900">
+              <div className="p-6 bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-all duration-300 ease-in-out">
+                <HiOutlineDocumentText className="w-12 h-12 text-primary mb-4" />
+                <h5 className="text-xl font-semibold text-gray-900">
                   Panduan Lengkap
                 </h5>
-                <p className="text-base text-gray-600">
+                <p className="text-gray-600">
                   Pelajari semua informasi penting yang perlu Anda ketahui.
                 </p>
               </div>

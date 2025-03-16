@@ -2,27 +2,27 @@ import { FaFacebookF, FaLinkedinIn, FaTwitter, FaYoutube, FaInstagram } from "re
 
 const Footer = () => {
     return (
-        <footer className="bg-blue-50 text-gray-600 py-6">
+        <footer className="bg-[#EAE0C8] text-text-color py-6">
             <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex justify-between items-center">
                     <span className="text-sm">©2025 CultureConnect</span>
-                    <button className="bg-[#1E2A59] text-white px-4 py-2 rounded-md text-sm">
+                    <button className="text-white bg-primary hover:bg-secondary focus:ring-4 focus:outline-none focus:ring-amber-700 cursor-pointer font-medium rounded-lg text-sm px-5 py-2.5 transition duration-300 ease-in-out">
                         Follow Us
                     </button>
                 </div>
-                <hr className="my-4 border-gray-300" />
+                <hr className="my-4 border-text-color" />
                 <div className="flex justify-between items-center">
-                    <div className="flex space-x-6 text-gray-500 text-sm">
-                        <a href="#" className="hover:text-gray-700">Home</a>
-                        <a href="#" className="hover:text-gray-700">About</a>
-                        <a href="#" className="hover:text-gray-700">Contact</a>
+                    <div className="flex space-x-6 text-text-color text-sm">
+                        <a href="#" className="hover:text-accent">Home</a>
+                        <a href="#" className="hover:text-accent">About</a>
+                        <a href="#" className="hover:text-accent">Contact</a>
                     </div>
-                    <div className="flex space-x-4 text-gray-400">
-                        <a href="#" className="hover:text-gray-700"><FaFacebookF /></a>
-                        <a href="#" className="hover:text-gray-700"><FaLinkedinIn /></a>
-                        <a href="#" className="hover:text-gray-700"><FaTwitter /></a>
-                        <a href="#" className="hover:text-gray-700"><FaYoutube /></a>
-                        <a href="#" className="hover:text-gray-700"><FaInstagram /></a>
+                    <div className="flex space-x-4 text-text-color">
+                        <a href="#" className="hover:text-accent"><FaFacebookF /></a>
+                        <a href="#" className="hover:text-accent"><FaLinkedinIn /></a>
+                        <a href="#" className="hover:text-accent"><FaTwitter /></a>
+                        <a href="#" className="hover:text-accent"><FaYoutube /></a>
+                        <a href="#" className="hover:text-accent"><FaInstagram /></a>
                     </div>
                 </div>
             </div>

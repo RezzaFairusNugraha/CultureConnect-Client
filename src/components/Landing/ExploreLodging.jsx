@@ -1,38 +1,46 @@
-import LodgingImage from "/images/ASET_PAGE_4.png";
+import LodgingImage from "/images/Indonesia-Bandung-4.jpg";
 
 const ExploreLodging = () => {
   return (
-    <section className="py-10">
-      <div className="container mx-auto px-5 lg:px-20">
-        <div className="flex flex-col lg:flex-row items-center gap-10">
+    <section className="py-16 bg-gray-50">
+      <div className="container mx-auto px-6 md:px-12 lg:px-20">
+        <div className="grid grid-cols-1 lg:grid-cols-2 items-center gap-12">
+
+          {/* Gambar */}
+          <div 
+            className="flex justify-center"
+            data-aos="fade-right"
+          >
+            <img
+              src={LodgingImage}
+              alt="Nearby Lodging"
+              className="w-full max-w-[450px] md:max-w-full rounded-lg shadow-lg"
+            />
+          </div>
+
           {/* Konten Teks */}
-          <div className="w-full lg:w-1/2 space-y-5" data-aos="zoom-in-right">
-            <h2 className="text-2xl lg:text-4xl font-semibold text-gray-900">
-              Penginapan Terdekat
+          <div 
+            className="text-center lg:text-left"
+            data-aos="fade-left"
+          >
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 leading-tight">
+              Penginapan Nyaman <br /> Untuk Perjalanan Anda
             </h2>
-            <p className="text-gray-700 leading-relaxed">
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit. A, qui
-              repellat molestias non laboriosam quisquam nisi reiciendis iste
-              nam eos corporis tenetur! Consectetur, dolorem amet odit nobis
-              dolores numquam corporis.
+            <p className="text-lg text-gray-700 mt-5 leading-relaxed">
+              Temukan tempat menginap yang nyaman selama perjalanan Anda. 
+              Dari penginapan tradisional hingga hotel modern, kami membantu 
+              Anda menemukan tempat terbaik yang sesuai dengan kebutuhan dan kenyamanan Anda.
             </p>
             <a
               href="#"
-              className="inline-block bg-[#1E2A59] hover:bg-[#14203F] transition-all py-3 px-6 text-white font-medium rounded-lg shadow-md hover:shadow-lg"
+              className="mt-6 inline-block bg-primary text-white font-medium rounded-lg px-6 py-3 text-lg shadow-md hover:bg-secondary transition-all duration-300 ease-in-out"
+              data-aos="fade-up"
+              data-aos-delay="200"
             >
-              Jelajahi
+              Jelajahi Sekarang
             </a>
           </div>
 
-          {/* Gambar */}
-          <div className="w-full lg:w-1/2">
-            <img
-              data-aos="zoom-in-left"
-              src={LodgingImage}
-              alt="Nearby Lodging"
-              className="w-full sm:w-3/4 lg:w-full xl:w-3/4 mx-auto"
-            />
-          </div>
         </div>
       </div>
     </section>

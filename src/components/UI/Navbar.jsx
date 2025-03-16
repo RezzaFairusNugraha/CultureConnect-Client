@@ -41,7 +41,7 @@ const Navbar = () => {
         }`}
       >
         <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center py-4">
-          <div className="text-2xl font-bold text-[#1E2A59]">
+          <div className="text-2xl font-bold text-primary">
             <a
               href="/"
               className="hover:opacity-80 transition-opacity duration-300"
@@ -50,12 +50,12 @@ const Navbar = () => {
             </a>
           </div>
 
-          <div className="hidden md:flex space-x-6 text-[#1E2A59] font-medium">
+          <div className="hidden md:flex space-x-6 text-primary font-medium">
             {["Home", "About", "Contact"].map((item) => (
               <a
                 key={item}
                 href="#"
-                className="hover:text-[#3A4D7D] transition-colors duration-300"
+                className="hover:text-secondary transition-colors duration-300"
               >
                 {item}
               </a>
@@ -65,20 +65,20 @@ const Navbar = () => {
           <div className="hidden md:flex space-x-4">
             <a
               href="/register"
-              className="border border-[#1E2A59] text-[#1E2A59] px-4 py-2 rounded-md hover:bg-[#1E2A59] hover:text-white transition duration-300 ease-in-out"
+              className="border border-primary text-primary px-4 py-2 rounded-md hover:bg-primary hover:text-white transition duration-300 ease-in-out"
             >
               Daftar
             </a>
             <button
               onClick={() => setModalOpen(true)}
-              className="text-white bg-[#1E2A59] hover:bg-[#3A4D7D] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 transition duration-300 ease-in-out"
+              className="text-white bg-primary hover:bg-secondary focus:ring-4 focus:outline-none focus:ring-amber-700 cursor-pointer font-medium rounded-lg text-sm px-5 py-2.5 transition duration-300 ease-in-out"
             >
               Masuk
             </button>
           </div>
 
           <button
-            className="md:hidden text-[#1E2A59] transition-transform duration-300"
+            className="md:hidden text-primary transition-transform duration-300"
             onClick={() => setMenuOpen(!isMenuOpen)}
           >
             {isMenuOpen ? <FaTimes size={28} /> : <FaBars size={28} />}
@@ -98,20 +98,20 @@ const Navbar = () => {
           <a
             key={item}
             href="#"
-            className="text-[#1E2A59] font-medium hover:text-[#3A4D7D] transition-colors duration-300"
+            className="text-primary font-medium hover:text-secondary transition-colors duration-300"
           >
             {item}
           </a>
         ))}
         <a
           href="/register"
-          className="border border-[#1E2A59] text-[#1E2A59] px-4 py-2 rounded-md hover:bg-[#1E2A59] hover:text-white transition duration-300 ease-in-out text-center"
+          className="border border-primary text-primary px-4 py-2 rounded-md hover:bg-primary hover:text-white transition duration-300 ease-in-out text-center"
         >
           Daftar
         </a>
         <button
           onClick={() => setModalOpen(true)}
-          className="w-full text-white bg-[#1E2A59] hover:bg-[#14203F] focus:ring-[#14203F] focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5"
+          className="w-full text-white bg-primary hover:bg-secondary focus:ring-secondary focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5"
         >
           Masuk
         </button>

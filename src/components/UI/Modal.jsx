@@ -37,7 +37,7 @@ const Modal = ({ isOpen, onClose, linkTo }) => {
             <div className="flex justify-center mt-2 text-sm">
               <p className="text-xs md:text-sm text-gray-500">
                 {linkTo.text}{" "}
-                <span className="text-[#1E2A59] border border-l-0 border-t-0 border-r-0 border-[#14203F]">
+                <span className="text-primary border border-l-0 border-t-0 border-r-0 border-secondary">
                   <strong>
                     <Link to={linkTo.href}>{linkTo.label}</Link>
                   </strong>

@@ -60,7 +60,7 @@ const LoginForm = ({ onSuccess, isModal }) => {
 
       <button
         type="submit"
-        className="w-full text-white bg-[#1E2A59] hover:bg-[#14203F] focus:ring-4 focus:outline-none focus:ring-[#5665a4] font-medium rounded-lg text-sm px-5 py-2.5"
+        className="w-full text-white bg-primary hover:bg-secondary focus:ring-4 focus:outline-none focus:ring-secondary font-medium rounded-lg text-sm px-5 py-2.5 cursor-pointer"
       >
         Masuk
       </button>
