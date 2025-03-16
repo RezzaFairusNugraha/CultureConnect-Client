@@ -13,7 +13,7 @@ const Landing = () => {
   useEffect(() => {
     AOS.init({
       once: false,
-      delay: 500,
+      delay: 200,
       duration: 1000,
       animatedClassName: "aos-animate",
     });

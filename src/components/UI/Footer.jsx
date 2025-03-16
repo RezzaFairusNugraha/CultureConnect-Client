@@ -6,7 +6,7 @@ const Footer = () => {
             <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex justify-between items-center">
                     <span className="text-sm">©2025 CultureConnect</span>
-                    <button className="text-white bg-primary hover:bg-secondary focus:ring-4 focus:outline-none focus:ring-amber-700 cursor-pointer font-medium rounded-lg text-sm px-5 py-2.5 transition duration-300 ease-in-out">
+                    <button className="text-white bg-amber-800 hover:bg-amber-900 focus:ring-2 focus:outline-none focus:ring-amber-600 cursor-pointer font-medium rounded-lg text-sm px-5 py-2.5 transition duration-300 ease-in-out">
                         Follow Us
                     </button>
                 </div>

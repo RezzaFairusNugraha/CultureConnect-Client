@@ -6,10 +6,12 @@ import InputField from "../components/UI/Form/InputField";
 import PasswordInput from "../components/UI/Form/PasswordInput";
 import MainForm from "../components/UI/Form/MainForm";
 import Layout from "../components/Layout/CommonLayout";
+import ReusableButton from "../components/UI/Form/ReusableButton";
 
 const Register = () => {
   const [form, setForm] = useState({ name: "", email: "", password: "" });
   const [errors, setErrors] = useState({});
+  const [pending, setPending] = useState(false);
 
   const handleChange = (e) => {
     setForm((prevForm) => ({ ...prevForm, [e.target.name]: e.target.value }));
@@ -19,25 +21,31 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const newErrors = {};
-
+  
     if (!form.name) newErrors.name = "Nama wajib diisi";
     if (!form.email) newErrors.email = "Email wajib diisi";
     if (!form.password) newErrors.password = "Password wajib diisi";
     if (form.password && form.password.length < 6) newErrors.password = "Password minimal 6 karakter";
-
+  
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
       return;
     }
-
+  
+    setPending(true);
+    setErrors({});
+  
     try {
       await register(form.name, form.email, form.password);
       alert("Registrasi berhasil!");
       window.location.href = "/login";
     } catch (err) {
       setErrors(typeof err === "object" && err !== null ? err : { general: "Terjadi kesalahan, coba lagi nanti" });
+    } finally {
+      setPending(false);
     }
   };
+  
 
   return (
     <Layout>
@@ -77,12 +85,7 @@ const Register = () => {
             required
             error={errors.password}
           />
-          <button
-            type="submit"
-            className="w-full text-white bg-primary hover:bg-secondary focus:ring-4 focus:outline-none focus:ring-secondary font-medium rounded-lg text-sm px-5 py-2.5 cursor-pointer"
-          >
-            Daftar
-          </button>
+          <ReusableButton text="Daftar" pending={pending} />
         </form>
       </MainForm>
       {errors.general && <p className="text-red-500 text-center mt-2">{errors.general}</p>}

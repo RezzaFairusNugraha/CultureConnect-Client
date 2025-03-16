@@ -26,9 +26,8 @@ const ExploreCulture = () => {
             </p>
             <a
               href="#"
-              className="mt-6 inline-block bg-primary text-white font-medium rounded-lg px-6 py-3 text-lg shadow-md hover:bg-secondary transition-all duration-300 ease-in-out"
+              className="mt-6 inline-block bg-amber-800 text-white font-medium rounded-lg px-6 py-3 text-lg shadow-md hover:bg-amber-900"
               data-aos="fade-up"
-              data-aos-delay="400"
             >
               Jelajahi Sekarang
             </a>

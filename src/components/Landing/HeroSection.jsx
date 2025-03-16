@@ -32,8 +32,7 @@ const HeroSection = () => {
         {/* Tombol CTA */}
         <a
           href="#"
-          className="bg-primary hover:bg-secondary transition-all py-3 px-8 
-          text-white font-semibold shadow-md hover:shadow-lg rounded-lg text-lg"
+          className="mt-6 inline-block bg-amber-800 text-white font-medium rounded-lg px-6 py-3 text-lg shadow-md hover:bg-amber-900"
         >
           Daftar Sekarang
         </a>

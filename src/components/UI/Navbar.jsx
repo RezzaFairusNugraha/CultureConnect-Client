@@ -36,7 +36,7 @@ const Navbar = () => {
   return (
     <>
       <nav
-        className={`fixed w-full z-50 transition-all duration-300 ease-in-out ${
+        className={`sticky top-0 w-full z-50 transition-all duration-300 ease-in-out ${
           isScrolled || isMenuOpen ? "bg-white shadow-md" : "bg-transparent"
         }`}
       >
@@ -63,18 +63,18 @@ const Navbar = () => {
           </div>
 
           <div className="hidden md:flex space-x-4">
-            <a
-              href="/register"
-              className="border border-primary text-primary px-4 py-2 rounded-md hover:bg-primary hover:text-white transition duration-300 ease-in-out"
-            >
-              Daftar
-            </a>
             <button
               onClick={() => setModalOpen(true)}
-              className="text-white bg-primary hover:bg-secondary focus:ring-4 focus:outline-none focus:ring-amber-700 cursor-pointer font-medium rounded-lg text-sm px-5 py-2.5 transition duration-300 ease-in-out"
+              className="px-4 py-2 rounded-md hover:bg-amber-800 hover:text-white transition duration-300 ease-in-out"
             >
               Masuk
             </button>
+            <a
+              href="/register"
+              className="text-white bg-amber-800 hover:bg-amber-900 focus:ring-2 focus:outline-none focus:ring-amber-600 cursor-pointer font-medium rounded-lg text-sm px-5 py-2.5 transition duration-300 ease-in-out"
+            >
+              Daftar
+            </a>
           </div>
 
           <button

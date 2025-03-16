@@ -4,11 +4,13 @@ import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import { login } from "../../../api"; 
 import InputField from "./InputField";
 import PasswordInput from "./PasswordInput";
+import ReusableButton from "./ReusableButton";
 
-const LoginForm = ({ onSuccess, isModal }) => {
+const LoginForm = ({ onSuccess }) => {
   const [form, setForm] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [pending, setPending] = useState(false);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -20,14 +22,16 @@ const LoginForm = ({ onSuccess, isModal }) => {
   const handleLogin = async (e) => {
     e.preventDefault();
     setError("");
+    setPending(true);
 
     try {
       const data = await login(form.email, form.password);
       localStorage.setItem("token", data.token);
-      alert("Login berhasil!");
       onSuccess(); 
     } catch (err) {
-      setError(err.message || "Login gagal, silakan coba lagi.");
+      setError(err.message || "Akun tidak ditemukan");
+    } finally {
+      setPending(false);
     }
   };
 
@@ -58,12 +62,7 @@ const LoginForm = ({ onSuccess, isModal }) => {
         icon={showPassword ? FaRegEyeSlash : FaRegEye}
       />
 
-      <button
-        type="submit"
-        className="w-full text-white bg-primary hover:bg-secondary focus:ring-4 focus:outline-none focus:ring-secondary font-medium rounded-lg text-sm px-5 py-2.5 cursor-pointer"
-      >
-        Masuk
-      </button>
+      <ReusableButton text="Masuk" pending={pending} />
     </form>
   );
 };
