@@ -2,7 +2,7 @@ import HeroImage from "/images/Ilustrasi-kuliner-nusantara.-.jpeg";
 
 const Banner = () => {
   return (
-    <section className="relative h-screen flex items-center">
+    <section className="relative h-screen flex items-center pt-20 md:pt-0">
     <div className="absolute top-0 left-0 h-full w-full hidden md:block"
       style={{
         backgroundImage: `linear-gradient(to left, rgba(255,255,255,0), rgba(255,255,255,0),rgba(255,255,255,0.1),rgba(255,255,255,1) ,rgba(255,255,255,1),rgba(255,255,255,1)), url(${HeroImage})`,
@@ -41,7 +41,7 @@ const Banner = () => {
             <div className="flex flex-col sm:flex-row gap-4 mt-6">
               <a
                 href="/register"
-                className="text-white bg-amber-800 hover:bg-amber-900 focus:ring-2 focus:outline-none focus:ring-amber-700 cursor-pointer rounded-lg px-5 py-3"
+                className="text-white text-center bg-amber-800 hover:bg-amber-900 focus:ring-2 focus:outline-none focus:ring-amber-700 cursor-pointer rounded-lg px-5 py-3"
                 data-aos="fade-right"
               >
                 Jelajahi

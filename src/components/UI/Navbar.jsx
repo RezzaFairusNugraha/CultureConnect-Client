@@ -51,27 +51,36 @@ const Navbar = () => {
           </div>
 
           <div className="hidden md:flex space-x-6 text-primary font-medium">
-            {["Home", "About", "Contact"].map((item) => (
               <a
-                key={item}
+                href="/"
+                className="hover:text-secondary transition-colors duration-300"
+              >
+                Beranda
+              </a>
+              <a
+                href="/about"
+                className="hover:text-secondary transition-colors duration-300"
+              >
+                Tentang
+              </a>
+              <a
                 href="#"
                 className="hover:text-secondary transition-colors duration-300"
               >
-                {item}
+                Kontak
               </a>
-            ))}
           </div>
 
           <div className="hidden md:flex space-x-4">
             <button
               onClick={() => setModalOpen(true)}
-              className="px-4 py-2 rounded-md hover:bg-amber-800 hover:text-white transition duration-300 ease-in-out"
+              className="px-4 py-2 rounded-md hover:bg-amber-800 hover:text-white"
             >
               Masuk
             </button>
             <a
               href="/register"
-              className="text-white bg-amber-800 hover:bg-amber-900 focus:ring-2 focus:outline-none focus:ring-amber-600 cursor-pointer font-medium rounded-lg text-sm px-5 py-2.5 transition duration-300 ease-in-out"
+              className="text-white bg-amber-800 hover:bg-amber-900 focus:ring-2 focus:outline-none focus:ring-amber-600 cursor-pointer font-medium rounded-lg text-sm px-5 py-2.5"
             >
               Daftar
             </a>
@@ -94,27 +103,36 @@ const Navbar = () => {
             : "-translate-y-10 opacity-0 pointer-events-none"
         }`}
       >
-        {["Home", "About", "Contact"].map((item) => (
           <a
-            key={item}
+            href="/"
+            className="text-primary font-medium hover:text-secondary transition-colors duration-300"
+          >
+            Beranda
+          </a>
+          <a
+            href="/about"
+            className="text-primary font-medium hover:text-secondary transition-colors duration-300"
+          >
+            Tentang
+          </a>
+          <a
             href="#"
             className="text-primary font-medium hover:text-secondary transition-colors duration-300"
           >
-            {item}
+            Kontak
           </a>
-        ))}
-        <a
-          href="/register"
-          className="border border-primary text-primary px-4 py-2 rounded-md hover:bg-primary hover:text-white transition duration-300 ease-in-out text-center"
-        >
-          Daftar
-        </a>
         <button
           onClick={() => setModalOpen(true)}
-          className="w-full text-white bg-primary hover:bg-secondary focus:ring-secondary focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5"
+          className="w-full border px-4 py-2 rounded-md hover:bg-amber-800 hover:text-white"
         >
           Masuk
         </button>
+        <a
+          href="/register"
+          className="text-white text-center bg-amber-800 hover:bg-amber-900 focus:ring-2 focus:outline-none focus:ring-amber-600 cursor-pointer font-medium rounded-lg text-sm px-5 py-2.5"
+        >
+          Daftar
+        </a>
       </div>
 
       {isModalOpen && (
