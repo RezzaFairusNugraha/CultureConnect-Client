@@ -40,14 +40,14 @@ const Banner = () => {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 mt-6">
               <a
-                href="/register"
+                href="#"
                 className="text-white text-center bg-amber-800 hover:bg-amber-900 focus:ring-2 focus:outline-none focus:ring-amber-700 cursor-pointer rounded-lg px-5 py-3"
                 data-aos="fade-right"
               >
                 Jelajahi
               </a>
               <a
-                href="#"
+                href="/about"
                 className="border py-3 px-6 rounded-md font-medium hover:bg-amber-900 hover:text-white transition-all text-center"
                 data-aos="fade-left"
               >

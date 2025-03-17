@@ -12,7 +12,7 @@ export const login = async (email, password) => {
         const response = await api.post("/auth/login", { email, password });
         return response.data;
     } catch (error) {
-        throw error.response?.data || { errors: { general: "Login gagal" } };
+        throw error.response?.data;
     }
 };
 

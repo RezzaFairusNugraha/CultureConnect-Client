@@ -29,7 +29,7 @@ const LoginForm = ({ onSuccess }) => {
       localStorage.setItem("token", data.token);
       onSuccess(); 
     } catch (err) {
-      setError(err.message || "Akun tidak ditemukan");
+      setError(err);
     } finally {
       setPending(false);
     }
@@ -37,7 +37,6 @@ const LoginForm = ({ onSuccess }) => {
 
   return (
     <form className="space-y-4" onSubmit={handleLogin}>
-      {error && <p className="text-red-500 text-sm">{error}</p>}
 
       <InputField
         label="Email"
@@ -49,6 +48,7 @@ const LoginForm = ({ onSuccess }) => {
         required
         icon={MdAlternateEmail}
       />
+      {error && <p className="text-red-500 text-sm">{error.email}</p>}
 
       <PasswordInput
         label="Password"
@@ -61,6 +61,7 @@ const LoginForm = ({ onSuccess }) => {
         togglePasswordView={togglePasswordView}
         icon={showPassword ? FaRegEyeSlash : FaRegEye}
       />
+      {error && <p className="text-red-500 text-sm">{error.password}</p>}
 
       <ReusableButton text="Masuk" pending={pending} />
     </form>
