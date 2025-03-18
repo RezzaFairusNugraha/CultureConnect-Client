@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import Modal from "./Modal";
 import { FaBars, FaTimes } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { checkAuth } from "../../api/index";
 
 const Navbar = () => {
   const [isModalOpen, setModalOpen] = useState(false);
@@ -13,9 +14,14 @@ const Navbar = () => {
   const profileRef = useRef(null);
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    setIsAuthenticated(!!token);
+    const verifyAuth = async () => {
+      const isAuthenticated = await checkAuth();
+      setIsAuthenticated(isAuthenticated);
+    };
+    
+    verifyAuth();
   }, []);
+  
 
   useEffect(() => {
     const handleScroll = () => {

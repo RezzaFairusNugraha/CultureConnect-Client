@@ -8,6 +8,17 @@ const api = axios.create({
   headers: { "Content-Type": "application/json" }
 });
 
+// Cek status autentikasi dengan backend
+export const checkAuth = async () => {
+    try {
+        const response = await api.get("/auth/check");
+        return response.data.isAuthenticated;
+    } catch (error) {
+        error.response?.data;
+        return false;
+    }
+};
+
 export const login = async (email, password) => {
     try {
         const response = await api.post("/auth/login", { email, password });
@@ -28,7 +39,7 @@ export const register = async (name, email, password) => {
 
 export const fetchDashboardData = async () => {
     try {
-        const response = await api.get("/dashboard");
+        const response = await api.get("/dashboard", { withCredentials: true });
         return response.data;
     } catch (error) {
         throw new Error(error.response?.data?.error || "Gagal mengambil data dashboard");
