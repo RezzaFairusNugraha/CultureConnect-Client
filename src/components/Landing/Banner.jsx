@@ -5,17 +5,25 @@ const Banner = () => {
     <section className="relative h-screen flex items-center pt-20 md:pt-0">
     <div className="absolute top-0 left-0 h-full w-full hidden md:block"
       style={{
-        backgroundImage: `linear-gradient(to left, rgba(255,255,255,0), rgba(255,255,255,0),rgba(255,255,255,0.1),rgba(255,255,255,1) ,rgba(255,255,255,1),rgba(255,255,255,1)), url(${HeroImage})`,
+        backgroundImage: `linear-gradient(to left, rgba(255,255,255,0), rgba(255,255,255,0.5),rgba(255,255,255,0.9),rgba(255,255,255,1) ,rgba(255,255,255,1),rgba(255,255,255,1)), url(${HeroImage})`,
         backgroundSize: "contain",
         backgroundPosition: "140% center",
         backgroundRepeat: "no-repeat",
       }}
     ></div>
       <div className="relative container mx-auto px-6 sm:px-12 lg:px-24 py-16">
-        <div className="grid md:grid-cols-2 items-center gap-12">
+        <div className="grid md:grid-cols-1 items-center gap-12">
+            {/* Mobile Image */}
+            <div className="md:hidden flex justify-center mt-10 relative">
+              <img
+                src={HeroImage}
+                alt="Hero Section"
+                className="w-full sm:w-full rounded-lg"
+              />
+          </div>
           <div className="text-left max-w-xl">
             <h1 
-              className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 leading-tight" 
+              className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 leading-tight font-serif" 
               data-aos="fade-right" 
               data-aos-easing="ease-in-sine"
             >
@@ -54,15 +62,6 @@ const Banner = () => {
                 Lebih lanjut
               </a>
             </div>
-          </div>
-
-          {/* Mobile Image */}
-          <div className="md:hidden flex justify-center mt-10 relative">
-            <img
-              src={HeroImage}
-              alt="Hero Section"
-              className="w-full sm:w-full md:w-3/4 max-w-md mx-auto"
-            />
           </div>
         </div>
       </div>

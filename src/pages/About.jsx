@@ -1,9 +1,9 @@
 import Layout from "../components/Layout/CommonLayout";
-import HeroAbout from "../About/HeroAbout";
-import WhyCreated from "../About/WhyCreated";
-import HowToFix from "../About/HowToFix";
-import HowToWork from "../About/HowToWork";
-import PositiveImpact from "../About/PositiveImpact";
+import HeroAbout from "../components/About/HeroAbout";
+import WhyCreated from "../components/About/WhyCreated";
+import HowToFix from "../components/About/HowToFix";
+import HowToWork from "../components/About/HowToWork";
+import PositiveImpact from "../components/About/PositiveImpact";
 
 const AboutPage = () => {
     return (
