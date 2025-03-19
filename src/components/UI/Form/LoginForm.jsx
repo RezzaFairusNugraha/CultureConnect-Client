@@ -1,12 +1,15 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";  // Tambahkan ini
 import { MdAlternateEmail } from "react-icons/md";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
-import { login } from "../../../api"; 
+import { useAuth } from "../../../context/AuthContext";  
 import InputField from "./InputField";
 import PasswordInput from "./PasswordInput";
 import ReusableButton from "./ReusableButton";
 
-const LoginForm = ({ onSuccess }) => {
+const LoginForm = () => {
+  const navigate = useNavigate();  // Untuk pindah halaman
+  const { handleLogin } = useAuth();  
   const [form, setForm] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -19,15 +22,14 @@ const LoginForm = ({ onSuccess }) => {
 
   const togglePasswordView = () => setShowPassword(!showPassword);
 
-  const handleLogin = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
     setPending(true);
 
     try {
-      const data = await login(form.email, form.password);
-      localStorage.setItem("token", data.token);
-      onSuccess(); 
+      await handleLogin(form.email, form.password);
+      navigate("/dashboard"); 
     } catch (err) {
       setError(err);
     } finally {
@@ -36,7 +38,7 @@ const LoginForm = ({ onSuccess }) => {
   };
 
   return (
-    <form className="space-y-4" onSubmit={handleLogin}>
+    <form className="space-y-4" onSubmit={handleSubmit}>
 
       <InputField
         label="Email"

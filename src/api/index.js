@@ -4,44 +4,54 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "https://cultureconnec
 
 const api = axios.create({
   baseURL: API_BASE_URL,
-  withCredentials: true, 
+  withCredentials: true,
   headers: { "Content-Type": "application/json" }
 });
 
-// Cek status autentikasi dengan backend
+export const login = async (email, password) => {
+  try {
+    const response = await api.post("/auth/login", { email, password });
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || { message: "Login gagal" };
+  }
+};
+
 export const checkAuth = async () => {
     try {
-        const response = await api.get("/auth/check");
-        return response.data.isAuthenticated;
+      const response = await api.get("/auth/check");
+      return response.data.isAuthenticated;
     } catch (error) {
-        error.response?.data;
-        return false;
+      console.error("Check Auth Error:", error.response?.data || error);
+      return false;
     }
-};
-
-export const login = async (email, password) => {
-    try {
-        const response = await api.post("/auth/login", { email, password });
-        return response.data;
-    } catch (error) {
-        throw error.response?.data;
-    }
-};
+  };
+  
 
 export const register = async (name, email, password) => {
-    try {
-        const response = await api.post("/auth/register", { name, email, password });
-        return response.data;
-    } catch (error) {
-        throw error.response?.data || { email: "Registrasi gagal, coba lagi" };
-    }
+  try {
+    const response = await api.post("/auth/register", { name, email, password });
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || { message: "Registrasi gagal" };
+  }
 };
 
 export const fetchDashboardData = async () => {
-    try {
-        const response = await api.get("/dashboard", { withCredentials: true });
-        return response.data;
-    } catch (error) {
-        throw new Error(error.response?.data?.error || "Gagal mengambil data dashboard");
-    }
+  try {
+    const response = await api.get("/dashboard");
+    return response.data;
+  } catch (error) {
+    throw new Error(error.response?.data?.error || "Gagal mengambil data dashboard");
+  }
+};
+
+export const logout = async () => {
+  try {
+    await api.post("/auth/logout");
+    return true;
+  } catch (error) {
+    console.error("Logout gagal:", error);
+    return false;
+  }
 };

@@ -1,30 +1,38 @@
 import { useEffect, useState } from "react";
-import { fetchDashboardData } from "../../api/index";
+import { useNavigate } from "react-router-dom";
+import { fetchDashboardData } from "../../api";
 import Layout from "../../components/Layout/CommonLayout";
+import { useAuth } from "../../context/AuthContext";
 
 const Dashboard = () => {
+  const { isAuthenticated } = useAuth();
   const [data, setData] = useState(null);
   const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
+    if (!isAuthenticated) {
+      navigate("/");
+      return;
+    }
+
     const fetchDashboard = async () => {
-      const token = localStorage.getItem("token");
-
-      if (!token) {
-        window.location.href = "/";
-        return;
-      }
-
       try {
-        const result = await fetchDashboardData(token);
+        setIsLoading(true);
+        const result = await fetchDashboardData();
         setData(result);
       } catch (err) {
         setError(err.message);
+      } finally {
+        setIsLoading(false);
       }
     };
 
     fetchDashboard();
-  }, []);
+  }, [isAuthenticated, navigate]);
+
+  if (isLoading) return <p>Loading data...</p>;
 
   return (
     <Layout>
@@ -35,19 +43,9 @@ const Dashboard = () => {
           <div className="mt-4 p-4 border rounded shadow-md">
             <p>Pengunjung: {data.dashboardData.visitors}</p>
             <p>Pendapatan: ${data.dashboardData.revenue}</p>
-            <p>Pengguna Baru: {data.dashboardData.newUsers}</p>
-            <button
-              onClick={() => {
-                localStorage.removeItem("token");
-                window.location.href = "/";
-              }}
-              className="mt-3 p-2 bg-red-500 text-white rounded"
-            >
-              Logout
-            </button>
           </div>
         ) : (
-          <p>Loading...</p>
+          <p>Data tidak tersedia</p>
         )}
       </div>
     </Layout>
