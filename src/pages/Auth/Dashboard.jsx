@@ -43,6 +43,7 @@ const Dashboard = () => {
           <div className="mt-4 p-4 border rounded shadow-md">
             <p>Pengunjung: {data.dashboardData.visitors}</p>
             <p>Pendapatan: ${data.dashboardData.revenue}</p>
+            <p>Pengguna Baru: {data.dashboardData.newUsers}</p>
           </div>
         ) : (
           <p>Data tidak tersedia</p>

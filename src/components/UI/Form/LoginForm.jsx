@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";  // Tambahkan ini
+import { useNavigate } from "react-router-dom"; 
 import { MdAlternateEmail } from "react-icons/md";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import { useAuth } from "../../../context/AuthContext";  
@@ -8,38 +8,41 @@ import PasswordInput from "./PasswordInput";
 import ReusableButton from "./ReusableButton";
 
 const LoginForm = () => {
-  const navigate = useNavigate();  // Untuk pindah halaman
+  const navigate = useNavigate();
   const { handleLogin } = useAuth();  
   const [form, setForm] = useState({ email: "", password: "" });
-  const [error, setError] = useState("");
+  const [errors, setErrors] = useState({});
   const [showPassword, setShowPassword] = useState(false);
   const [pending, setPending] = useState(false);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
-    setError(""); 
+    setErrors({ ...errors, [e.target.name]: "" }); 
   };
 
   const togglePasswordView = () => setShowPassword(!showPassword);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError("");
+    setErrors({});
     setPending(true);
-
+  
     try {
       await handleLogin(form.email, form.password);
-      navigate("/dashboard"); 
+      navigate("/dashboard");
     } catch (err) {
-      setError(err);
-    } finally {
       setPending(false);
+      if (err.response && err.response.data) {
+        setErrors(err.response.data);
+      } else {
+        setErrors({ general: "Terjadi kesalahan saat login" });
+      }
     }
   };
+  
 
   return (
     <form className="space-y-4" onSubmit={handleSubmit}>
-
       <InputField
         label="Email"
         type="email"
@@ -49,8 +52,8 @@ const LoginForm = () => {
         onChange={handleChange}
         required
         icon={MdAlternateEmail}
+        error={errors.email} 
       />
-      {error && <p className="text-red-500 text-sm">{error.email}</p>}
 
       <PasswordInput
         label="Password"
@@ -62,8 +65,10 @@ const LoginForm = () => {
         showPassword={showPassword}
         togglePasswordView={togglePasswordView}
         icon={showPassword ? FaRegEyeSlash : FaRegEye}
+        error={errors.password} 
       />
-      {error && <p className="text-red-500 text-sm">{error.password}</p>}
+
+      {errors.general && <p className="text-red-500 text-sm text-center">{errors.general}</p>}
 
       <ReusableButton text="Masuk" pending={pending} />
     </form>

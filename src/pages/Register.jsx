@@ -2,6 +2,7 @@ import { useState } from "react";
 import { VscAccount } from "react-icons/vsc";
 import { MdAlternateEmail } from "react-icons/md";
 import { register } from "../api/index";
+import { useNavigate } from "react-router-dom";
 import InputField from "../components/UI/Form/InputField";
 import PasswordInput from "../components/UI/Form/PasswordInput";
 import MainForm from "../components/UI/Form/MainForm";
@@ -12,6 +13,8 @@ const Register = () => {
   const [form, setForm] = useState({ name: "", email: "", password: "" });
   const [errors, setErrors] = useState({});
   const [pending, setPending] = useState(false);
+
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setForm((prevForm) => ({ ...prevForm, [e.target.name]: e.target.value }));
@@ -38,13 +41,14 @@ const Register = () => {
     try {
       await register(form.name, form.email, form.password);
       alert("Registrasi berhasil!");
-      window.location.href = "/login";
+      navigate("/login");
     } catch (err) {
-      setErrors(typeof err === "object" && err !== null ? err : { general: "Terjadi kesalahan, coba lagi nanti" });
+      setErrors(err); 
     } finally {
       setPending(false);
     }
   };
+  
   
 
   return (

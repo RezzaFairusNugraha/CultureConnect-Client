@@ -4,32 +4,47 @@ import { checkAuth, login, logout } from "../api";
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(null);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const verifyAuth = async () => {
-      const authStatus = await checkAuth();
-      setIsAuthenticated(authStatus);
-      setLoading(false);
+      try {
+        const authStatus = await checkAuth();
+        setIsAuthenticated(authStatus);
+      } catch (error) {
+        setIsAuthenticated(false);
+      } finally {
+        setLoading(false);
+      }
     };
 
     verifyAuth();
   }, []);
 
   const handleLogin = async (email, password) => {
-    await login(email, password);
-    setIsAuthenticated(true);
+    try {
+      const response = await login(email, password);
+      setIsAuthenticated(true);
+      return response;
+    } catch (error) {
+      throw error.response ? error : { response: { data: { general: "Terjadi kesalahan saat login" } } };
+    }
   };
+  
 
   const handleLogout = async () => {
-    await logout();
-    setIsAuthenticated(false);
+    try {
+      await logout();
+      setIsAuthenticated(false);
+    } catch (error) {
+      console.error("Logout gagal:", error);
+    }
   };
 
   return (
     <AuthContext.Provider value={{ isAuthenticated, handleLogin, handleLogout, loading }}>
-      {children}
+      {!loading && children}
     </AuthContext.Provider>
   );
 };
