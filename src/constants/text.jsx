@@ -5,7 +5,7 @@ import {
   AiOutlineGlobal,
   AiOutlineSearch,
   AiOutlineCheckCircle,
-  AiOutlineUser, // Tambahkan ikon yang belum diimpor
+  AiOutlineUser,
 } from "react-icons/ai";
 
 const impacts = [
@@ -15,7 +15,7 @@ const impacts = [
       "Menemukan pengalaman yang lebih autentik dan tidak biasa.",
       "Mendapat rekomendasi yang sesuai dengan preferensi pribadi.",
     ],
-    icon: () => <AiOutlineUser className="w-10 h-10 text-indigo-800" />, // Ubah menjadi fungsi
+    icon: () => <AiOutlineUser className="w-10 h-10 text-indigo-800" />, 
     bgColor: "bg-indigo-100",
     textColor: "text-indigo-800",
   },

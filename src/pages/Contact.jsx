@@ -1,5 +1,5 @@
 import Layout from "../components/Layout/CommonLayout";
-import ContactComponent from "../components/contact/Contact";
+import ContactComponent from "../components/contact/ContactComponent";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { useEffect } from "react";

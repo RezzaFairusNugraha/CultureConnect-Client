@@ -42,7 +42,7 @@ const NavbarGuest = () => {
           <div className="hidden md:flex space-x-6 text-primary">
             <Link to="/" className="hover:text-secondary transition-colors duration-300">Beranda</Link>
             <Link to="/about" className="hover:text-secondary transition-colors duration-300">Tentang</Link>
-            <Link to="#" className="hover:text-secondary transition-colors duration-300">Kontak</Link>
+            <Link to="/contact" className="hover:text-secondary transition-colors duration-300">Kontak</Link>
           </div>
 
           <div className="hidden md:flex space-x-4 items-center">
@@ -56,7 +56,7 @@ const NavbarGuest = () => {
                   <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg">
                     <Link to="/dashboard" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Dashboard</Link>
                     <Link to="/profile/edit" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Profil Saya</Link>
-                    <button onClick={() => { handleLogout(); navigate("/"); }} className="w-full text-left block px-4 py-2 text-sm text-red-600 hover:bg-gray-100">Keluar</button>
+                    <button onClick={() => { handleLogout(); navigate("/"); }} className="w-full text-left block px-4 py-2 text-sm text-red-600 hover:bg-gray-100 cursor-pointer">Keluar</button>
                   </div>
                 )}
               </div>
@@ -77,7 +77,7 @@ const NavbarGuest = () => {
           <div ref={menuRef} className="md:hidden bg-white shadow-md p-4 absolute top-full left-0 w-full flex flex-col space-y-4">
             <Link to="/" className="text-primary hover:text-secondary transition-colors duration-300" onClick={() => setMenuOpen(false)}>Beranda</Link>
             <Link to="/about" className="text-primary hover:text-secondary transition-colors duration-300" onClick={() => setMenuOpen(false)}>Tentang</Link>
-            <Link to="#" className="text-primary hover:text-secondary transition-colors duration-300" onClick={() => setMenuOpen(false)}>Kontak</Link>
+            <Link to="/contact" className="text-primary hover:text-secondary transition-colors duration-300" onClick={() => setMenuOpen(false)}>Kontak</Link>
             {!isAuthenticated ? (
               <>
                 <button onClick={() => { setModalOpen(true); setMenuOpen(false); }} className="cursor-pointer">Masuk</button>

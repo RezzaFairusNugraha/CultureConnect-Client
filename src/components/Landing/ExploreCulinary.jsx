@@ -5,12 +5,13 @@ const ExploreCulinary = () => {
     <section className="py-16 bg-[#f7f7f7]">
       <div className="container mx-auto px-6 md:px-12 lg:px-20">
         <div className="grid grid-cols-1 lg:grid-cols-2 items-center gap-12">
-          {/* Konten Teks */}
           <div className="text-center lg:text-left" data-aos="fade-right">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 leading-tight">
-              Nikmati Kuliner Otentik <br />{" "}
-              <span className="text-[#973C00]">dari Berbagai Daerah <hr /></span>
+              Nikmati Kuliner Otentik
+              <br />
+              <span className="text-[#973C00]">dari Berbagai Daerah</span>
             </h2>
+            <hr />
             <p className="text-lg text-gray-700 mt-5 leading-relaxed">
               Nikmati cita rasa khas dari berbagai daerah dengan sajian kuliner
               autentik yang menggugah selera. Temukan beragam hidangan
@@ -26,7 +27,6 @@ const ExploreCulinary = () => {
               Jelajahi Sekarang
             </a>
           </div>
-          {/* Gambar */}
           <div className="flex justify-center" data-aos="fade-left">
             <img
               src={CulinaryImage}

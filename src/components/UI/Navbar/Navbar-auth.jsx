@@ -48,7 +48,7 @@ const NavbarAuth = ({name}) => {
                 </button>
                 {isProfileOpen && (
                   <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg">
-                    <button onClick={() => { handleLogout(); navigate("/"); }} className="w-full text-left block px-4 py-2 text-sm text-red-600 hover:bg-gray-100">Keluar</button>
+                    <button onClick={() => { handleLogout(); navigate("/"); }} className="w-full text-left block px-4 py-2 text-sm text-red-600 hover:bg-gray-100 cursor-pointer">Keluar</button>
                   </div>
                 )}
               </div>
@@ -81,7 +81,7 @@ const NavbarAuth = ({name}) => {
                 <Link to="/register" className="text-white bg-amber-800 hover:bg-amber-900 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Daftar</Link>
               </>
             ) : (
-              <button onClick={() => { handleLogout(); setMenuOpen(false); navigate("/"); }} className="text-red-600 hover:text-red-800">Keluar</button>
+              <button onClick={() => { handleLogout(); setMenuOpen(false); navigate("/"); }} className="text-red-600 hover:text-red-800 cursor-pointer">Keluar</button>
             )}
           </div>
         )}

@@ -95,15 +95,8 @@ const Register = () => {
           <ReusableButton text="Daftar" pending={pending} />
         </form>
       </MainForm>
-<<<<<<< HEAD
       {errors.general && <p className="text-red-500 text-center mt-2">{errors.general}</p>}
     </LayoutGuest>
-=======
-      {errors.general && (
-        <p className="text-red-500 text-center mt-2">{errors.general}</p>
-      )}
-    </Layout>
->>>>>>> 44d69b0 (Add style,SplashScreen and Contact(progres))
   );
 };
 

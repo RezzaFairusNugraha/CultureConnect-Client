@@ -6,7 +6,6 @@ import { useNavigate } from "react-router-dom";
 import InputField from "../UI/Form/InputField";
 import PasswordInput from "../UI/Form/PasswordInput";
 import MainForm from "../UI/Form/MainForm";
-import Layout from "../Layout/CommonLayout";
 import ReusableButton from "../UI/Form/ReusableButton";
 
 const Register = () => {

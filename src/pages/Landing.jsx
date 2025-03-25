@@ -1,9 +1,5 @@
-<<<<<<< HEAD
 import LayoutGuest from "../components/Layout/CommonLayout";
-=======
-import Layout from "../components/Layout/CommonLayout";
 import SplashScreen from "../components/Landing/SplashScreen";
->>>>>>> 44d69b0 (Add style,SplashScreen and Contact(progres))
 import Banner from "../components/Landing/Banner";
 import About from "../components/Landing/About";
 import ExploreCulture from "../components/Landing/ExploreCulture";
@@ -24,13 +20,9 @@ const Landing = () => {
   }, []);
   return (
     <>
-<<<<<<< HEAD
       <LayoutGuest>
-        <Banner />
-=======
-      <Layout>
         <SplashScreen />
->>>>>>> 44d69b0 (Add style,SplashScreen and Contact(progres))
+        <Banner />
         <About />
         <ExploreCulture />
         <ExploreLodging />
