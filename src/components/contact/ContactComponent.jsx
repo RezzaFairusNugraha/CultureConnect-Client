@@ -1,8 +1,9 @@
 import HeroImage from "/images/Ilustrasi-kuliner-nusantara.-.jpeg";
+import FromContact from "./FromContact";
 
 const Banner = () => {
   return (
-    <section className="relative h-screen flex items-center pt-20 md:pt-0">
+    <section className="relative h-screen flex items-center pt-20 md:pt-0 ">
       <div
         className="absolute top-0 left-0 h-full w-full hidden md:block"
         style={{
@@ -11,7 +12,9 @@ const Banner = () => {
           backgroundPosition: "140% center",
           backgroundRepeat: "no-repeat",
         }}
-      ></div>
+      >
+        <FromContact />
+      </div>
       <div className="relative container mx-auto px-6 sm:px-12 lg:px-24 py-16">
         <div className="grid md:grid-cols-1 items-center gap-12">
           {/* Mobile Image */}

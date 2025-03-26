@@ -2,15 +2,11 @@ import LodgingImage from "/images/Indonesia-Bandung-4.jpg";
 
 const ExploreLodging = () => {
   return (
-    <section className="py-16 bg-gray-50">
+    <section className="py-16 bg-[#f7f7f7]">
       <div className="container mx-auto px-6 md:px-12 lg:px-20">
         <div className="grid grid-cols-1 lg:grid-cols-2 items-center gap-12">
-
           {/* Gambar */}
-          <div 
-            className="flex justify-center"
-            data-aos="fade-right"
-          >
+          <div className="flex justify-center" data-aos="fade-right">
             <img
               src={LodgingImage}
               alt="Nearby Lodging"
@@ -19,17 +15,18 @@ const ExploreLodging = () => {
           </div>
 
           {/* Konten Teks */}
-          <div 
-            className="text-center lg:text-left"
-            data-aos="fade-left"
-          >
+          <div className="text-center lg:text-left" data-aos="fade-left">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 leading-tight">
-              Penginapan Nyaman <br /> Untuk Perjalanan Anda
+              Penginapan Nyaman <br />{" "}
+              <span className="text-[#973C00]">
+                Untuk Perjalanan Anda <hr />
+              </span>
             </h2>
             <p className="text-lg text-gray-700 mt-5 leading-relaxed">
-              Temukan tempat menginap yang nyaman selama perjalanan Anda. 
-              Dari penginapan tradisional hingga hotel modern, kami membantu 
-              Anda menemukan tempat terbaik yang sesuai dengan kebutuhan dan kenyamanan Anda.
+              Temukan tempat menginap yang nyaman selama perjalanan Anda. Dari
+              penginapan tradisional hingga hotel modern, kami membantu Anda
+              menemukan tempat terbaik yang sesuai dengan kebutuhan dan
+              kenyamanan Anda.
             </p>
             <a
               href="#"
@@ -40,7 +37,6 @@ const ExploreLodging = () => {
               Jelajahi Sekarang
             </a>
           </div>
-
         </div>
       </div>
     </section>

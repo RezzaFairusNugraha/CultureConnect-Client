@@ -1,4 +1,5 @@
 import Layout from "../components/Layout/CommonLayout";
+import SplashScreen from "../components/Landing/SplashScreen";
 import Banner from "../components/Landing/Banner";
 import About from "../components/Landing/About";
 import ExploreCulture from "../components/Landing/ExploreCulture";
@@ -20,7 +21,7 @@ const Landing = () => {
   return (
     <>
       <Layout>
-        <Banner />
+        <SplashScreen />
         <About />
         <ExploreCulture />
         <ExploreLodging />

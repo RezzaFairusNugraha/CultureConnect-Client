@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { VscAccount } from "react-icons/vsc";
 import { MdAlternateEmail } from "react-icons/md";
-import { register } from "../api/index";
+import { register } from "../../api/index";
 import { useNavigate } from "react-router-dom";
-import InputField from "../components/UI/Form/InputField";
-import PasswordInput from "../components/UI/Form/PasswordInput";
-import MainForm from "../components/UI/Form/MainForm";
-import Layout from "../components/Layout/CommonLayout";
-import ReusableButton from "../components/UI/Form/ReusableButton";
+import InputField from "../UI/Form/InputField";
+import PasswordInput from "../UI/Form/PasswordInput";
+import MainForm from "../UI/Form/MainForm";
+import Layout from "../Layout/CommonLayout";
+import ReusableButton from "../UI/Form/ReusableButton";
 
 const Register = () => {
   const [form, setForm] = useState({ name: "", email: "", password: "" });
@@ -51,7 +51,7 @@ const Register = () => {
   };
 
   return (
-    <Layout>
+    <>
       <MainForm
         title="Daftar Akun CultureConnect"
         linkTo={{
@@ -98,7 +98,7 @@ const Register = () => {
       {errors.general && (
         <p className="text-red-500 text-center mt-2">{errors.general}</p>
       )}
-    </Layout>
+    </>
   );
 };
 
