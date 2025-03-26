@@ -1,8 +1,9 @@
 import HeroImage from "/images/Ilustrasi-kuliner-nusantara.-.jpeg";
+import FromContact from "./FromContact";
 
 const Banner = () => {
   return (
-    <section className="relative h-screen flex items-center pt-20 md:pt-0">
+    <section className="relative h-screen flex items-center pt-20 md:pt-0 ">
       <div
         className="absolute top-0 left-0 h-full w-full hidden md:block"
         style={{
@@ -11,17 +12,11 @@ const Banner = () => {
           backgroundPosition: "140% center",
           backgroundRepeat: "no-repeat",
         }}
-      ></div>
+      >
+        <FromContact />
+      </div>
       <div className="relative container mx-auto px-6 sm:px-12 lg:px-24 py-16">
         <div className="grid md:grid-cols-1 items-center gap-12">
-<<<<<<< HEAD
-            <div className="md:hidden flex justify-center mt-10 relative">
-              <img
-                src={HeroImage}
-                alt="Hero Section"
-                className="w-full sm:w-full rounded-lg"
-              />
-=======
           {/* Mobile Image */}
           <div className="md:hidden flex justify-center mt-10 relative">
             <img
@@ -29,7 +24,6 @@ const Banner = () => {
               alt="Hero Section"
               className="w-full sm:w-full rounded-lg"
             />
->>>>>>> 44d69b0 (Add style,SplashScreen and Contact(progres))
           </div>
           <div className="text-left max-w-xl">
             <h1
@@ -61,13 +55,8 @@ const Banner = () => {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 mt-6">
               <a
-<<<<<<< HEAD
-                href="/dashboard"
-                className="text-white text-center bg-amber-800 hover:bg-amber-900 focus:ring-2 focus:outline-none focus:ring-amber-700 cursor-pointer rounded-lg px-5 py-3"
-=======
                 href="#"
                 className="text-white text-center bg-[#3D2B1F] shadow hover: focus:ring-2 focus:outline-none focus:ring-amber-700 cursor-pointer rounded-lg px-5 py-3"
->>>>>>> 44d69b0 (Add style,SplashScreen and Contact(progres))
                 data-aos="fade-right"
               >
                 Jelajahi
