@@ -13,7 +13,6 @@ const Banner = () => {
     ></div>
       <div className="relative container mx-auto px-6 sm:px-12 lg:px-24 py-16">
         <div className="grid md:grid-cols-1 items-center gap-12">
-            {/* Mobile Image */}
             <div className="md:hidden flex justify-center mt-10 relative">
               <img
                 src={HeroImage}
@@ -48,7 +47,7 @@ const Banner = () => {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 mt-6">
               <a
-                href="#"
+                href="/dashboard"
                 className="text-white text-center bg-amber-800 hover:bg-amber-900 focus:ring-2 focus:outline-none focus:ring-amber-700 cursor-pointer rounded-lg px-5 py-3"
                 data-aos="fade-right"
               >

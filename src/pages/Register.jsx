@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import InputField from "../components/UI/Form/InputField";
 import PasswordInput from "../components/UI/Form/PasswordInput";
 import MainForm from "../components/UI/Form/MainForm";
-import Layout from "../components/Layout/CommonLayout";
+import LayoutGuest from "../components/Layout/CommonLayout";
 import ReusableButton from "../components/UI/Form/ReusableButton";
 
 const Register = () => {
@@ -52,7 +52,7 @@ const Register = () => {
   
 
   return (
-    <Layout>
+    <LayoutGuest>
       <MainForm
         title="Daftar Akun CultureConnect"
         linkTo={{ text: "Sudah Punya Akun?", href: "/login", label: "Masuk Sekarang" }}
@@ -93,7 +93,7 @@ const Register = () => {
         </form>
       </MainForm>
       {errors.general && <p className="text-red-500 text-center mt-2">{errors.general}</p>}
-    </Layout>
+    </LayoutGuest>
   );
 };
 

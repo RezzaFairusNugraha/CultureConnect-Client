@@ -1,14 +1,14 @@
-import Navbar from "../UI/Navbar";
 import Footer from "../UI/Footer";
+import NavbarGuest from "../UI/Navbar/Navbar-home";
 
-const Layout = ({ children }) => {
+const LayoutGuest = ({ children }) => {
     return (
         <>
-            <Navbar />
+            <NavbarGuest/>
             {children}
             <Footer />
         </>
     )
 }
 
-export default Layout;
+export default LayoutGuest;

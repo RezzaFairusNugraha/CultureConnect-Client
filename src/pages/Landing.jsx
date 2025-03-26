@@ -1,4 +1,4 @@
-import Layout from "../components/Layout/CommonLayout";
+import LayoutGuest from "../components/Layout/CommonLayout";
 import Banner from "../components/Landing/Banner";
 import About from "../components/Landing/About";
 import ExploreCulture from "../components/Landing/ExploreCulture";
@@ -19,13 +19,13 @@ const Landing = () => {
   }, []);
   return (
     <>
-      <Layout>
+      <LayoutGuest>
         <Banner />
         <About />
         <ExploreCulture />
         <ExploreLodging />
         <ExploreCulinary />
-      </Layout>
+      </LayoutGuest>
     </>
   );
 };

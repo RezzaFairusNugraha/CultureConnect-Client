@@ -36,18 +36,6 @@ export const login = async (email, password) => {
   }
 };
 
-
-
-export const checkAuth = async () => {
-  try {
-    const response = await api.get("/auth/check", { withCredentials: true });
-    return response.data;
-  } catch (error) {
-    throw new Error(error.response?.data?.error || "Gagal mengecek status login");
-  }
-};
-
-
 export const fetchDashboardData = async () => {
   try {
     const token = localStorage.getItem("token");

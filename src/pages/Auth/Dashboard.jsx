@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { fetchDashboardData } from "../../api";
-import Layout from "../../components/Layout/CommonLayout";
 import { useAuth } from "../../context/AuthContext";
-
+import LayoutAuth from "../../components/Layout/AuthLayout";
 const Dashboard = () => {
   const { isAuthenticated } = useAuth();
   const [data, setData] = useState(null);
@@ -35,21 +34,23 @@ const Dashboard = () => {
   if (isLoading) return <p>Loading data...</p>;
 
   return (
-    <Layout>
+    <>
+    <LayoutAuth name={data.user.name}>
       <div className="p-5">
         <h1 className="text-2xl font-bold">Dashboard</h1>
         {error && <p className="text-red-500">{error}</p>}
         {data ? (
           <div className="mt-4 p-4 border rounded shadow-md">
-            <p>Pengunjung: {data.dashboardData.visitors}</p>
-            <p>Pendapatan: ${data.dashboardData.revenue}</p>
-            <p>Pengguna Baru: {data.dashboardData.newUsers}</p>
+            <p>User ID: {data.user.id}</p>
+            <p>Name : {data.user.name}</p>
+            <p>Email : {data.user.email}</p>
           </div>
         ) : (
           <p>Data tidak tersedia</p>
         )}
       </div>
-    </Layout>
+    </LayoutAuth>
+    </>
   );
 };
 

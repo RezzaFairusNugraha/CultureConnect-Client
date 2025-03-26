@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect } from "react";
-import { checkAuth, login, logout } from "../api";
+import { login, logout } from "../api";
 
 const AuthContext = createContext();
 
@@ -10,7 +10,7 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const verifyAuth = async () => {
       try {
-        const authStatus = await checkAuth();
+        const authStatus = localStorage.getItem("token");
         setIsAuthenticated(authStatus);
       } catch (error) {
         setIsAuthenticated(false);

@@ -1,4 +1,4 @@
-import Layout from "../components/Layout/CommonLayout";
+import LayoutGuest from "../components/Layout/CommonLayout";
 import HeroAbout from "../components/About/HeroAbout";
 import WhyCreated from "../components/About/WhyCreated";
 import HowToFix from "../components/About/HowToFix";
@@ -7,13 +7,13 @@ import PositiveImpact from "../components/About/PositiveImpact";
 
 const AboutPage = () => {
     return (
-        <Layout>
+        <LayoutGuest>
             <HeroAbout />
             <WhyCreated />
             <HowToFix />
             <HowToWork />
             <PositiveImpact />
-        </Layout>
+        </LayoutGuest>
     );
 };
 

@@ -1,9 +1,9 @@
 import React from "react";
-import Layout from "../components/Layout/CommonLayout";
+import LayoutGuest from "../components/Layout/CommonLayout";
 
 function NotFound() {
   return (
-    <Layout>
+    <LayoutGuest>
       <section className="relative z-10 bg-primary py-[120px]">
         <div className="container mx-auto">
           <div className="-mx-4 flex">
@@ -38,7 +38,7 @@ function NotFound() {
           <div className="h-full w-1/3 bg-gradient-to-b from-[#FFFFFF14] to-[#C4C4C400]"></div>
         </div>
       </section>
-    </Layout>
+    </LayoutGuest>
   );
 }
 
