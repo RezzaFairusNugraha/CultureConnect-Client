@@ -6,6 +6,7 @@ import PrivateRoute from "./components/PrivateRoute";
 import Landing from "./pages/Landing";
 import NotFound from "./pages/NotFound";
 import AboutPage from "./pages/About";
+import Contact from "./pages/Contact";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/about" element={<AboutPage />} />
+        <Route path="/contact" element={<Contact />} />
         <Route
           path="/dashboard"
           element={
