@@ -17,23 +17,18 @@ const HowToWork = () => {
         <div className="relative pl-6">
           {steps.map((step, index) => (
             <div key={step.id} className="relative flex items-start mb-12">
-              {/* Garis Penghubung */}
               {index !== steps.length - 1 && (
                 <div
                   className="absolute top-12 w-[3px] h-full bg-gray-300"
                   data-aos="fade-right"
                 ></div>
               )}
-
-              {/* Ikon Langkah */}
               <div
                 className={`w-12 h-12 flex items-center justify-center rounded-full border-4 ${step.color} absolute left-[-24px]`}
                 data-aos="zoom-in"
               >
                 {step.icon()}
               </div>
-
-              {/* Konten */}
               <div
                 className="ml-12 p-5 bg-white shadow-md rounded-lg w-full"
                 data-aos="fade-left"

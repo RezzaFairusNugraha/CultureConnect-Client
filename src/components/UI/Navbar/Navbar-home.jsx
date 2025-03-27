@@ -1,18 +1,19 @@
 import { useState, useEffect, useRef } from "react";
 import Modal from "../Modal";
+import LogoutModal from "../LogoutModal";
 import { FaBars, FaTimes } from "react-icons/fa";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useAuth } from "../../../context/AuthContext";
 
 const NavbarGuest = () => {
-  const { isAuthenticated, handleLogout } = useAuth();
+  const { isAuthenticated } = useAuth();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setMenuOpen] = useState(false);
   const [isProfileOpen, setProfileOpen] = useState(false);
   const [isModalOpen, setModalOpen] = useState(false);
+  const [isLogoutModalOpen, setLogoutModalOpen] = useState(false); 
   const menuRef = useRef(null);
   const profileRef = useRef(null);
-  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 0);
@@ -56,13 +57,21 @@ const NavbarGuest = () => {
                   <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg">
                     <Link to="/dashboard" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Dashboard</Link>
                     <Link to="/profile/edit" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Profil Saya</Link>
-                    <button onClick={() => { handleLogout(); navigate("/"); }} className="w-full text-left block px-4 py-2 text-sm text-red-600 hover:bg-gray-100 cursor-pointer">Keluar</button>
+                    <button 
+                      onClick={() => { 
+                        setProfileOpen(false); 
+                        setLogoutModalOpen(true); 
+                      }} 
+                      className="w-full text-left block px-4 py-2 text-sm text-red-600 hover:bg-gray-100 cursor-pointer"
+                    >
+                      Keluar
+                    </button>
                   </div>
                 )}
               </div>
             ) : (
               <>
-                <button onClick={() => setModalOpen(true)} className="cursor-pointer">Masuk</button>
+                <button onClick={() => { setModalOpen(true); setLogoutModalOpen(false); }} className="cursor-pointer">Masuk</button>
                 <Link to="/register" className="text-white bg-amber-800 hover:bg-amber-900 font-medium rounded-lg text-sm px-5 py-2.5">Daftar</Link>
               </>
             )}
@@ -87,13 +96,15 @@ const NavbarGuest = () => {
               <>
                 <Link to="/dashboard" className="text-primary hover:text-secondary transition-colors duration-300" onClick={() => setMenuOpen(false)}>Dashboard</Link>
                 <Link to="/profile/edit" className="text-primary hover:text-secondary transition-colors duration-300" onClick={() => setMenuOpen(false)}>Profil Saya</Link>
-                <button onClick={() => { handleLogout(); setMenuOpen(false); navigate("/"); }} className="text-red-600 hover:text-red-800">Keluar</button>
+                <button onClick={() => { setLogoutModalOpen(true); setMenuOpen(false); }} className="text-red-600 hover:text-red-800">Keluar</button>
               </>
             )}
           </div>
         )}
       </nav>
+
       {isModalOpen && <Modal isOpen={isModalOpen} onClose={() => setModalOpen(false)} />}
+      <LogoutModal isOpen={isLogoutModalOpen} onClose={() => setLogoutModalOpen(false)} />
     </>
   );
 };
