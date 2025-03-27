@@ -21,31 +21,31 @@ const About = () => {
           <div>
             <h1 className="text-xl sm:text-3xl md:text-4xl font-bold mb-6 leading-tight text-gray-900">
               Temukan pengalaman hebat bersama{" "}
-              <span className="text-[#973C00]">
-                kami
-              </span>
+              <span className="text-[#973C00]">kami</span>
             </h1>
             <hr />
             <p className="text-md leading-relaxed mb-8 text-gray-700">
               Jelajahi keunikan budaya dan kelezatan kuliner khas daerah bersama
-              kami. Temukan cerita di balik setiap tempat yang Anda kunjungi dan rasakan pengalaman yang tak terlupakan di setiap perjalanan Anda.
+              kami. Temukan cerita di balik setiap tempat yang Anda kunjungi dan
+              rasakan pengalaman yang tak terlupakan di setiap perjalanan Anda.
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-              <div className="p-6 bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-all duration-300 ease-in-out">
-                <HiOutlineLightBulb className="w-12 h-12 text-primary mb-4" />
-                <h5 className="text-xl font-semibold text-gray-900">
+              <div className="p-6 bg-amber-800  rounded-lg shadow-sm hover:shadow-md transition-all duration-300 ease-in-out">
+                <HiOutlineLightBulb className="w-12 h-12 text-white mb-4" />
+                <h5 className="text-xl font-semibold text-white">
                   Butuh Bantuan?
                 </h5>
-                <p className="text-gray-600">
-                  Lihat panduan langkah demi langkah untuk klaim manfaat mingguan.
+                <p className="text-white">
+                  Lihat panduan langkah demi langkah untuk klaim manfaat
+                  mingguan.
                 </p>
               </div>
-              <div className="p-6 bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-all duration-300 ease-in-out">
-                <HiOutlineDocumentText className="w-12 h-12 text-primary mb-4" />
-                <h5 className="text-xl font-semibold text-gray-900">
+              <div className="p-6 bg-amber-800  rounded-lg shadow-sm hover:shadow-md transition-all duration-300 ease-in-out">
+                <HiOutlineDocumentText className="w-12 h-12 text-white mb-4" />
+                <h5 className="text-xl font-semibold text-white">
                   Panduan Lengkap
                 </h5>
-                <p className="text-gray-600">
+                <p className="text-white">
                   Pelajari semua informasi penting yang perlu Anda ketahui.
                 </p>
               </div>

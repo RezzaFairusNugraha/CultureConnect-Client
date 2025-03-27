@@ -6,8 +6,8 @@ import LocalCulinaryImage2 from "/images/kuliner-nusantara-2.png";
 const WhyCreated = () => {
   return (
     <>
-      <div className="mx-auto max-w-screen-xl px-4 py-15 sm:px-6 lg:px-8">
-        <div>
+      <div className="mx-auto max-w-screen-xl px-4 py-15 sm:px-6 lg:px-8 overflow-x-hidden">
+        <div data-aos="fade-right">
           <h2 className="text-4xl font-semibold leading-tight tracking-tight md:text-4xl">
             Mengapa CultureConnect
             <br />
@@ -19,7 +19,7 @@ const WhyCreated = () => {
         <ol className="relative border-s border-amber-800">
           <li className="mb-10 ms-4 flex flex-col md:flex-row md:items-center">
             <div className="absolute w-3 h-3 bg-amber-800 rounded-full mt-1.5 -start-1.5 border border-white"></div>
-            <div className="md:w-2/3">
+            <div className="md:w-2/3" data-aos="fade-right">
               <time className="text-2xl font-bold leading-none">
                 Globalisasi dan kemajuan teknologi
               </time>
@@ -35,11 +35,12 @@ const WhyCreated = () => {
               src={CultureHeritageImage}
               alt="Cultural Heritage"
               className="w-full max-w-[250px] md:max-w-[300px] mx-auto md:ms-6 rounded-lg"
+              data-aos="fade-left"
             />
           </li>
           <li className="mb-10 ms-4 flex flex-col md:flex-row md:items-center">
             <div className="absolute w-3 h-3 bg-amber-800 rounded-full mt-1.5 -start-1.5 border border-white"></div>
-            <div className="md:w-2/3">
+            <div className="md:w-2/3" data-aos="fade-right">
               <time className="text-2xl font-bold leading-none mb-3">
                 Destinasi budaya asli
               </time>
@@ -53,11 +54,12 @@ const WhyCreated = () => {
               src={CulturalDestinationImage}
               alt="Cultural Destination"
               className="w-full max-w-[250px] md:max-w-[300px] mx-auto md:ms-6 rounded-lg"
+              data-aos="fade-left"
             />
           </li>
           <li className="mb-10 ms-4 flex flex-col md:flex-row md:items-center">
             <div className="absolute w-3 h-3 bg-amber-800 rounded-full mt-1.5 -start-1.5 border border-white"></div>
-            <div className="md:w-2/3">
+            <div className="md:w-2/3" data-aos="fade-right">
               <time className="text-2xl font-bold leading-none mb-3">
                 Meningkatkan penjualan UMKM
               </time>
@@ -71,11 +73,12 @@ const WhyCreated = () => {
               src={LocalCulinaryImage1}
               alt="Local Culinary 1"
               className="w-full max-w-[250px] md:max-w-[300px] mx-auto md:ms-6 rounded-lg"
+              data-aos="fade-left"
             />
           </li>
           <li className="mb-10 ms-4 flex flex-col md:flex-row md:items-center">
             <div className="absolute w-3 h-3 bg-amber-800 rounded-full mt-1.5 -start-1.5 border border-white"></div>
-            <div className="md:w-2/3">
+            <div className="md:w-2/3" data-aos="fade-right">
               <time className="text-2xl font-bold leading-none mb-3">
                 Sistem rekomendasi berdasarkan referensi pengguna
               </time>
@@ -89,6 +92,7 @@ const WhyCreated = () => {
               src={LocalCulinaryImage2}
               alt="Local Culinary 2"
               className="w-full max-w-[250px] md:max-w-[300px] mx-auto md:ms-6 rounded-lg"
+              data-aos="fade-left"
             />
           </li>
         </ol>

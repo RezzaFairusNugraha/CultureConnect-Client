@@ -1,10 +1,18 @@
+import React from "react";
+import HeaderContact from "./ComponentContact/HeaderContact";
+import Help from "./ComponentContact/Help";
+import FromContact from "./ComponentContact/FromContact";
 
-const Contact = () => {
+const ContactPage = () => {
   return (
     <>
-        <h1 className="text-center w-full h-full items-center">INI ADALAH HALAMAN CONTACT</h1>
+      <div className="bg-gradient-to-b from-background to-[#EAE0C8]">
+        <HeaderContact />
+        <Help />
+        <FromContact />
+      </div>
     </>
   );
 };
 
-export default Contact;
+export default ContactPage;
