@@ -2,9 +2,9 @@ import { solutions } from "../../constants/text.jsx";
 
 const HowToFix = () => {
   return (
-    <div className="bg-[#f7f7f7]">
+    <div className="bg-[#f7f7f7] overflow-x-hidden">
       <div className="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
+        <div className="text-center mb-12" data-aos="fade-up">
           <h2 className="text-4xl font-semibold leading-tight tracking-tight text-gray-900">
             Bagaimana CultureConnect Mengatasi Masalah Ini?
           </h2>
@@ -14,6 +14,7 @@ const HowToFix = () => {
             <div
               key={index}
               className="w-full max-w-md p-6 bg-white border border-gray-200 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 h-full flex flex-col"
+              data-aos="zoom-in"
             >
               <div className="flex items-center mb-4">
                 <div className={`p-3 ${solution.bgColor} rounded-full`}>

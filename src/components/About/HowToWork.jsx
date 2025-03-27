@@ -2,8 +2,11 @@ import { steps } from "../../constants/text.jsx";
 
 const HowToWork = () => {
   return (
-    <div className="bg-[#f7f7f7]">
-      <div className="mx-auto max-w-screen-xl px-4 py-15 sm:px-6 lg:px-8">
+    <div className="bg-[#f7f7f7] overflow-x-hidden">
+      <div
+        className="mx-auto max-w-screen-xl px-4 py-15 sm:px-6 lg:px-8"
+        data-aos="fade-right"
+      >
         <div>
           <h2 className="text-4xl font-semibold leading-tight tracking-tight md:text-4xl">
             Cara Kerja CultureConnect
@@ -16,18 +19,25 @@ const HowToWork = () => {
             <div key={step.id} className="relative flex items-start mb-12">
               {/* Garis Penghubung */}
               {index !== steps.length - 1 && (
-                <div className="absolute top-12 w-[3px] h-full bg-gray-300"></div>
+                <div
+                  className="absolute top-12 w-[3px] h-full bg-gray-300"
+                  data-aos="fade-right"
+                ></div>
               )}
 
               {/* Ikon Langkah */}
               <div
                 className={`w-12 h-12 flex items-center justify-center rounded-full border-4 ${step.color} absolute left-[-24px]`}
+                data-aos="zoom-in"
               >
                 {step.icon()}
               </div>
 
               {/* Konten */}
-              <div className="ml-12 p-5 bg-white shadow-md rounded-lg w-full">
+              <div
+                className="ml-12 p-5 bg-white shadow-md rounded-lg w-full"
+                data-aos="fade-left"
+              >
                 <h3 className="text-lg font-bold">{step.title}</h3>
                 <p className="text-gray-700">{step.description}</p>
               </div>
