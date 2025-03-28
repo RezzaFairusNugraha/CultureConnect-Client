@@ -60,6 +60,7 @@ const Dashboard = () => {
           )}
         </div>
       </LayoutAuth>
+    </div>
   );
 };
 
