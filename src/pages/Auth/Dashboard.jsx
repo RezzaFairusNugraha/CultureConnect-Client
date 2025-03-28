@@ -6,6 +6,8 @@ import LayoutAuth from "../../components/Layout/AuthLayout";
 import LoadingAnimation from "../../components/UI/LoadingAnimation";
 import Hero from "../../components/UI/Dashboard/Hero";
 import Destination from "../../components/UI/Dashboard/Destination";
+import RestaurantCard from "../../components/UI/Dashboard/Card";
+import HeroPromotion from "../../components/UI/Dashboard/Promotion";
 
 const Dashboard = () => {
   const { isAuthenticated } = useAuth();
@@ -42,6 +44,9 @@ const Dashboard = () => {
       <LayoutAuth name={data.user.name}>
         <Hero name={data.user.name} />
         <Destination />
+        <HeroPromotion />
+        <RestaurantCard />
+
         <div className="p-5">
           <h1 className="text-2xl font-bold">Dashboard</h1>
           {error && <p className="text-red-500">{error}</p>}
