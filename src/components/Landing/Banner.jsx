@@ -1,4 +1,4 @@
-import HeroImage from "/images/Ilustrasi-kuliner-nusantara.-.jpeg";
+import HeroImage from "/images/Ilustrasi-kuliner-nusantara.jpeg";
 
 const Banner = () => {
   return (
