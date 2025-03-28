@@ -4,7 +4,7 @@ import LayoutGuest from "../components/Layout/CommonLayout";
 function NotFound() {
   return (
     <LayoutGuest>
-      <section className="relative z-10 flex h-screen items-center justify-center bg-primary">
+      <section className="relative z-10 flex h-screen items-center justify-center bg-gradient-to-b from-background to-[#EAE0C8]">
         <div className="container mx-auto text-center">
           <h2 className="mb-2 text-[50px] font-bold leading-none text-black sm:text-[80px] md:text-[100px]">
             404
