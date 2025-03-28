@@ -46,7 +46,6 @@ const Dashboard = () => {
         <Destination />
         <HeroPromotion />
         <RestaurantCard />
-
         <div className="p-5">
           <h1 className="text-2xl font-bold">Dashboard</h1>
           {error && <p className="text-red-500">{error}</p>}
@@ -61,7 +60,6 @@ const Dashboard = () => {
           )}
         </div>
       </LayoutAuth>
-    </div>
   );
 };
 

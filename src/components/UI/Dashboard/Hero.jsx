@@ -22,9 +22,3 @@ function Hero({ name }) {
             Mau ke mana anda hari ini?
           </h2>
         </div>
-      </div>
-    </div>
-  );
-}
-
-export default Hero;
