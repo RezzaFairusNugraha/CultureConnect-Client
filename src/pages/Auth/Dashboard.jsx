@@ -4,6 +4,9 @@ import { fetchDashboardData } from "../../api";
 import { useAuth } from "../../context/AuthContext";
 import LayoutAuth from "../../components/Layout/AuthLayout";
 import LoadingAnimation from "../../components/UI/LoadingAnimation";
+import Hero from "../../components/UI/Dashboard/Hero";
+import Destination from "../../components/UI/Dashboard/Destination";
+
 const Dashboard = () => {
   const { isAuthenticated } = useAuth();
   const [data, setData] = useState(null);
@@ -32,26 +35,28 @@ const Dashboard = () => {
     fetchDashboard();
   }, [isAuthenticated, navigate]);
 
-  if (isLoading) return <LoadingAnimation/>;
+  if (isLoading) return <LoadingAnimation />;
 
   return (
-    <>
-    <LayoutAuth name={data.user.name}>
-      <div className="p-5">
-        <h1 className="text-2xl font-bold">Dashboard</h1>
-        {error && <p className="text-red-500">{error}</p>}
-        {data ? (
-          <div className="mt-4 p-4 border rounded shadow-md">
-            <p>User ID: {data.user.id}</p>
-            <p>Name : {data.user.name}</p>
-            <p>Email : {data.user.email}</p>
-          </div>
-        ) : (
-          <p>Data tidak tersedia</p>
-        )}
-      </div>
-    </LayoutAuth>
-    </>
+    <div className="overflow-x-hidden">
+      <LayoutAuth name={data.user.name}>
+        <Hero name={data.user.name} />
+        <Destination />
+        <div className="p-5">
+          <h1 className="text-2xl font-bold">Dashboard</h1>
+          {error && <p className="text-red-500">{error}</p>}
+          {data ? (
+            <div className="mt-4 p-4 border rounded shadow-md">
+              <p>User ID: {data.user.id}</p>
+              <p>Name : {data.user.name}</p>
+              <p>Email : {data.user.email}</p>
+            </div>
+          ) : (
+            <p>Data tidak tersedia</p>
+          )}
+        </div>
+      </LayoutAuth>
+    </div>
   );
 };
 
