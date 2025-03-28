@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { fetchDashboardData } from "../../api";
 import { useAuth } from "../../context/AuthContext";
 import LayoutAuth from "../../components/Layout/AuthLayout";
+import LoadingAnimation from "../../components/UI/LoadingAnimation";
 const Dashboard = () => {
   const { isAuthenticated } = useAuth();
   const [data, setData] = useState(null);
@@ -31,7 +32,7 @@ const Dashboard = () => {
     fetchDashboard();
   }, [isAuthenticated, navigate]);
 
-  if (isLoading) return <p>Loading data...</p>;
+  if (isLoading) return <LoadingAnimation/>;
 
   return (
     <>
