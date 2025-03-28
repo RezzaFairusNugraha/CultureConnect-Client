@@ -4,7 +4,7 @@ import LayoutGuest from "../components/Layout/CommonLayout";
 function NotFound() {
   return (
     <LayoutGuest>
-      <section className="relative z-10 bg-primary py-[120px]">
+      <section className="relative z-10 py-[120px] bg-gradient-to-b from-background to-[#EAE0C8]">
         <div className="container mx-auto">
           <div className="-mx-4 flex">
             <div className="w-full px-4">
@@ -20,7 +20,7 @@ function NotFound() {
                 </p>
                 <a
                   href="/"
-                  className="inline-block rounded-lg border border-black hover:border-[#193cb8] px-8 py-3 text-center text-base font-semibold text-black transition hover:bg-[#193cb8] hover:text-white shadow hover:shadow-black"
+                  className="inline-block rounded-lg border border-black hover:border-amber-900 px-8 py-3 text-center text-base font-semibold text-black transition hover:bg-amber-900 hover:text-white shadow hover:shadow-black"
                 >
                   Go To Home
                 </a>
