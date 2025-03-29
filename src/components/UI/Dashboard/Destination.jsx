@@ -37,8 +37,8 @@ const PrevArrow = (props) => {
 const Collections = () => {
   const settings = {
     dots: false,
-    infinite: false,
-    speed: 500,
+    infinite: true,
+    speed: 300,
     slidesToShow: 4,
     slidesToScroll: 1,
     arrows: true,

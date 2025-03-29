@@ -40,27 +40,12 @@ const Dashboard = () => {
   if (isLoading) return <LoadingAnimation />;
 
   return (
-    <div className="overflow-x-hidden">
       <LayoutAuth name={data.user.name}>
-        <Hero name={data.user.name} />
+        <Hero/>
         <Destination />
         <HeroPromotion />
         <RestaurantCard />
-        <div className="p-5">
-          <h1 className="text-2xl font-bold">Dashboard</h1>
-          {error && <p className="text-red-500">{error}</p>}
-          {data ? (
-            <div className="mt-4 p-4 border rounded shadow-md">
-              <p>User ID: {data.user.id}</p>
-              <p>Name : {data.user.name}</p>
-              <p>Email : {data.user.email}</p>
-            </div>
-          ) : (
-            <p>Data tidak tersedia</p>
-          )}
-        </div>
       </LayoutAuth>
-    </div>
   );
 };
 

@@ -87,7 +87,7 @@ const NavbarAuth = ({ name }) => {
             )}
           </div>
 
-          <button className="md:hidden text-primary" onClick={() => setMenuOpen(!isMenuOpen)}>
+          <button className="md:hidden text-primary cursor-pointer" onClick={() => setMenuOpen(!isMenuOpen)}>
             {isMenuOpen ? <FaTimes size={28} /> : <FaBars size={28} />}
           </button>
         </div>
