@@ -27,6 +27,7 @@ function FormContact() {
               onChange={handleChange}
               placeholder="Masukkan nama Anda"
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-amber-500 focus:border-amber-500 block w-full p-2.5"
+              required
             />
           </div>
           <div data-aos="fade-left">
@@ -44,6 +45,7 @@ function FormContact() {
               onChange={handleChange}
               placeholder="Masukkan email Anda"
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-amber-500 focus:border-amber-500 block w-full p-2.5"
+              required
             />
           </div>
         </div>
@@ -62,6 +64,7 @@ function FormContact() {
             onChange={handleChange}
             placeholder="Tulis pesan Anda di sini"
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-amber-500 focus:border-amber-500 block w-full p-2.5"
+            required
           />
         </div>
         <div className="flex justify-center">

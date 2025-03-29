@@ -9,8 +9,10 @@ import {
 } from "@material-tailwind/react";
 import { IoStar } from "react-icons/io5";
 import { restaurantData } from "./data/dataDashboard";
+import { useNavigate } from "react-router-dom";
 
 const RestaurantCard = () => {
+  const navigate = useNavigate();
   return (
     <div className="container mx-auto px-4 py-6">
       <Typography variant="h4" color="blue-gray" className="mb-6">
@@ -64,6 +66,7 @@ const RestaurantCard = () => {
               <Button
                 variant="filled"
                 className="bg-amber-800 hover:bg-amber-900"
+                onClick={() => navigate(`/dashboard/${item.name}`)}
               >
                 Read More
               </Button>
