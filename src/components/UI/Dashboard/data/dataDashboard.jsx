@@ -7,6 +7,7 @@ export const restaurantData = [
     discount: "Flat 15% OFF",
     time: "Buka saat 17:00h",
     imageUrl: "https://images.unsplash.com/photo-1600891964599-f61ba0e24092",
+    phone: "+91 9090272731",
   },
   {
     name: "Somewhere Restaurant & Bar",
@@ -16,6 +17,7 @@ export const restaurantData = [
     discount: "Flat 15% OFF",
     time: "Buka saat 12:00h",
     imageUrl: "https://images.unsplash.com/photo-1504639725590-34d0984388bd",
+    phone: "+91 9090272731",
   },
   {
     name: "Tamasha",
@@ -25,6 +27,7 @@ export const restaurantData = [
     discount: "Flat 15% OFF",
     time: "Buka saat 11:30h",
     imageUrl: "https://images.unsplash.com/photo-1414235077428-338989a2e8c0",
+    phone: "+91 9090272731",
   },
   {
     name: "Cé La Vie Kitchen & Bar",
@@ -34,6 +37,7 @@ export const restaurantData = [
     discount: "Flat 15% OFF",
     time: "Buka saat 17:00h",
     imageUrl: "https://images.unsplash.com/photo-1600891964599-f61ba0e24092",
+    phone: "+91 9090272731",
   },
   {
     name: "Somewhere Restaurant & Bar",
@@ -43,6 +47,7 @@ export const restaurantData = [
     discount: "Flat 15% OFF",
     time: "Buka saat 12:00h",
     imageUrl: "https://images.unsplash.com/photo-1504639725590-34d0984388bd",
+    phone: "+91 9090272731",
   },
   {
     name: "Tamasha",
@@ -52,6 +57,7 @@ export const restaurantData = [
     discount: "Flat 15% OFF",
     time: "Buka saat 11:30h",
     imageUrl: "https://images.unsplash.com/photo-1414235077428-338989a2e8c0",
+    phone: "+91 9090272731",
   },
 ];
 
