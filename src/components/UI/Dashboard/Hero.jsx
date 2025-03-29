@@ -1,20 +1,26 @@
 import React from "react";
-import HeroImage from "/images/bali_view_beside_the_river.png";
+import HeroImage from "/images/Ilustrasi-kuliner-nusantara.jpeg";
 
-function Hero() {
+function Hero({ name }) {
   return (
-    <div
-      className="relative flex items-center justify-between px-6 md:px-12 lg:px-20 h-[250px] md:h-[300px] lg:h-[350px] bg-cover bg-center"
-      style={{ backgroundImage: `url(${HeroImage})` }}
-    >
-      <h1 className="text-white text-3xl md:text-5xl lg:text-6xl font-bold w-3/4 md:w-1/2">
-        Mau kemana anda hari ini?
-      </h1>
-      
-      <div className="text-white flex flex-col items-center text-center">
-        <div className="w-[50px] h-[50px] md:w-[100px] md:h-[100px] lg:w-[150px] lg:h-[150px] bg-white rounded-md mt-2"></div>
-        <p className="text-base md:text-lg lg:text-xl font-semibold mt-2">Karawang</p>
-        <p className="text-sm md:text-base">Jawa Barat, Indonesia</p>
+    <div className="relative h-[450px] lg:h-[300px]">
+      {/* Background dengan gradient overlay */}
+      <div
+        className="absolute inset-0"
+        style={{
+          backgroundImage: `linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url(${HeroImage})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+      />
+      {/* Container untuk teks yang di-center */}
+      <div className="absolute inset-0 flex flex-col items-center justify-center">
+        <h1 className="text-white text-3xl font-bold mb-4">
+          Hai {name.split(" ")[0]}
+        </h1>
+        <h2 className="text-white text-3xl font-bold">
+          Mau ke mana anda hari ini?
+        </h2>
       </div>
     </div>
   );
