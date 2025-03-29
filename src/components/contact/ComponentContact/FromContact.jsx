@@ -6,14 +6,14 @@ function FormContact() {
   const { form, loading, alert, handleChange, handleSubmit } = useContactForm();
 
   return (
-    <div className="max-w-3xl mx-auto pb-10" data-aos="zoom-in">
+    <div className="max-w-3xl mx-auto pb-10">
       <form
         className="space-y-6 bg-white p-8 rounded-lg shadow-md"
         onSubmit={handleSubmit}
       >
         {alert.message && <Alert type={alert.type} message={alert.message} />}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div data-aos="fade-right">
+          <div>
             <label
               className="block mb-2 font-semibold text-gray-700"
               htmlFor="nama"
@@ -29,7 +29,7 @@ function FormContact() {
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-amber-500 focus:border-amber-500 block w-full p-2.5"
             />
           </div>
-          <div data-aos="fade-left">
+          <div>
             <label
               className="block mb-2 font-semibold text-gray-700"
               htmlFor="email"
@@ -47,7 +47,7 @@ function FormContact() {
             />
           </div>
         </div>
-        <div data-aos="fade-up">
+        <div>
           <label
             className="block mb-2 font-semibold text-gray-700"
             htmlFor="pesan"

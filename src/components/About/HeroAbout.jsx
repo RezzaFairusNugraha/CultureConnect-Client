@@ -13,7 +13,6 @@ const HeroAbout = () => {
     >
       <div
         className="container mx-auto flex flex-col justify-center items-center h-full px-4 py-8 text-center"
-        data-aos="fade-up"
       >
         <h1 className="text-4xl font-bold">
           CultureConnect:{" "}

@@ -23,16 +23,12 @@ const Banner = () => {
           <div className="text-left max-w-xl">
             <h1 
               className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 leading-tight" 
-              data-aos="fade-right" 
-              data-aos-easing="ease-in-sine"
             >
               Mari menjelajah <br /> bersama kami.
             </h1>
             <hr />
             <p 
               className="text-gray-700 text-lg leading-relaxed" 
-              data-aos="fade-right" 
-              data-aos-easing="ease-in-sine"
             >
               Temukan pesona budaya dan kelezatan kuliner khas dari berbagai daerah. 
               Dari tradisi yang kaya hingga hidangan yang menggugah selera, kami siap 
@@ -40,8 +36,6 @@ const Banner = () => {
             </p>
             <p 
               className="text-gray-700 text-lg leading-relaxed mt-4" 
-              data-aos="fade-right" 
-              data-aos-easing="ease-in-sine"
             >
               Jelajahi tempat-tempat bersejarah, nikmati masakan autentik, dan 
               rasakan pengalaman yang tak terlupakan di setiap perjalanan Anda.
@@ -50,14 +44,12 @@ const Banner = () => {
               <a
                 href="/dashboard"
                 className="text-white text-center bg-amber-800 hover:bg-amber-900 focus:ring-2 focus:outline-none focus:ring-amber-700 cursor-pointer rounded-lg px-5 py-3"
-                data-aos="fade-right"
               >
                 Jelajahi
               </a>
               <a
                 href="/about"
                 className="border py-3 px-6 rounded-md font-medium hover:bg-amber-900 hover:text-white transition-all text-center"
-                data-aos="fade-left"
               >
                 Lebih lanjut
               </a>

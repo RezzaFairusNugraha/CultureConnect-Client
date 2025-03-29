@@ -8,7 +8,6 @@ const ExploreCulture = () => {
           <div className="text-center lg:text-left">
             <h2
               className="text-3xl md:text-4xl font-bold text-gray-900 leading-tight"
-              data-aos="fade-right"
             >
               Menyelami Keindahan <br />
               <span className="text-[#973C00]">
@@ -18,8 +17,6 @@ const ExploreCulture = () => {
             <hr/>
             <p
               className="text-lg text-gray-700 mt-5 leading-relaxed"
-              data-aos="fade-right"
-              data-aos-delay="200"
             >
               Jelajahi kekayaan budaya yang tersembunyi di berbagai daerah.
               Temukan warisan sejarah, seni tradisional, dan kisah-kisah menarik
@@ -29,12 +26,11 @@ const ExploreCulture = () => {
             <a
               href="#"
               className="mt-6 inline-block bg-amber-800 text-white font-medium rounded-lg px-6 py-3 text-lg shadow-md hover:bg-amber-900"
-              data-aos="fade-up"
             >
               Jelajahi Sekarang
             </a>
           </div>
-          <div className="flex justify-center" data-aos="fade-left">
+          <div className="flex justify-center">
             <img
               src={CultureImage}
               alt="Cultural Tourism"

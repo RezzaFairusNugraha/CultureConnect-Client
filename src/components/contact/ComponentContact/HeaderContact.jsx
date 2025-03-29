@@ -6,7 +6,6 @@ function HeaderContact() {
     <div className="grid grid-cols-1 md:grid-cols-3 pt-10">
       <div
         className="flex flex-col items-center text-center  p-6 "
-        data-aos="fade-right"
       >
         <div className="bg-amber-100 text-amber-800 p-4 rounded-full mb-3">
           <FiMail size={24} />
@@ -19,7 +18,6 @@ function HeaderContact() {
       </div>
       <div
         className="flex flex-col items-center text-center  p-6 "
-        data-aos="fade-up"
       >
         <div className="bg-amber-100 text-amber-800 p-4 rounded-full mb-3">
           <FiPhoneCall size={24} />
@@ -32,7 +30,6 @@ function HeaderContact() {
       </div>
       <div
         className="flex flex-col items-center text-center  p-6 "
-        data-aos="fade-left"
       >
         <div className="bg-amber-100 text-amber-800 p-4 rounded-full mb-3">
           <FiMapPin size={24} />

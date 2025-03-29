@@ -7,11 +7,9 @@ const About = () => {
       <div className="container mx-auto px-10 md:px-12 lg:px-20">
         <div
           className="grid xl:grid-cols-2 grid-cols-1 items-center pt-16 gap-12"
-          data-aos="fade-up"
         >
           <div className="flex justify-center">
             <img
-              data-aos="fade-up-right"
               src={AboutImage}
               alt="Ilustrasi Budaya Nusantara"
               className="w-full max-w-[400px] md:max-w-full mx-auto rounded-lg"
