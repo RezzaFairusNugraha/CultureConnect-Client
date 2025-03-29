@@ -3,7 +3,7 @@ import { HiOutlineLightBulb, HiOutlineDocumentText } from "react-icons/hi";
 
 const About = () => {
   return (
-    <section className="homePage pb-16 overflow-hidden bg-gray-50">
+    <section className="homePage py-12 overflow-hidden bg-gray-50">
       <div className="container mx-auto px-10 md:px-12 lg:px-20">
         <div
           className="grid xl:grid-cols-2 grid-cols-1 items-center pt-16 gap-12"

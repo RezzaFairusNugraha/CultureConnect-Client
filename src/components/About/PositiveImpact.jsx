@@ -2,7 +2,7 @@ import { impacts } from "../../constants/text.jsx";
 
 const PositiveImpact = () => {
   return (
-    <div className="bg-[#f7f7f7] overflow-x-hidden">
+    <div className="bg-[#f7f7f7]">
       <div className="mx-auto max-w-screen-xl py-5 sm:px-6 lg:px-8">
         <hr className="border-gray-300" />
       </div>

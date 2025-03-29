@@ -6,7 +6,7 @@ import LocalCulinaryImage2 from "/images/kuliner-nusantara-2.png";
 const WhyCreated = () => {
   return (
     <>
-      <div className="mx-auto max-w-screen-xl px-4 py-15 sm:px-6 lg:px-8 overflow-x-hidden">
+      <div className="mx-auto max-w-screen-xl px-4 py-15 sm:px-6 lg:px-8">
         <div>
           <h2 className="text-4xl font-semibold leading-tight tracking-tight md:text-4xl">
             Mengapa CultureConnect

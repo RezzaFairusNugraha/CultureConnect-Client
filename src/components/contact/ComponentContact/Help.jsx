@@ -2,7 +2,7 @@ import React from "react";
 
 function Help() {
   return (
-    <div className="text-center mt-15 mb-8 ">
+    <div className="text-center mt-15 mb-8 mx-auto px-4 sm:px-6 lg:px-8">
       <h3 className="text-2xl md:text-3xl font-bold mt-1">
         Bagaimana kami bisa membantu Anda?
       </h3>

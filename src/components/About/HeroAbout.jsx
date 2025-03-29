@@ -3,7 +3,7 @@ import PetaIndonesia from "/images/peta_indonesia.png";
 const HeroAbout = () => {
   return (
     <section
-      className="bg-gray-100 h-[90vh] overflow-x-hidden"
+      className="bg-gray-100 h-[90vh]"
       style={{
         backgroundImage: `url(${PetaIndonesia})`,
         backgroundSize: "cover",

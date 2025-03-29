@@ -2,7 +2,7 @@ import CulinaryImage from "/images/menu-khas-jawa-barat.png";
 
 const ExploreCulinary = () => {
   return (
-    <section className="py-16 bg-[#f7f7f7]">
+    <section className="py-12 bg-[#f7f7f7]">
       <div className="container mx-auto px-6 md:px-12 lg:px-20">
         <div className="grid grid-cols-1 lg:grid-cols-2 items-center gap-12">
           <div className="text-center lg:text-left">

@@ -2,7 +2,7 @@ import { solutions } from "../../constants/text.jsx";
 
 const HowToFix = () => {
   return (
-    <div className="bg-[#f7f7f7] overflow-x-hidden">
+    <div className="bg-[#f7f7f7]">
       <div className="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           <h2 className="text-4xl font-semibold leading-tight tracking-tight text-gray-900">

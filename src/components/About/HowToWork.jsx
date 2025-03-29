@@ -2,7 +2,7 @@ import { steps } from "../../constants/text.jsx";
 
 const HowToWork = () => {
   return (
-    <div className="bg-[#f7f7f7] overflow-x-hidden">
+    <div className="bg-[#f7f7f7]">
       <div
         className="mx-auto max-w-screen-xl px-4 py-15 sm:px-6 lg:px-8"
       >
