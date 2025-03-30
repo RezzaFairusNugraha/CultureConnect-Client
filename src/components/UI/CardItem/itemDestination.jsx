@@ -8,21 +8,17 @@ import {
   Button,
 } from "@material-tailwind/react";
 import { IoStar } from "react-icons/io5";
-import { kuliner, wisata, museum } from "./data/dataDashboard";
+import { kuliner, wisata, museum } from "../Dashboard/data/dataDashboard";
 import { useNavigate } from "react-router-dom";
 
-const RestaurantCard = ({ category }) => {
+const RestaurantCard = () => {
   const navigate = useNavigate();
-  const data = { kuliner, wisata, museum };
+  const allData = [...kuliner, ...wisata, ...museum];
 
   return (
     <div className="container mx-auto px-4 py-6">
-      <Typography variant="h4" color="blue-gray" className="mb-6">
-        {category.charAt(0).toUpperCase() + category.slice(1)}
-      </Typography>
-
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-        {data[category].map((item, index) => (
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+        {allData.map((item, index) => (
           <Card
             key={index}
             className="

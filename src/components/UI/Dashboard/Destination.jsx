@@ -1,4 +1,6 @@
+// Collections.js
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import Slider from "react-slick";
 import { IoMdRestaurant } from "react-icons/io";
 import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
@@ -34,7 +36,9 @@ const PrevArrow = (props) => {
   );
 };
 
-const Collections = () => {
+const Collections = ({ category, setCategory }) => {
+  const navigate = useNavigate(); // HOOK untuk navigasi
+
   const settings = {
     dots: false,
     infinite: true,
@@ -68,34 +72,66 @@ const Collections = () => {
 
   return (
     <div className="px-6 py-8">
+      {/* NAVIGASI KATEGORI */}
       <nav className="flex space-x-8 border-b border-gray-200 pb-2">
-        <button className="text-gray-800 font-semibold border-b-2 border-red-500 pb-1 flex items-center space-x-2">
+        <button
+          onClick={() => setCategory && setCategory("kuliner")}
+          className={`font-semibold flex items-center space-x-2 pb-1 ${
+            category === "kuliner"
+              ? "text-gray-800 border-b-2 border-red-500"
+              : "text-gray-500 hover:text-gray-800"
+          }`}
+        >
           <IoMdRestaurant className="text-xl" />
           <span>Kuliner</span>
         </button>
-        <button className="text-gray-500 hover:text-gray-800 font-semibold flex items-center space-x-2">
+
+        <button
+          onClick={() => setCategory && setCategory("wisata")}
+          className={`font-semibold flex items-center space-x-2 pb-1 ${
+            category === "wisata"
+              ? "text-gray-800 border-b-2 border-red-500"
+              : "text-gray-500 hover:text-gray-800"
+          }`}
+        >
           <GiCommercialAirplane className="text-xl" />
           <span>Wisata</span>
         </button>
-        <button className="text-gray-500 hover:text-gray-800 font-semibold flex items-center space-x-2">
+
+        <button
+          onClick={() => setCategory && setCategory("museum")}
+          className={`font-semibold flex items-center space-x-2 pb-1 ${
+            category === "museum"
+              ? "text-gray-800 border-b-2 border-red-500"
+              : "text-gray-500 hover:text-gray-800"
+          }`}
+        >
           <MdMuseum className="text-xl" />
           <span>Museum</span>
         </button>
       </nav>
 
+      {/* KOLEKSI */}
       <div className="mt-6">
         <h2 className="text-2xl font-bold text-gray-800">Koleksi</h2>
         <p className="text-gray-600 mt-1">
-          Jelajahi daftar terpilih untuk restoran, kafe, dan bar terbaik di
-          sekitar Delhi NCR, berdasarkan tren.
+          {category === "kuliner"
+            ? "Jelajahi daftar terpilih untuk restoran, kafe, dan bar terbaik."
+            : category === "wisata"
+            ? "Temukan destinasi wisata terbaik dan tempat-tempat menarik untuk dikunjungi."
+            : "Jelajahi museum terbaik yang menyimpan sejarah dan kebudayaan menarik."}
         </p>
       </div>
 
+      {/* SLIDER */}
       <div className="mt-6 relative">
         <Slider {...settings}>
           {collectionsData.map((item, index) => (
             <div key={index} className="px-2">
-              <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+              <div
+                className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow cursor-pointer"
+                onClick={() => navigate(`/detail/${item.title}`)}
+              >
                 <img
                   src={item.imageUrl}
                   alt={item.title}

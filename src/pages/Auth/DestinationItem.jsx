@@ -6,7 +6,7 @@ import { useAuth } from "../../context/AuthContext";
 import LoadingAnimation from "../../components/UI/LoadingAnimation";
 import ItemContainer from "../../components/UI/CardItem/itemContainer";
 
-function CardItem() {
+function DestinationItem() {
   const { isAuthenticated } = useAuth();
   const [data, setData] = useState(null);
   const [error, setError] = useState("");
@@ -42,4 +42,4 @@ function CardItem() {
   );
 }
 
-export default CardItem;
+export default DestinationItem;

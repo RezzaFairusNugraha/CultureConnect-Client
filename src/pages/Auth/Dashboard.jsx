@@ -15,6 +15,7 @@ const Dashboard = () => {
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
+  const [category, setCategory] = useState("kuliner");
 
   useEffect(() => {
     if (!isAuthenticated) {
@@ -40,12 +41,12 @@ const Dashboard = () => {
   if (isLoading) return <LoadingAnimation />;
 
   return (
-      <LayoutAuth name={data.user.name}>
-        <Hero/>
-        <Destination />
-        <HeroPromotion />
-        <RestaurantCard />
-      </LayoutAuth>
+    <LayoutAuth name={data.user.name}>
+      <Hero />
+      <Destination category={category} setCategory={setCategory} />
+      <HeroPromotion />
+      <RestaurantCard category={category} />
+    </LayoutAuth>
   );
 };
 
