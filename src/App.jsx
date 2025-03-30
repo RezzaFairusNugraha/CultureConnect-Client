@@ -9,6 +9,7 @@ import Landing from "./pages/Landing";
 import NotFound from "./pages/NotFound";
 import AboutPage from "./pages/About";
 import Contact from "./pages/Contact";
+import DestinationDetail from "./pages/Auth/DestinationDetail.jsx";
 
 function App() {
   return (
@@ -32,6 +33,14 @@ function App() {
           element={
             <PrivateRoute>
               <CardItem />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/detail/:title"
+          element={
+            <PrivateRoute>
+              <DestinationDetail />
             </PrivateRoute>
           }
         />
