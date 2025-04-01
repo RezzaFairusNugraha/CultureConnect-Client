@@ -6,23 +6,18 @@ function HeaderContact() {
     {
       icon: <FiMail size={24} />,
       title: "Alamat Email",
-      details: ["info@example.com", "support@example.com"],
+      details: ["cultureconnecttim@gmail.com"],
     },
     {
       icon: <FiPhoneCall size={24} />,
       title: "Nomor Telepon",
-      details: ["+1 (123) 1234 4567", "+99 (987) 5432 4567"],
-    },
-    {
-      icon: <FiMapPin size={24} />,
-      title: "Alamat Kami",
-      details: ["82 12th Street, Office 14", "Edinburgh, UK"],
+      details: ["+62 858-6324-4821", "+62 856-9339-0636"],
     },
   ];
 
   return (
     <div className="max-w-7xl mx-auto pt-10">
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {contactItems.map((item, index) => (
           <div
             key={index}
