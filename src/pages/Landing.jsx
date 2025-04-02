@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import LayoutGuest from "../components/Layout/CommonLayout";
 import SplashScreen from "../components/Landing/SplashScreen";
 import Banner from "../components/Landing/Banner";
@@ -7,6 +8,9 @@ import ExploreLodging from "../components/Landing/ExploreLodging";
 import ExploreCulinary from "../components/Landing/ExploreCulinary";
 
 const Landing = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []); 
   return (
     <>
       <LayoutGuest>

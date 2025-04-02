@@ -7,6 +7,7 @@ import LoadingAnimation from "../../components/UI/LoadingAnimation";
 import Hero from "../../components/UI/Dashboard/Hero";
 import Destination from "../../components/UI/Dashboard/Destination";
 import SavedDestination from "../../components/UI/Dashboard/SavedDestination";
+import { isDragActive } from "framer-motion";
 
 const Dashboard = () => {
   const { isAuthenticated } = useAuth();
@@ -42,7 +43,7 @@ const Dashboard = () => {
   return (
     <LayoutAuth name={data.user.name}>
       <Hero />
-      <SavedDestination />
+      <SavedDestination userId={data.user.id}/>
       <Destination category={category} setCategory={setCategory} />
     </LayoutAuth>
   );

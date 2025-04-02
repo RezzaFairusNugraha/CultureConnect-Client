@@ -8,6 +8,7 @@ import Landing from "./pages/Landing";
 import NotFound from "./pages/NotFound";
 import AboutPage from "./pages/About";
 import Contact from "./pages/Contact";
+import SingleDestination from "./pages/Auth/SingleDestination";
 
 function App() {
   return (
@@ -26,22 +27,14 @@ function App() {
             </PrivateRoute>
           }
         />
-        {/* <Route
-          path="/dashboard/:name"
+        <Route
+          path="/dashboard/:id"
           element={
             <PrivateRoute>
-              <CardItem />
+              <SingleDestination />
             </PrivateRoute>
           }
-        /> */}
-        {/* <Route
-          path="/detail/:title"
-          element={
-            <PrivateRoute>
-              <DestinationDetail />
-            </PrivateRoute>
-          }
-        /> */}
+        />
         <Route
           path="/profile"
           element={

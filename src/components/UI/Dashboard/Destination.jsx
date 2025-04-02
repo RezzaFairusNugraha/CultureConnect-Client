@@ -1,18 +1,40 @@
 import React, { useState, useMemo, useEffect } from "react";
 import { IoMdRestaurant } from "react-icons/io";
 import { GiCommercialAirplane } from "react-icons/gi";
-import { destinations } from "../../../data/destinations";
+import { getAllDestinations } from "../../../api";
+import Card from "../../Card";
 
 const Collections = ({ category, setCategory }) => {
+  const [destinations, setDestinations] = useState([]);
   const [pages, setPages] = useState({ kuliner: 1, wisata: 1 });
   const [loading, setLoading] = useState(false);
-  const itemsPerPage = 10;
+  const [loadingMore, setLoadingMore] = useState(false);
+  const [error, setError] = useState(false);
+  const itemsPerPage = 8;
+
+  useEffect(() => {
+    const fetchDestinations = async () => {
+      try {
+        setLoading(true);
+        setError(false);
+        const data = await getAllDestinations();
+        setDestinations(data);
+      } catch (error) {
+        console.error("Gagal mengambil data destinasi:", error.message);
+        setError(true);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchDestinations();
+  }, []);
 
   const filteredDestinations = useMemo(() => {
     return destinations.filter((item) =>
       category === "kuliner" ? item.category === "Kuliner" : item.category !== "Kuliner"
     );
-  }, [category]);
+  }, [category, destinations]);
 
   const currentPage = pages[category] || 1;
 
@@ -28,20 +50,20 @@ const Collections = ({ category, setCategory }) => {
   }, [category]);
 
   const loadMore = () => {
-    if (loading) return;
-    setLoading(true);
+    if (loadingMore) return;
+    setLoadingMore(true);
 
     setTimeout(() => {
       setPages((prevPages) => ({
         ...prevPages,
-        [category]: prevPages[category] + 1, 
+        [category]: prevPages[category] + 1,
       }));
-      setLoading(false);
+      setLoadingMore(false);
     }, 1000);
   };
 
   return (
-    <div className="px-30 py-8">
+    <div className="mx-auto max-w-screen-xl px-4 py-8">
       <nav className="flex space-x-8 border-b border-gray-200 pb-2">
         <button
           onClick={() => setCategory("kuliner")}
@@ -75,40 +97,33 @@ const Collections = ({ category, setCategory }) => {
             : "Temukan destinasi wisata terbaik dan tempat-tempat menarik untuk dikunjungi."}
         </p>
       </div>
-
-      <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-        {displayedDestinations.map((item) => (
-          <div key={item.id} className="rounded overflow-hidden shadow-lg p-3 transform transition-transform duration-300">
-            <img
-              className="w-full rounded h-48 object-cover"
-              src={item.image}
-              alt={item.name}
-              loading="lazy"
-            />
-            <div className="px-2 py-3">
-              <p className="text-right text-sm text-gray-600">{item.location}</p>
-              <div className="font-bold text-xl mb-1">{item.name}</div>
-              <p className="text-gray-700 text-base">{item.description}</p>
-            </div>
-            <div className="px-5 py-3 text-right">
-              <button className="bg-amber-800 hover:bg-amber-700 text-white py-2 px-3 rounded text-sm cursor-pointer">
-                Selengkapnya
-              </button>
-            </div>
+      <div className="mt-6">
+        {error ? (
+          <p className="text-red-500 text-center">Gagal menampilkan rekomendasi.</p>
+        ) : loading ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            {[...Array(4)].map((_, index) => (
+              <div key={index} className="bg-gray-200 h-40 rounded-md"></div>
+            ))}
           </div>
-        ))}
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            {displayedDestinations.map((item) => (
+              <Card item={item} key={item.id} />
+            ))}
+          </div>
+        )}
       </div>
-
-      {displayedDestinations.length < filteredDestinations.length && (
+      {!error && displayedDestinations.length < filteredDestinations.length && (
         <div className="text-center mt-6">
           <button
             onClick={loadMore}
-            disabled={loading}
+            disabled={loadingMore}
             className={`bg-amber-800 text-white px-4 py-2 rounded hover:bg-amber-900 transition-all cursor-pointer ${
-              loading ? "opacity-50 cursor-not-allowed" : ""
+              loadingMore ? "opacity-50 cursor-not-allowed" : ""
             }`}
           >
-            {loading ? (
+            {loadingMore ? (
               <div className="flex items-center space-x-2">
                 <div className="animate-spin h-5 w-5 border-t-2 border-white rounded-full"></div>
                 <span>Loading...</span>

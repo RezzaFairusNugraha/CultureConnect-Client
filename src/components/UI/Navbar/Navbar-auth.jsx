@@ -4,8 +4,8 @@ import { FaBars, FaTimes } from "react-icons/fa";
 import { useAuth } from "../../../context/AuthContext";
 import LogoutModal from "../LogoutModal";
 
-const NavbarAuth = ({ name }) => {
-  const { isAuthenticated } = useAuth();
+const NavbarAuth = () => {
+  const { isAuthenticated, user } = useAuth(); // Ambil user dari AuthContext
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setMenuOpen] = useState(false);
   const [isProfileOpen, setProfileOpen] = useState(false);
@@ -54,7 +54,7 @@ const NavbarAuth = ({ name }) => {
                   onClick={() => setProfileOpen(!isProfileOpen)}
                   className="flex items-center space-x-2 cursor-pointer"
                 >
-                  <span className="text-primary">Hi {name.split(" ")[0]}!</span>
+                  <span className="text-primary">Hi {user?.name.split(" ")[0]}!</span>
                   <img
                     src="https://picsum.photos/50"
                     alt="User Profile"
