@@ -6,8 +6,7 @@ import LayoutAuth from "../../components/Layout/AuthLayout";
 import LoadingAnimation from "../../components/UI/LoadingAnimation";
 import Hero from "../../components/UI/Dashboard/Hero";
 import Destination from "../../components/UI/Dashboard/Destination";
-import RestaurantCard from "../../components/UI/Dashboard/Card";
-import HeroPromotion from "../../components/UI/Dashboard/Promotion";
+import SavedDestination from "../../components/UI/Dashboard/SavedDestination";
 
 const Dashboard = () => {
   const { isAuthenticated } = useAuth();
@@ -43,9 +42,8 @@ const Dashboard = () => {
   return (
     <LayoutAuth name={data.user.name}>
       <Hero />
+      <SavedDestination />
       <Destination category={category} setCategory={setCategory} />
-      <HeroPromotion />
-      <RestaurantCard category={category} />
     </LayoutAuth>
   );
 };
