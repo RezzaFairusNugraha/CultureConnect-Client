@@ -5,7 +5,7 @@ import Dashboard from "./pages/Auth/Dashboard";
 import Profile from "./pages/Auth/Profile";
 import PrivateRoute from "./components/PrivateRoute";
 import Landing from "./pages/Landing";
-import NotFound from "./pages/NotFound";
+import NotFound from "../public/NotFound";
 import AboutPage from "./pages/About";
 import Contact from "./pages/Contact";
 import SingleDestination from "./pages/Auth/SingleDestination";

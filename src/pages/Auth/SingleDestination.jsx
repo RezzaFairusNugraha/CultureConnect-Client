@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams, useLocation } from "react-router-dom";
 import { getDestinationById, saveDestination, getSavedDestinations, deleteSavedDestination } from "../../api";
 import LayoutAuth from "../../components/Layout/AuthLayout";
-import { FaArrowLeft, FaBookmark, FaRegBookmark } from "react-icons/fa";
+import { FaArrowLeft, FaBookmark, FaRegBookmark, FaCheck, FaSpinner } from "react-icons/fa";
 import { useAuth } from "../../context/AuthContext";
 
 const SingleDestination = () => {
@@ -14,6 +14,9 @@ const SingleDestination = () => {
   const [loading, setLoading] = useState(!state?.destination);
   const [error, setError] = useState("");
   const [bookmarked, setBookmarked] = useState(false);
+  const [showTooltip, setShowTooltip] = useState(false);
+  const [bookmarkLoading, setBookmarkLoading] = useState(false);
+  const [tempIcon, setTempIcon] = useState(null);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -45,7 +48,10 @@ const SingleDestination = () => {
       if (!userId) {
         return;
       }
-
+      
+      setBookmarkLoading(true);
+      setTempIcon(<FaSpinner className="animate-spin" />);
+      
       if (bookmarked) {
         await deleteSavedDestination(userId, destination.id);
         setBookmarked(false);
@@ -53,8 +59,13 @@ const SingleDestination = () => {
         await saveDestination(userId, destination.id);
         setBookmarked(true);
       }
+
+      setTempIcon(<FaCheck className="text-amber-800 transition-transform duration-200 scale-125" />);
+      setTimeout(() => setTempIcon(null), 1000);
     } catch (error) {
       console.error("Gagal mengubah status bookmark:", error);
+    } finally {
+      setBookmarkLoading(false);
     }
   };
 
@@ -78,16 +89,25 @@ const SingleDestination = () => {
             onError={(e) => (e.target.src = "https://placehold.co/600x400")}
           />
           <div className="text-amber-800">
-            <div className="flex justify-between items-center mb-4">
+            <div className="flex justify-between items-center mb-4 relative">
               <h1 className="text-3xl font-bold">{destination.name}</h1>
-              <button
-                onClick={toggleBookmark}
-                className={`text-2xl cursor-pointer transform transition-transform duration-200 ${
-                  bookmarked ? "text-amber-800 scale-110" : "text-gray-700"
-                } hover:text-amber-800`}
+              <div
+                className="relative"
+                onMouseEnter={() => setShowTooltip(true)}
+                onMouseLeave={() => setShowTooltip(false)}
               >
-                {bookmarked ? <FaBookmark /> : <FaRegBookmark />}
-              </button>
+                {showTooltip && (
+                  <div className="absolute -top-12 -right-5 bg-gray-800 text-white text-center text-xs py-1 px-3 rounded shadow-md animate-fadeIn">
+                    {bookmarkLoading ? "Memproses" : bookmarked ? "Hapus Simpanan" : "Simpan Destinasi"}
+                  </div>
+                )}
+                <button
+                  onClick={toggleBookmark}
+                  className="text-2xl cursor-pointer transform transition-transform duration-300 hover:scale-110"
+                >
+                  {tempIcon || (bookmarked ? <FaBookmark className="text-amber-800" /> : <FaRegBookmark className="text-gray-700" />)}
+                </button>
+              </div>
             </div>
             <p className="text-lg mb-4">{destination.description}</p>
             <p className="text-gray-700"><strong>Lokasi:</strong> {destination.location}</p>
