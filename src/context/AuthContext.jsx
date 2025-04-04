@@ -1,12 +1,11 @@
-import { createContext, useContext, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
+import { AuthContext } from "./AuthContext";
 import { login, logout } from "../api";
-
-const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [user, setUser] = useState(null); // Tambahkan state user
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
     const verifyAuth = async () => {
@@ -14,12 +13,12 @@ export const AuthProvider = ({ children }) => {
         const authStatus = localStorage.getItem("token");
         setIsAuthenticated(!!authStatus);
 
-        // Simulasikan fetch data pengguna jika token ada
         if (authStatus) {
-          const userData = JSON.parse(localStorage.getItem("user")); // Simpan data user di localStorage
+          const userData = JSON.parse(localStorage.getItem("user"));
           setUser(userData);
         }
       } catch (error) {
+        console.error("Error verifying auth:", error);
         setIsAuthenticated(false);
         setUser(null);
       } finally {
@@ -34,8 +33,8 @@ export const AuthProvider = ({ children }) => {
     try {
       const response = await login(email, password);
       setIsAuthenticated(true);
-      setUser(response.user); // Simpan data user setelah login
-      localStorage.setItem("user", JSON.stringify(response.user)); // Simpan di localStorage
+      setUser(response.user);
+      localStorage.setItem("user", JSON.stringify(response.user));
       return response;
     } catch (error) {
       throw error.response
@@ -48,8 +47,8 @@ export const AuthProvider = ({ children }) => {
     try {
       await logout();
       setIsAuthenticated(false);
-      setUser(null); // Hapus data user
-      localStorage.removeItem("user"); // Hapus dari localStorage
+      setUser(null);
+      localStorage.removeItem("user");
     } catch (error) {
       console.error("Logout gagal:", error);
     }
@@ -63,5 +62,3 @@ export const AuthProvider = ({ children }) => {
     </AuthContext.Provider>
   );
 };
-
-export const useAuth = () => useContext(AuthContext);

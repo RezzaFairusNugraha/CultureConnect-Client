@@ -3,7 +3,7 @@ import { useParams, useLocation } from "react-router-dom";
 import { getDestinationById, saveDestination, getSavedDestinations, deleteSavedDestination } from "../../api";
 import LayoutAuth from "../../components/Layout/AuthLayout";
 import { FaArrowLeft, FaBookmark, FaRegBookmark, FaCheck, FaSpinner } from "react-icons/fa";
-import { useAuth } from "../../context/AuthContext";
+import { useAuth } from "../../context/UseAuth";
 
 const SingleDestination = () => {
   const { id } = useParams();

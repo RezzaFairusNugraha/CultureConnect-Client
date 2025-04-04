@@ -1,6 +1,7 @@
+// eslint-disable-next-line no-unused-vars
 import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../context/AuthContext";
+import { useAuth } from "../../context/UseAuth"; 
 
 const LogoutModal = ({ isOpen, onClose }) => {
   const navigate = useNavigate();

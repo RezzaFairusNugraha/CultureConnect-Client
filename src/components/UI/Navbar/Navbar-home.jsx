@@ -3,7 +3,7 @@ import Modal from "../Modal";
 import LogoutModal from "../LogoutModal";
 import { FaBars, FaTimes } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import { useAuth } from "../../../context/AuthContext";
+import { useAuth } from "../../../context/UseAuth";
 
 const NavbarGuest = () => {
   const { isAuthenticated } = useAuth();
