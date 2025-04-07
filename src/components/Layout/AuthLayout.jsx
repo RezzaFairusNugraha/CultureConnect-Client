@@ -1,10 +1,10 @@
 import NavbarAuth from "../UI/Navbar/Navbar-auth";
 import Footer from "../UI/Footer";
 
-const LayoutAuth = ({ children, name }) => {
+const LayoutAuth = ({ children }) => {
     return (
         <>
-            <NavbarAuth name={name}/>
+            <NavbarAuth/>
             {children}
             <Footer />
         </>

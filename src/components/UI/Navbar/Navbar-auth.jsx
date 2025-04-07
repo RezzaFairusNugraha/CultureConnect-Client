@@ -5,7 +5,7 @@ import { useAuth } from "../../../context/UseAuth";
 import LogoutModal from "../LogoutModal";
 
 const NavbarAuth = () => {
-  const { isAuthenticated, user } = useAuth(); // Ambil user dari AuthContext
+  const { isAuthenticated, user } = useAuth();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setMenuOpen] = useState(false);
   const [isProfileOpen, setProfileOpen] = useState(false);
