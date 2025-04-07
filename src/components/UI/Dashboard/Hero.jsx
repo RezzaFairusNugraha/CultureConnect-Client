@@ -18,7 +18,11 @@ function Hero() {
         );
         const data = await response.json();
         if (data.address) {
-          const city = data.address.city || data.address.town || data.address.village || "Tidak diketahui";
+          const city =
+            data.address.city ||
+            data.address.town ||
+            data.address.village ||
+            "Tidak diketahui";
           const state = data.address.state || "Tidak diketahui";
           setLocationName(`${city}, ${state}`);
         }
@@ -59,10 +63,13 @@ function Hero() {
 
         <div className="relative z-10 flex flex-col items-center text-center bg-white p-4 rounded-lg shadow-lg w-full max-w-xs">
           <div className="w-full h-[120px] md:h-[150px] rounded-md overflow-hidden shadow-md">
-            <MapContainer center={position} zoom={13} className="w-full h-full" key={position}>
-              <TileLayer
-                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-              />
+            <MapContainer
+              center={position}
+              zoom={13}
+              className="w-full h-full"
+              key={position}
+            >
+              <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
               <Marker position={position}>
                 <Popup>Anda berada di sini!</Popup>
               </Marker>

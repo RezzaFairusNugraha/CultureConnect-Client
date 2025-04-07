@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom"; 
 import { MdAlternateEmail } from "react-icons/md";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
-import { useAuth } from "../../../context/AuthContext";  
+import { useAuth } from "../../../context/UseAuth";  
 import InputField from "./InputField";
 import PasswordInput from "./PasswordInput";
 import ReusableButton from "./ReusableButton";

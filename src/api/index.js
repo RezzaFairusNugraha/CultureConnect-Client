@@ -13,10 +13,7 @@ const register = async (name, email, password) => {
     const response = await api.post("/auth/register", { name, email, password });
     return response.data;
   } catch (error) {
-    if (error.response) {
-      throw error.response.data; 
-    }
-    throw { general: "Registrasi gagal, coba lagi nanti" };
+    throw error.response?.data || { general: "Registrasi gagal, coba lagi nanti" };
   }
 };
 
@@ -27,18 +24,16 @@ const login = async (email, password) => {
     localStorage.setItem("token", token);
     return response.data;
   } catch (error) {
-    if (error.response && error.response.data) {
-      throw { response: { data: error.response.data } };
-    } else {
-      throw { response: { data: { general: "Login gagal, coba lagi nanti" } } };
-    }
+    throw error.response?.data || { general: "Login gagal, coba lagi nanti" };
   }
 };
 
 const fetchDashboardData = async () => {
   try {
     const token = localStorage.getItem("token");
-    const response = await api.get("/dashboard", { headers: { "Authorization": `Bearer ${token}` } });
+    const response = await api.get("/dashboard", {
+      headers: { Authorization: `Bearer ${token}` },
+    });
     return response.data;
   } catch (error) {
     throw new Error(error.response?.data?.error || "Gagal mengambil data dashboard");
@@ -101,10 +96,15 @@ export const deleteSavedDestination = async (userId, destinationId) => {
 const logout = async () => {
   try {
     const token = localStorage.getItem("token");
-    await api.post("/auth/logout", { headers: { "Authorization": `Bearer ${token}` } });
+    await api.post(
+      "/auth/logout",
+      {}, 
+      { headers: { Authorization: `Bearer ${token}` } } 
+    );
     localStorage.removeItem("token");
     return true;
   } catch (error) {
+    console.error("Logout failed:", error);
     return false;
   }
 };

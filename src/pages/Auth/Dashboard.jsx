@@ -1,18 +1,16 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { fetchDashboardData } from "../../api";
-import { useAuth } from "../../context/AuthContext";
+import { useAuth } from "../../context/UseAuth";
 import LayoutAuth from "../../components/Layout/AuthLayout";
 import LoadingAnimation from "../../components/UI/LoadingAnimation";
 import Hero from "../../components/UI/Dashboard/Hero";
 import Destination from "../../components/UI/Dashboard/Destination";
 import SavedDestination from "../../components/UI/Dashboard/SavedDestination";
-import { isDragActive } from "framer-motion";
 
 const Dashboard = () => {
   const { isAuthenticated } = useAuth();
   const [data, setData] = useState(null);
-  const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
   const [category, setCategory] = useState("kuliner");
@@ -28,8 +26,8 @@ const Dashboard = () => {
         setIsLoading(true);
         const result = await fetchDashboardData();
         setData(result);
-      } catch (err) {
-        setError(err.message);
+      } catch {
+        setIsLoading(false);
       } finally {
         setIsLoading(false);
       }
@@ -43,7 +41,7 @@ const Dashboard = () => {
   return (
     <LayoutAuth name={data.user.name}>
       <Hero />
-      <SavedDestination userId={data.user.id}/>
+      <SavedDestination userId={data.user.id} />
       <Destination category={category} setCategory={setCategory} />
     </LayoutAuth>
   );

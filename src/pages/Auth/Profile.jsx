@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { fetchDashboardData } from "../../api";
-import { useAuth } from "../../context/AuthContext";
+import { useAuth } from "../../context/UseAuth";
 import LayoutAuth from "../../components/Layout/AuthLayout";
 import LoadingAnimation from "../../components/UI/LoadingAnimation";
 import UserProfile from "../../components/UI/UserProfile";
