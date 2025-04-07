@@ -38,7 +38,7 @@ const Dashboard = () => {
 
   return (
     <div className="overflow-x-hidden">
-      <LayoutAuth name={data.user.name}>
+      <LayoutAuth>
         <UserProfile name={data.user.name} />
         <div className="p-5">
           <h1 className="text-2xl font-bold">Profile</h1>
