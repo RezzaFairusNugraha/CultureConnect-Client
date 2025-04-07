@@ -9,7 +9,6 @@ const EditProfileModal = ({ show, onClose }) => {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 backdrop-blur-sm">
       <div className="bg-white rounded-lg w-full max-w-md max-h-[90vh] overflow-y-auto">
-        {/* Header */}
         <div className="sticky top-0 bg-white p-4 border-b">
           <div className="flex justify-between items-center">
             <h1 className="text-xl font-bold">Edit profil</h1>
@@ -19,9 +18,7 @@ const EditProfileModal = ({ show, onClose }) => {
           </div>
         </div>
 
-        {/* Content */}
         <div className="p-4">
-          {/* Full Name */}
           <div className="mb-6">
             <h3 className="text-sm font-medium text-gray-500 mb-1">
               Full Name
@@ -29,7 +26,6 @@ const EditProfileModal = ({ show, onClose }) => {
             <p className="text-lg font-medium">Rezza Fairus Nugraha</p>
           </div>
 
-          {/* Phone Number */}
           <div className="mb-6">
             <h3 className="text-sm font-medium text-gray-500 mb-1">
               Phone number
@@ -42,7 +38,6 @@ const EditProfileModal = ({ show, onClose }) => {
             </div>
           </div>
 
-          {/* Email */}
           <div className="mb-6">
             <h3 className="text-sm font-medium text-gray-500 mb-1">
               Email address
@@ -58,7 +53,6 @@ const EditProfileModal = ({ show, onClose }) => {
             </div>
           </div>
 
-          {/* City Input */}
           <div className="mb-6">
             <div className="flex items-center gap-2 mb-1">
               <div className="w-5 h-5 bg-gray-200 rounded-full flex items-center justify-center text-xs text-gray-500">
@@ -77,7 +71,6 @@ const EditProfileModal = ({ show, onClose }) => {
             />
           </div>
 
-          {/* Save Button */}
           <button
             className="w-full py-3 bg-red-600 text-white rounded-lg font-medium mt-4"
             onClick={() => {
