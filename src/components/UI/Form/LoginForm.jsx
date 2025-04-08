@@ -29,11 +29,11 @@ const LoginForm = () => {
   
     try {
       await handleLogin(form.email, form.password);
-      navigate("/dashboard");
+      navigate("/fill-user-data");
     } catch (err) {
       setPending(false);
-      if (err.response && err.response.data) {
-        setErrors(err.response.data);
+      if (err.email || err.password || err.general) {
+        setErrors(err);
       } else {
         setErrors({ general: "Terjadi kesalahan saat login" });
       }

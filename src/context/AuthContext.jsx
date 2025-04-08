@@ -37,9 +37,7 @@ export const AuthProvider = ({ children }) => {
       localStorage.setItem("user", JSON.stringify(response.user));
       return response;
     } catch (error) {
-      throw error.response
-        ? error
-        : { response: { data: { general: "Terjadi kesalahan saat login" } } };
+      throw error
     }
   };
 

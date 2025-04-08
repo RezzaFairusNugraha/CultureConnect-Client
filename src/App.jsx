@@ -9,6 +9,7 @@ import NotFound from "../public/NotFound";
 import AboutPage from "./pages/About";
 import Contact from "./pages/Contact";
 import SingleDestination from "./pages/Auth/SingleDestination";
+import UserFormData from "./pages/Auth/UserFormData";
 
 function App() {
   return (
@@ -19,6 +20,14 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/about" element={<AboutPage />} />
         <Route path="/contact" element={<Contact />} />
+        <Route
+          path="/fill-user-data"
+          element={
+            <PrivateRoute>
+              <UserFormData />
+            </PrivateRoute>
+          }
+        />
         <Route
           path="/dashboard"
           element={
