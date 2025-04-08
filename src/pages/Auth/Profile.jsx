@@ -40,19 +40,6 @@ const Dashboard = () => {
     <div className="overflow-x-hidden">
       <LayoutAuth>
         <UserProfile name={data.user.name} />
-        <div className="p-5">
-          <h1 className="text-2xl font-bold">Profile</h1>
-          {error && <p className="text-red-500">{error}</p>}
-          {data ? (
-            <div className="mt-4 p-4 border rounded shadow-md">
-              <p>User ID: {data.user.id}</p>
-              <p>Name : {data.user.name}</p>
-              <p>Email : {data.user.email}</p>
-            </div>
-          ) : (
-            <p>Data tidak tersedia</p>
-          )}
-        </div>
       </LayoutAuth>
     </div>
   );

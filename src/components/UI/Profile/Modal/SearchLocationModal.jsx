@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { formatIndonesianAddress } from "./Data/translate";
 
 const SearchLocationModal = ({ show, onClose, onSelectLocation }) => {
   const [inputValue, setInputValue] = useState("");
@@ -21,13 +22,14 @@ const SearchLocationModal = ({ show, onClose, onSelectLocation }) => {
               format: "json",
               addressdetails: 1,
               limit: 5,
-              countrycodes: "id", // hanya Indonesia
+              countrycodes: "id",
+              accept_language: "id",
             },
           }
         );
         setPredictions(res.data);
       } catch (error) {
-        console.error("Search failed:", error);
+        console.error("Pencarian gagal:", error);
         setPredictions([]);
       } finally {
         setIsSearching(false);
@@ -38,12 +40,15 @@ const SearchLocationModal = ({ show, onClose, onSelectLocation }) => {
   };
 
   const handleSelect = (place) => {
+    const address = formatIndonesianAddress(place.address);
+
     const location = {
       lat: parseFloat(place.lat),
       lng: parseFloat(place.lon),
-      address: place.display_name,
-      name: place.display_name,
+      address: address,
+      name: address,
     };
+
     onSelectLocation(location);
     onClose();
   };
@@ -53,7 +58,6 @@ const SearchLocationModal = ({ show, onClose, onSelectLocation }) => {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 backdrop-blur-sm">
       <div className="relative bg-white w-full max-w-md rounded-lg shadow-lg p-4 max-h-[80vh] overflow-hidden">
-        {/* Header */}
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-xl font-bold">Cari Lokasi</h2>
           <button
@@ -64,7 +68,6 @@ const SearchLocationModal = ({ show, onClose, onSelectLocation }) => {
           </button>
         </div>
 
-        {/* Search Input */}
         <div className="relative mb-4">
           <input
             type="text"
@@ -81,7 +84,6 @@ const SearchLocationModal = ({ show, onClose, onSelectLocation }) => {
           )}
         </div>
 
-        {/* Search Results */}
         <div className="border-t pt-2 max-h-[60vh] overflow-y-auto">
           {predictions.length > 0 ? (
             <ul className="divide-y">
@@ -91,7 +93,9 @@ const SearchLocationModal = ({ show, onClose, onSelectLocation }) => {
                   className="py-3 px-2 hover:bg-gray-50 cursor-pointer"
                   onClick={() => handleSelect(place)}
                 >
-                  <div className="font-medium">{place.display_name}</div>
+                  <div className="font-medium">
+                    {formatIndonesianAddress(place.address)}
+                  </div>
                 </li>
               ))}
             </ul>

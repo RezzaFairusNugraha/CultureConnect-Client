@@ -3,7 +3,6 @@ import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 
-// Fix for default marker icons
 delete L.Icon.Default.prototype._getIconUrl;
 L.Icon.Default.mergeOptions({
   iconRetinaUrl:
@@ -26,12 +25,8 @@ const DeliveryLocationModal = ({
   ]);
   const [deliveryArea, setDeliveryArea] = useState("Cisarua");
   const [completeAddress, setCompleteAddress] = useState("");
-  const [floor, setFloor] = useState("");
-  const [landmark, setLandmark] = useState("");
-  const [areaLocality, setAreaLocality] = useState("");
   const [addressType, setAddressType] = useState("Home");
 
-  // Component to handle map recentering
   function RecenterMap({ center }) {
     const map = useMap();
     useEffect(() => {
@@ -56,9 +51,6 @@ const DeliveryLocationModal = ({
       markerPosition: { lat: markerPosition[0], lng: markerPosition[1] },
       deliveryArea,
       completeAddress,
-      floor,
-      landmark,
-      areaLocality,
       addressType,
     });
     onClose();
@@ -99,31 +91,30 @@ const DeliveryLocationModal = ({
           </MapContainer>
         </div>
 
-        <div className="flex flex-col space-y-3">
+        <form
+          className="flex flex-col space-y-3"
+          onSubmit={(e) => {
+            e.preventDefault(); // prevent reload
+            handleSave();
+          }}
+        >
           <div>
-            <label className="block text-gray-700 text-sm mb-1">
-              DELIVERY AREA
-            </label>
-            <div className="flex items-center gap-2">
-              <input
-                type="text"
-                className="border rounded w-full px-2 py-1 text-sm"
-                value={deliveryArea}
-                onChange={(e) => setDeliveryArea(e.target.value)}
-              />
-              <button
-                type="button"
-                className="text-blue-600 text-sm underline"
-                onClick={onOpenSearchLocation}
-              >
-                Change
-              </button>
-            </div>
+            <label className="block text-gray-700 text-sm mb-1">Alamat</label>
+            <input
+              type="text"
+              className="border rounded w-full px-2 py-1 text-sm"
+              value={deliveryArea}
+              onFocus={(e) => {
+                setDeliveryArea(e.target.value);
+                onOpenSearchLocation();
+              }}
+              required
+            />
           </div>
 
           <div>
             <label className="block text-gray-700 text-sm mb-1">
-              Complete Address *
+              Alamat Lengkap *
             </label>
             <input
               type="text"
@@ -133,43 +124,6 @@ const DeliveryLocationModal = ({
               required
             />
           </div>
-
-          <div>
-            <label className="block text-gray-700 text-sm mb-1">
-              Floor (Optional)
-            </label>
-            <input
-              type="text"
-              className="border rounded w-full px-2 py-1 text-sm"
-              value={floor}
-              onChange={(e) => setFloor(e.target.value)}
-            />
-          </div>
-
-          <div>
-            <label className="block text-gray-700 text-sm mb-1">
-              Landmark (Optional)
-            </label>
-            <input
-              type="text"
-              className="border rounded w-full px-2 py-1 text-sm"
-              value={landmark}
-              onChange={(e) => setLandmark(e.target.value)}
-            />
-          </div>
-
-          <div>
-            <label className="block text-gray-700 text-sm mb-1">
-              Area / Sector / Locality
-            </label>
-            <input
-              type="text"
-              className="border rounded w-full px-2 py-1 text-sm"
-              value={areaLocality}
-              onChange={(e) => setAreaLocality(e.target.value)}
-            />
-          </div>
-
           <div>
             <label className="block text-gray-700 text-sm mb-1">
               Address Type
@@ -193,16 +147,16 @@ const DeliveryLocationModal = ({
               ))}
             </div>
           </div>
-        </div>
 
-        <div className="flex justify-end mt-6">
-          <button
-            onClick={handleSave}
-            className="px-4 py-2 bg-blue-500 text-white rounded text-sm font-medium hover:bg-blue-600"
-          >
-            Save and proceed
-          </button>
-        </div>
+          <div className="flex justify-end mt-6">
+            <button
+              type="submit"
+              className="px-4 py-2 bg-amber-800 text-white rounded text-sm font-medium hover:bg-amber-900"
+            >
+              Save and proceed
+            </button>
+          </div>
+        </form>
       </div>
     </div>
   );

@@ -1,4 +1,4 @@
-import React, { useReducer } from "react";
+import React, { useReducer, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { addUserProfile } from "../../api/index";
 import { motion, AnimatePresence } from "framer-motion";
@@ -16,9 +16,12 @@ const initialState = {
     bio: "",
     gender: "",
     age: "",
+    detailAddress: "",
     address: "",
-    city: "",
     province: "",
+    city: "",
+    district: "",
+    village: "",
   },
   previewImage: null,
   step: 0,
@@ -86,6 +89,59 @@ const UserFormData = () => {
 
   const { profile, previewImage, step, error, loading } = state;
 
+  // Wilayah data
+  const [provinces, setProvinces] = useState([]);
+  const [regencies, setRegencies] = useState([]);
+  const [districts, setDistricts] = useState([]);
+  const [villages, setVillages] = useState([]);
+
+  // Selected IDs
+  const [selectedProvinceId, setSelectedProvinceId] = useState("");
+  const [selectedRegencyId, setSelectedRegencyId] = useState("");
+  const [selectedDistrictId, setSelectedDistrictId] = useState("");
+  const [selectedVillageId, setSelectedVillageId] = useState("");
+
+  // Load provinces
+  useEffect(() => {
+    fetch("https://www.emsifa.com/api-wilayah-indonesia/api/provinces.json")
+      .then((res) => res.json())
+      .then(setProvinces)
+      .catch((err) => console.error("Gagal memuat provinsi:", err));
+  }, []);
+
+  // Load regencies
+  useEffect(() => {
+    if (!selectedProvinceId) return setRegencies([]);
+    fetch(
+      `https://www.emsifa.com/api-wilayah-indonesia/api/regencies/${selectedProvinceId}.json`
+    )
+      .then((res) => res.json())
+      .then(setRegencies)
+      .catch((err) => console.error("Gagal memuat kabupaten:", err));
+  }, [selectedProvinceId]);
+
+  // Load districts
+  useEffect(() => {
+    if (!selectedRegencyId) return setDistricts([]);
+    fetch(
+      `https://www.emsifa.com/api-wilayah-indonesia/api/districts/${selectedRegencyId}.json`
+    )
+      .then((res) => res.json())
+      .then(setDistricts)
+      .catch((err) => console.error("Gagal memuat kecamatan:", err));
+  }, [selectedRegencyId]);
+
+  // Load villages
+  useEffect(() => {
+    if (!selectedDistrictId) return setVillages([]);
+    fetch(
+      `https://www.emsifa.com/api-wilayah-indonesia/api/villages/${selectedDistrictId}.json`
+    )
+      .then((res) => res.json())
+      .then(setVillages)
+      .catch((err) => console.error("Gagal memuat kelurahan:", err));
+  }, [selectedDistrictId]);
+
   const handleNext = () => {
     const errorMessage = validateStep(step, profile);
     if (errorMessage) {
@@ -126,7 +182,6 @@ const UserFormData = () => {
       dispatch({ type: "SET_LOADING", value: false });
       return;
     }
-
     try {
       const profileToSubmit = {
         ...profile,
@@ -247,21 +302,34 @@ const UserFormData = () => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-white via-amber-100 to-amber-200 p-6">
       <div className="bg-white/90 border border-amber-200 backdrop-blur-md rounded-2xl shadow-2xl p-8 w-full max-w-lg">
-        <h1 className="text-3xl font-bold text-center text-amber-900 mb-2">Hai User!</h1>
-        <p className="text-center text-amber-800 mb-2">Selamat datang di CultureConnect!</p>
-        <p className="text-sm text-center mb-6">Lengkapi data dirimu dulu yuk!</p>
+        <h1 className="text-3xl font-bold text-center text-amber-900 mb-2">
+          Hai User!
+        </h1>
+        <p className="text-center text-amber-800 mb-2">
+          Selamat datang di CultureConnect!
+        </p>
+        <p className="text-sm text-center mb-6">
+          Lengkapi data dirimu dulu yuk!
+        </p>
 
         <div className="flex justify-between mb-6">
-          {steps.map((s, index) => (
-            <div key={index} className="flex-1 flex items-center">
+          {steps.map((_, i) => (
+            <div key={i} className="flex-1 flex items-center">
               <div
-                className={`w-8 h-8 flex items-center justify-center rounded-full text-sm font-bold cursor-pointer
-                  ${index <= step ? "bg-amber-700 text-white" : "bg-gray-300 text-gray-600"}`}
+                className={`w-8 h-8 flex items-center justify-center rounded-full text-sm font-bold cursor-pointer ${
+                  i <= step
+                    ? "bg-amber-700 text-white"
+                    : "bg-gray-300 text-gray-600"
+                }`}
               >
-                {index + 1}
+                {i + 1}
               </div>
-              {index < steps.length - 1 && (
-                <div className={`flex-1 h-1 mx-2 ${index < step ? "bg-amber-700" : "bg-gray-300"}`} />
+              {i < steps.length - 1 && (
+                <div
+                  className={`flex-1 h-1 mx-2 ${
+                    i < step ? "bg-amber-700" : "bg-gray-300"
+                  }`}
+                />
               )}
             </div>
           ))}
@@ -287,7 +355,7 @@ const UserFormData = () => {
               <button
                 type="button"
                 onClick={handlePrev}
-                className="px-4 py-2 rounded-lg text-amber-800 hover:text-amber-900 hover:underline transition cursor-pointer"
+                className="px-4 py-2 rounded-lg text-amber-800 hover:text-amber-900 hover:underline transition"
               >
                 Kembali
               </button>
@@ -296,7 +364,7 @@ const UserFormData = () => {
               <button
                 type="button"
                 onClick={handleNext}
-                className="ml-auto px-4 py-2 rounded-lg bg-amber-700 text-white hover:bg-amber-800 transition cursor-pointer"
+                className="ml-auto px-4 py-2 rounded-lg bg-amber-700 text-white hover:bg-amber-800 transition"
               >
                 Lanjut
               </button>
