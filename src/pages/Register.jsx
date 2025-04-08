@@ -3,16 +3,18 @@ import { VscAccount } from "react-icons/vsc";
 import { MdAlternateEmail } from "react-icons/md";
 import { register } from "../api/index";
 import { useNavigate } from "react-router-dom";
-import InputField from "../components/UI/Form/InputField";
-import PasswordInput from "../components/UI/Form/PasswordInput";
+import InputField from "../components/UI/Form/AllUiComponents/InputField";
+import PasswordInput from "../components/UI/Form/AllUiComponents/PasswordInput";
+import ReusableButton from "../components/UI/Form/AllUiComponents/ReusableButton";
 import MainForm from "../components/UI/Form/MainForm";
 import LayoutGuest from "../components/Layout/CommonLayout";
-import ReusableButton from "../components/UI/Form/ReusableButton";
+import { useAuth } from "../context/UseAuth";
 
 const Register = () => {
   const [form, setForm] = useState({ name: "", email: "", password: "" });
   const [errors, setErrors] = useState({});
   const [pending, setPending] = useState(false);
+  const { setIsAuthenticated, setUser } = useAuth(); // Ambil setIsAuthenticated dan setUser dari context
 
   const navigate = useNavigate();
 
@@ -40,9 +42,18 @@ const Register = () => {
     setErrors({});
 
     try {
-      await register(form.name, form.email, form.password);
+      const response = await register(form.name, form.email, form.password);
+
+      // Simpan token dan data pengguna
+      localStorage.setItem("token", response.token);
+      localStorage.setItem("user", JSON.stringify(response.user));
+
+      // Perbarui AuthContext
+      setIsAuthenticated(true);
+      setUser(response.user); // Tambahkan ini untuk memperbarui user di AuthContext
+
       alert("Registrasi berhasil!");
-      navigate("/login");
+      navigate("/fill-user-data");
     } catch (err) {
       setErrors(err);
     } finally {
@@ -92,7 +103,7 @@ const Register = () => {
             required
             error={errors.password}
           />
-          <ReusableButton text="Daftar" pending={pending} />
+          <ReusableButton text="Daftar" pending={pending} className="w-full"/>
         </form>
       </MainForm>
       {errors.general && <p className="text-red-500 text-center mt-2">{errors.general}</p>}
