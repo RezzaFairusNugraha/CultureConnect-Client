@@ -3,9 +3,9 @@ import { useNavigate } from "react-router-dom";
 import { MdAlternateEmail } from "react-icons/md";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import { useAuth } from "../../../context/UseAuth";  
-import InputField from "./InputField";
-import PasswordInput from "./PasswordInput";
-import ReusableButton from "./ReusableButton";
+import InputField from "./AllUiComponents/InputField";
+import PasswordInput from ".//AllUiComponents/PasswordInput";
+import ReusableButton from "./AllUiComponents/ReusableButton";
 
 const LoginForm = () => {
   const navigate = useNavigate();
@@ -29,7 +29,7 @@ const LoginForm = () => {
   
     try {
       await handleLogin(form.email, form.password);
-      navigate("/fill-user-data");
+      navigate("/dashboard");
     } catch (err) {
       setPending(false);
       if (err.email || err.password || err.general) {
@@ -70,7 +70,7 @@ const LoginForm = () => {
 
       {errors.general && <p className="text-red-500 text-sm text-center">{errors.general}</p>}
 
-      <ReusableButton text="Masuk" pending={pending} />
+      <ReusableButton text="Masuk" pending={pending} className="w-full"/>
     </form>
   );
 };

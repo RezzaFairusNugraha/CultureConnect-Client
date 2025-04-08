@@ -37,7 +37,7 @@ export const AuthProvider = ({ children }) => {
       localStorage.setItem("user", JSON.stringify(response.user));
       return response;
     } catch (error) {
-      throw error
+      throw error;
     }
   };
 
@@ -54,7 +54,15 @@ export const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ isAuthenticated, user, handleLogin, handleLogout, loading }}
+      value={{
+        isAuthenticated,
+        setIsAuthenticated, 
+        user,
+        setUser,
+        handleLogin,
+        handleLogout,
+        loading,
+      }}
     >
       {!loading && children}
     </AuthContext.Provider>

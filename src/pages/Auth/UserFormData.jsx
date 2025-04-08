@@ -1,7 +1,53 @@
-import React, { useState, useEffect } from "react";
+import React, { useReducer, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { addUserProfile } from "../../api/index";
 import { motion, AnimatePresence } from "framer-motion";
+import InputField from "../../components/UI/Form/AllUiComponents/InputField";
+import FileInput from "../../components/UI/Form/AllUiComponents/FileInput";
+import ReusableButton from "../../components/UI/Form/AllUiComponents/ReusableButton";
+
+const defaultImage = "/images/default-avatar-icon.jpg";
+
+const steps = ["Foto", "Bio", "Data Pribadi", "Alamat"];
+
+const initialState = {
+  profile: {
+    profilePic: "",
+    bio: "",
+    gender: "",
+    age: "",
+    detailAddress: "",
+    address: "",
+    province: "",
+    city: "",
+    district: "",
+    village: "",
+  },
+  previewImage: null,
+  step: 0,
+  error: "",
+  loading: false,
+};
+
+const reducer = (state, action) => {
+  switch (action.type) {
+    case "SET_FIELD":
+      return {
+        ...state,
+        profile: { ...state.profile, [action.field]: action.value },
+      };
+    case "SET_PREVIEW_IMAGE":
+      return { ...state, previewImage: action.value };
+    case "SET_STEP":
+      return { ...state, step: action.value };
+    case "SET_ERROR":
+      return { ...state, error: action.value };
+    case "SET_LOADING":
+      return { ...state, loading: action.value };
+    default:
+      return state;
+  }
+};
 
 const uploadImage = async (file) => {
   return new Promise((resolve) => {
@@ -11,27 +57,37 @@ const uploadImage = async (file) => {
   });
 };
 
-const steps = ["Foto", "Bio", "Data Pribadi", "Alamat"];
+const validateStep = (step, profile) => {
+  const fieldsPerStep = [
+    [], // Step 0, tidak wajibkan karena default image akan digunakan
+    ["bio"],
+    ["gender", "age"],
+    ["address", "city", "province"],
+  ];
+  const currentFields = fieldsPerStep[step];
+  const missingFields = currentFields.filter((field) => !profile[field]);
+
+  if (missingFields.length > 0) {
+    return `Mohon lengkapi data berikut: ${missingFields.join(", ")}`;
+  }
+  return null;
+};
+
+const validateAllFields = (profile) => {
+  const requiredFields = ["bio", "gender", "age", "address", "city", "province"];
+  const missingFields = requiredFields.filter((field) => !profile[field]);
+
+  if (missingFields.length > 0) {
+    return `Mohon lengkapi semua data berikut: ${missingFields.join(", ")}`;
+  }
+  return null;
+};
 
 const UserFormData = () => {
   const navigate = useNavigate();
-  const [profile, setProfile] = useState({
-    profilePic: "",
-    bio: "",
-    gender: "",
-    age: "",
-    detailAddress: "", // input detail
-    address: "", // full address
-    province: "",
-    city: "",
-    district: "",
-    village: "",
-  });
+  const [state, dispatch] = useReducer(reducer, initialState);
 
-  const [previewImage, setPreviewImage] = useState(null);
-  const [step, setStep] = useState(0);
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
+  const { profile, previewImage, step, error, loading } = state;
 
   // Wilayah data
   const [provinces, setProvinces] = useState([]);
@@ -86,140 +142,160 @@ const UserFormData = () => {
       .catch((err) => console.error("Gagal memuat kelurahan:", err));
   }, [selectedDistrictId]);
 
-  // Navigation
   const handleNext = () => {
-    const fields = [
-      ["profilePic"],
-      ["bio"],
-      ["gender", "age"],
-      ["province", "city", "district", "village", "detailAddress", "address"],
-    ][step];
-    if (!fields.every((f) => profile[f])) {
-      setError("Mohon lengkapi data terlebih dahulu.");
+    const errorMessage = validateStep(step, profile);
+    if (errorMessage) {
+      dispatch({ type: "SET_ERROR", value: errorMessage });
       return;
     }
-    setError("");
-    setStep((s) => Math.min(s + 1, steps.length - 1));
-  };
-  const handlePrev = () => {
-    setError("");
-    setStep((s) => Math.max(s - 1, 0));
+
+    dispatch({ type: "SET_ERROR", value: "" });
+    dispatch({ type: "SET_STEP", value: Math.min(step + 1, steps.length - 1) });
   };
 
-  // Handlers
+  const handlePrev = () => {
+    dispatch({ type: "SET_STEP", value: Math.max(step - 1, 0) });
+  };
+
   const handleImageChange = async (e) => {
     const file = e.target.files[0];
-    if (!file) return;
-    const url = await uploadImage(file);
-    setPreviewImage(url);
-    setProfile((p) => ({ ...p, profilePic: url }));
+    if (file) {
+      const imageUrl = await uploadImage(file);
+      dispatch({ type: "SET_PREVIEW_IMAGE", value: imageUrl });
+      dispatch({ type: "SET_FIELD", field: "profilePic", value: imageUrl });
+    }
   };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setProfile((p) => ({ ...p, [name]: value }));
-  };
-
-  const handleProvinceChange = (e) => {
-    const id = e.target.value;
-    const name = provinces.find((p) => p.id === id)?.name || "";
-    setSelectedProvinceId(id);
-    setProfile((p) => ({
-      ...p,
-      province: name,
-      city: "",
-      district: "",
-      village: "",
-      detailAddress: "",
-      address: "",
-    }));
-    setSelectedRegencyId("");
-    setSelectedDistrictId("");
-    setSelectedVillageId("");
-  };
-
-  const handleRegencyChange = (e) => {
-    const id = e.target.value;
-    const name = regencies.find((r) => r.id === id)?.name || "";
-    setSelectedRegencyId(id);
-    setProfile((p) => ({
-      ...p,
-      city: name,
-      district: "",
-      village: "",
-      detailAddress: "",
-      address: "",
-    }));
-    setSelectedDistrictId("");
-    setSelectedVillageId("");
-  };
-
-  const handleDistrictChange = (e) => {
-    const id = e.target.value;
-    const name = districts.find((d) => d.id === id)?.name || "";
-    setSelectedDistrictId(id);
-    setProfile((p) => ({
-      ...p,
-      district: name,
-      village: "",
-      detailAddress: "",
-      address: "",
-    }));
-    setSelectedVillageId("");
-  };
-
-  const handleVillageChange = (e) => {
-    const id = e.target.value;
-    const name = villages.find((v) => v.id === id)?.name || "";
-    setSelectedVillageId(id);
-    setProfile((p) => ({
-      ...p,
-      village: name,
-      detailAddress: "",
-      address: "", // clear full address until detail entered
-    }));
-  };
-
-  const handleDetailAddressChange = (e) => {
-    const detail = e.target.value;
-    // only build full address when detail typed
-    const full = `${detail}, ${profile.village}, ${profile.district}, ${profile.city}, ${profile.province}`;
-    setProfile((p) => ({
-      ...p,
-      detailAddress: detail,
-      address: full,
-    }));
+    dispatch({ type: "SET_FIELD", field: name, value });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
-    setError("");
-    const req = [
-      "profilePic",
-      "bio",
-      "gender",
-      "age",
-      "province",
-      "city",
-      "district",
-      "village",
-      "detailAddress",
-      "address",
-    ];
-    if (!req.every((f) => profile[f])) {
-      setError("Mohon lengkapi semua data terlebih dahulu.");
-      setLoading(false);
+    dispatch({ type: "SET_LOADING", value: true });
+    dispatch({ type: "SET_ERROR", value: "" });
+
+    const errorMessage = validateAllFields(profile);
+    if (errorMessage) {
+      dispatch({ type: "SET_ERROR", value: errorMessage });
+      dispatch({ type: "SET_LOADING", value: false });
       return;
     }
     try {
-      await addUserProfile({ ...profile, age: parseInt(profile.age, 10) });
+      const profileToSubmit = {
+        ...profile,
+        age: parseInt(profile.age, 10),
+        profilePic: profile.profilePic || defaultImage,
+      };
+
+      await addUserProfile(profileToSubmit);
+
+      localStorage.removeItem("isNewUser");
+
       alert("Profil berhasil dibuat!");
       navigate("/dashboard");
-    } catch {
-      setError("Gagal membuat profil pengguna");
+    } catch (err) {
+      console.error("Gagal membuat profil pengguna:", err);
+      dispatch({ type: "SET_ERROR", value: "Gagal membuat profil pengguna" });
     } finally {
-      setLoading(false);
+      dispatch({ type: "SET_LOADING", value: false });
+    }
+  };
+
+  const renderStepContent = () => {
+    switch (step) {
+      case 0:
+        return (
+          <>
+            <FileInput
+              label="Foto Profil"
+              name="profilePic"
+              onChange={handleImageChange}
+              required={false}
+            />
+            <div className="mt-4 text-center">
+              <img
+                src={previewImage || defaultImage}
+                alt="Preview"
+                className="w-28 h-28 rounded-full object-cover border-2 border-amber-700 mx-auto shadow"
+              />
+            </div>
+          </>
+        );
+      case 1:
+        return (
+          <InputField
+            label="Bio"
+            type="textarea"
+            name="bio"
+            value={profile.bio}
+            onChange={handleChange}
+            required
+            placeholder="Tulis bio Anda"
+          />
+        );
+      case 2:
+        return (
+          <>
+            <InputField
+              label="Jenis Kelamin"
+              type="select"
+              name="gender"
+              value={profile.gender}
+              onChange={handleChange}
+              required
+              options={[
+                { value: "", label: "Pilih Jenis Kelamin" },
+                { value: "Laki-laki", label: "Laki-laki" },
+                { value: "Perempuan", label: "Perempuan" },
+              ]}
+            />
+            <InputField
+              label="Umur"
+              type="number"
+              name="age"
+              value={profile.age}
+              onChange={handleChange}
+              required
+              placeholder="Masukkan umur Anda"
+            />
+          </>
+        );
+      case 3:
+        return (
+          <>
+            <InputField
+              label="Alamat"
+              type="text"
+              name="address"
+              value={profile.address}
+              onChange={handleChange}
+              required
+              placeholder="Masukkan alamat Anda"
+            />
+            <InputField
+              label="Kota"
+              type="text"
+              name="city"
+              value={profile.city}
+              onChange={handleChange}
+              required
+              placeholder="Masukkan kota Anda"
+            />
+            <InputField
+              label="Provinsi"
+              type="text"
+              name="province"
+              value={profile.province}
+              onChange={handleChange}
+              required
+              placeholder="Masukkan provinsi Anda"
+            />
+          </>
+        );
+      default:
+        return null;
     }
   };
 
@@ -268,177 +344,7 @@ const UserFormData = () => {
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.4 }}
             >
-              {step === 0 && (
-                <>
-                  <label className="block font-semibold text-amber-900 cursor-pointer">
-                    Foto Profil
-                  </label>
-                  <input
-                    type="file"
-                    accept="image/*"
-                    onChange={handleImageChange}
-                    required
-                    className="w-full p-2 border rounded-md shadow focus:outline-none focus:ring-2 focus:ring-amber-400 cursor-pointer"
-                  />
-                  {previewImage && (
-                    <div className="mt-4 text-center">
-                      <img
-                        src={previewImage}
-                        alt="Preview"
-                        className="w-28 h-28 rounded-full object-cover border-2 border-amber-700 mx-auto shadow"
-                      />
-                    </div>
-                  )}
-                </>
-              )}
-
-              {step === 1 && (
-                <>
-                  <label className="block font-medium text-amber-900 cursor-pointer">
-                    Bio
-                  </label>
-                  <textarea
-                    name="bio"
-                    value={profile.bio}
-                    onChange={handleChange}
-                    required
-                    className="w-full p-3 border border-amber-300 rounded-md shadow focus:outline-none focus:ring-2 focus:ring-amber-400"
-                    placeholder="Tulis bio Anda"
-                  />
-                </>
-              )}
-
-              {step === 2 && (
-                <>
-                  <label className="block font-medium text-amber-900 mb-1 cursor-pointer">
-                    Jenis Kelamin
-                  </label>
-                  <select
-                    name="gender"
-                    value={profile.gender}
-                    onChange={handleChange}
-                    required
-                    className="w-full p-3 border border-amber-300 rounded-md shadow focus:outline-none focus:ring-2 focus:ring-amber-400"
-                  >
-                    <option value="">Pilih Jenis Kelamin</option>
-                    <option value="Laki-laki">Laki-laki</option>
-                    <option value="Perempuan">Perempuan</option>
-                  </select>
-                  <label className="block font-medium text-amber-900 mt-4 mb-1 cursor-pointer">
-                    Umur
-                  </label>
-                  <input
-                    type="number"
-                    name="age"
-                    value={profile.age}
-                    onChange={handleChange}
-                    required
-                    className="w-full p-3 border border-amber-300 rounded-md shadow focus:outline-none focus:ring-2 focus:ring-amber-400"
-                    placeholder="Masukkan umur Anda"
-                  />
-                </>
-              )}
-
-              {step === 3 && (
-                <>
-                  <label className="block font-medium text-amber-900 cursor-pointer">
-                    Provinsi
-                  </label>
-                  <select
-                    value={selectedProvinceId}
-                    onChange={handleProvinceChange}
-                    required
-                    className="w-full p-3 border border-amber-300 rounded-md shadow mb-2 focus:outline-none focus:ring-2 focus:ring-amber-400"
-                  >
-                    <option value="">Pilih Provinsi</option>
-                    {provinces.map((p) => (
-                      <option key={p.id} value={p.id}>
-                        {p.name}
-                      </option>
-                    ))}
-                  </select>
-
-                  <label className="block font-medium text-amber-900">
-                    Kota/Kabupaten
-                  </label>
-                  <select
-                    value={selectedRegencyId}
-                    onChange={handleRegencyChange}
-                    required
-                    disabled={!selectedProvinceId}
-                    className="w-full p-3 border border-amber-300 rounded-md shadow mb-2 focus:outline-none focus:ring-2 focus:ring-amber-400"
-                  >
-                    <option value="">Pilih Kabupaten/Kota</option>
-                    {regencies.map((r) => (
-                      <option key={r.id} value={r.id}>
-                        {r.name}
-                      </option>
-                    ))}
-                  </select>
-
-                  <label className="block font-medium text-amber-900">
-                    Kecamatan
-                  </label>
-                  <select
-                    value={selectedDistrictId}
-                    onChange={handleDistrictChange}
-                    required
-                    disabled={!selectedRegencyId}
-                    className="w-full p-3 border border-amber-300 rounded-md shadow mb-2 focus:outline-none focus:ring-2 focus:ring-amber-400"
-                  >
-                    <option value="">Pilih Kecamatan</option>
-                    {districts.map((d) => (
-                      <option key={d.id} value={d.id}>
-                        {d.name}
-                      </option>
-                    ))}
-                  </select>
-
-                  <label className="block font-medium text-amber-900">
-                    Kelurahan/Desa
-                  </label>
-                  <select
-                    value={selectedVillageId}
-                    onChange={handleVillageChange}
-                    required
-                    disabled={!selectedDistrictId}
-                    className="w-full p-3 border border-amber-300 rounded-md shadow mb-2 focus:outline-none focus:ring-2 focus:ring-amber-400"
-                  >
-                    <option value="">Pilih Kelurahan/Desa</option>
-                    {villages.map((v) => (
-                      <option key={v.id} value={v.id}>
-                        {v.name}
-                      </option>
-                    ))}
-                  </select>
-
-                  <label className="block font-medium text-amber-900 cursor-pointer">
-                    Detail Alamat
-                  </label>
-                  <input
-                    type="text"
-                    name="detailAddress"
-                    value={profile.detailAddress}
-                    onChange={handleDetailAddressChange}
-                    required
-                    className="w-full p-3 border border-amber-300 rounded-md shadow focus:outline-none focus:ring-2 focus:ring-amber-400"
-                    placeholder="Contoh: Jl. Merdeka No. 10 RT 01/RW 02"
-                  />
-
-                  <label className="block font-medium text-amber-900 cursor-pointer">
-                    Alamat Lengkap
-                  </label>
-                  <input
-                    type="text"
-                    name="address"
-                    value={profile.address}
-                    readOnly
-                    required
-                    className="w-full p-3 border border-amber-300 rounded-md shadow focus:outline-none focus:ring-2 focus:ring-amber-400 bg-gray-100"
-                    placeholder="Alamat lengkap akan terisi otomatis"
-                  />
-                </>
-              )}
+              {renderStepContent()}
             </motion.div>
           </AnimatePresence>
 
@@ -463,33 +369,11 @@ const UserFormData = () => {
                 Lanjut
               </button>
             ) : (
-              <button
-                type="submit"
-                disabled={loading}
-                className="ml-auto px-6 py-2 bg-amber-800 text-white rounded-lg font-semibold hover:opacity-90 transition flex items-center gap-2 disabled:cursor-not-allowed"
-              >
-                {loading ? (
-                  <>
-                    <svg
-                      className="animate-spin w-4 h-4 text-white"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                    >
-                      <circle
-                        className="opacity-25"
-                        cx="12"
-                        cy="12"
-                        r="10"
-                        stroke="currentColor"
-                        strokeWidth="4"
-                      />
-                    </svg>
-                    Menyimpan...
-                  </>
-                ) : (
-                  "Simpan Profil"
-                )}
-              </button>
+              <ReusableButton
+                text="Simpan Profil"
+                pending={loading}
+                className="ml-auto px-6 py-2 bg-amber-800 text-white rounded-lg font-semibold hover:opacity-90 transition flex items-center gap-2"
+              />
             )}
           </div>
         </form>
