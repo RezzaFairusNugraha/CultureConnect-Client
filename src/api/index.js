@@ -1,6 +1,7 @@
 import axios from "axios";
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:5000";
+const API_BASE_URL =
+  import.meta.env.VITE_API_BASE_URL || "http://localhost:5000";
 
 const api = axios.create({
   baseURL: API_BASE_URL,
@@ -10,10 +11,16 @@ const api = axios.create({
 
 const register = async (name, email, password) => {
   try {
-    const response = await api.post("/auth/register", { name, email, password });
+    const response = await api.post("/auth/register", {
+      name,
+      email,
+      password,
+    });
     return response.data;
   } catch (error) {
-    throw error.response?.data || { general: "Registrasi gagal, coba lagi nanti" };
+    throw (
+      error.response?.data || { general: "Registrasi gagal, coba lagi nanti" }
+    );
   }
 };
 
@@ -36,7 +43,9 @@ const fetchDashboardData = async () => {
     });
     return response.data;
   } catch (error) {
-    throw new Error(error.response?.data?.error || "Gagal mengambil data dashboard");
+    throw new Error(
+      error.response?.data?.error || "Gagal mengambil data dashboard"
+    );
   }
 };
 
@@ -45,7 +54,9 @@ const getAllDestinations = async () => {
     const response = await api.get("/destinations");
     return response.data;
   } catch (error) {
-    throw new Error(error.response?.data?.error || "Gagal mengambil data destinasi");
+    throw new Error(
+      error.response?.data?.error || "Gagal mengambil data destinasi"
+    );
   }
 };
 
@@ -54,7 +65,9 @@ const getDestinationById = async (id) => {
     const response = await api.get(`/destinations/${id}`);
     return response.data;
   } catch (error) {
-    throw new Error(error.response?.data?.error || "Gagal mengambil data destinasi");
+    throw new Error(
+      error.response?.data?.error || "Gagal mengambil data destinasi"
+    );
   }
 };
 
@@ -98,8 +111,8 @@ const logout = async () => {
     const token = localStorage.getItem("token");
     await api.post(
       "/auth/logout",
-      {}, 
-      { headers: { Authorization: `Bearer ${token}` } } 
+      {},
+      { headers: { Authorization: `Bearer ${token}` } }
     );
     localStorage.removeItem("token");
     return true;

@@ -5,30 +5,6 @@ function SidebarProfile({ activeMenu, setActiveMenu }) {
       <ul className="mb-4 text-sm text-gray-600">
         <li
           className={`py-1 hover:text-black cursor-pointer ${
-            activeMenu === "Ulasan" ? "font-semibold text-black" : ""
-          }`}
-          onClick={() => setActiveMenu("Ulasan")}
-        >
-          Ulasan
-        </li>
-        <li
-          className={`py-1 hover:text-black cursor-pointer ${
-            activeMenu === "Foto" ? "font-semibold text-black" : ""
-          }`}
-          onClick={() => setActiveMenu("Foto")}
-        >
-          Foto
-        </li>
-        <li
-          className={`py-1 hover:text-black cursor-pointer ${
-            activeMenu === "Pengikut" ? "font-semibold text-black" : ""
-          }`}
-          onClick={() => setActiveMenu("Pengikut")}
-        >
-          Pengikut
-        </li>
-        <li
-          className={`py-1 hover:text-black cursor-pointer ${
             activeMenu === "BaruDilihat" ? "font-semibold text-black" : ""
           }`}
           onClick={() => setActiveMenu("BaruDilihat")}

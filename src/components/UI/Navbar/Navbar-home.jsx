@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../../../context/UseAuth";
 
 const NavbarGuest = () => {
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, profile } = useAuth();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setMenuOpen] = useState(false);
   const [isProfileOpen, setProfileOpen] = useState(false);
@@ -79,7 +79,7 @@ const NavbarGuest = () => {
                 >
                   <span className="text-primary">Profil</span>
                   <img
-                    src="https://picsum.photos/50"
+                    src={profile?.profilePic}
                     alt="User Profile"
                     className="w-8 h-8 rounded-full border"
                   />

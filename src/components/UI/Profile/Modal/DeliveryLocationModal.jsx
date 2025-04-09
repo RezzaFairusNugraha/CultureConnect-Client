@@ -1,59 +1,94 @@
 import React, { useState, useEffect } from "react";
-import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
-import L from "leaflet";
-import "leaflet/dist/leaflet.css";
+import { updateUserProfile } from "../../../../api/index";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-delete L.Icon.Default.prototype._getIconUrl;
-L.Icon.Default.mergeOptions({
-  iconRetinaUrl:
-    "https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon-2x.png",
-  iconUrl: "https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png",
-  shadowUrl: "https://unpkg.com/leaflet@1.7.1/dist/images/marker-shadow.png",
-});
+const DeliveryLocationModal = ({ show, onClose }) => {
+  const [provinces, setProvinces] = useState([]);
+  const [regencies, setRegencies] = useState([]);
+  const [districts, setDistricts] = useState([]);
+  const [villages, setVillages] = useState([]);
 
-const DeliveryLocationModal = ({
-  show,
-  onClose,
-  onConfirm,
-  onOpenSearchLocation,
-  selectedLocation,
-  defaultLocation = { lat: -6.9175, lng: 107.6191 },
-}) => {
-  const [markerPosition, setMarkerPosition] = useState([
-    defaultLocation.lat,
-    defaultLocation.lng,
-  ]);
-  const [deliveryArea, setDeliveryArea] = useState("Cisarua");
-  const [completeAddress, setCompleteAddress] = useState("");
-  const [addressType, setAddressType] = useState("Home");
+  const [selectedProvinceId, setSelectedProvinceId] = useState("");
+  const [selectedRegencyId, setSelectedRegencyId] = useState("");
+  const [selectedDistrictId, setSelectedDistrictId] = useState("");
+  const [selectedVillageId, setSelectedVillageId] = useState("");
 
-  function RecenterMap({ center }) {
-    const map = useMap();
-    useEffect(() => {
-      map.setView(center);
-    }, [center, map]);
-    return null;
-  }
+  const [detailAddress, setDetailAddress] = useState("");
 
   useEffect(() => {
-    if (selectedLocation) {
-      setDeliveryArea(selectedLocation.address || "");
-      setMarkerPosition([selectedLocation.lat, selectedLocation.lng]);
-    }
-  }, [selectedLocation]);
+    fetch("https://www.emsifa.com/api-wilayah-indonesia/api/provinces.json")
+      .then((res) => res.json())
+      .then(setProvinces);
+  }, []);
 
-  const handleMapClick = (e) => {
-    setMarkerPosition([e.latlng.lat, e.latlng.lng]);
+  useEffect(() => {
+    if (!selectedProvinceId) return;
+    fetch(
+      `https://www.emsifa.com/api-wilayah-indonesia/api/regencies/${selectedProvinceId}.json`
+    )
+      .then((res) => res.json())
+      .then(setRegencies);
+  }, [selectedProvinceId]);
+
+  useEffect(() => {
+    if (!selectedRegencyId) return;
+    fetch(
+      `https://www.emsifa.com/api-wilayah-indonesia/api/districts/${selectedRegencyId}.json`
+    )
+      .then((res) => res.json())
+      .then(setDistricts);
+  }, [selectedRegencyId]);
+
+  useEffect(() => {
+    if (!selectedDistrictId) return;
+    fetch(
+      `https://www.emsifa.com/api-wilayah-indonesia/api/villages/${selectedDistrictId}.json`
+    )
+      .then((res) => res.json())
+      .then(setVillages);
+  }, [selectedDistrictId]);
+
+  const getNameById = (arr, id) =>
+    arr.find((item) => item.id === id)?.name || "";
+
+  const getFullAddress = () => {
+    return `${detailAddress}, ${getNameById(
+      villages,
+      selectedVillageId
+    )}, ${getNameById(districts, selectedDistrictId)}, ${getNameById(
+      regencies,
+      selectedRegencyId
+    )}, ${getNameById(provinces, selectedProvinceId)}`;
   };
 
-  const handleSave = () => {
-    onConfirm({
-      markerPosition: { lat: markerPosition[0], lng: markerPosition[1] },
-      deliveryArea,
-      completeAddress,
-      addressType,
-    });
-    onClose();
+  const handleSave = async () => {
+    if (
+      !detailAddress ||
+      !selectedProvinceId ||
+      !selectedRegencyId ||
+      !selectedDistrictId ||
+      !selectedVillageId
+    ) {
+      toast.error("Lengkapi semua bagian alamat terlebih dahulu.");
+      return;
+    }
+
+    const fullAddress = getFullAddress();
+    const provinceName = getNameById(provinces, selectedProvinceId);
+
+    try {
+      await updateUserProfile({
+        address: fullAddress,
+        deliveryArea: provinceName,
+        detailAddress,
+      });
+
+      toast.success("Alamat berhasil diperbarui!");
+      onClose();
+    } catch (error) {
+      toast.error("Gagal memperbarui alamat.");
+    }
   };
 
   if (!show) return null;
@@ -68,92 +103,139 @@ const DeliveryLocationModal = ({
           ✖
         </button>
 
-        <h2 className="text-xl font-bold mb-2">Add Address</h2>
+        <h2 className="text-xl font-bold mb-2">Ubah Alamat</h2>
         <p className="text-gray-600 text-sm mb-3">
-          Your food will be delivered here
+          Alamat pengantaran akan digunakan untuk layanan kami.
         </p>
-
-        <div className="mb-4 w-full h-[200px] md:h-[250px] rounded-md overflow-hidden">
-          <MapContainer
-            center={markerPosition}
-            zoom={15}
-            style={{ height: "100%", width: "100%" }}
-            onClick={handleMapClick}
-          >
-            <TileLayer
-              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            />
-            <Marker position={markerPosition}>
-              <Popup>Delivery Location</Popup>
-            </Marker>
-            <RecenterMap center={markerPosition} />
-          </MapContainer>
-        </div>
 
         <form
           className="flex flex-col space-y-3"
           onSubmit={(e) => {
-            e.preventDefault(); // prevent reload
+            e.preventDefault();
             handleSave();
           }}
         >
+          {/* Select Provinsi */}
           <div>
-            <label className="block text-gray-700 text-sm mb-1">Alamat</label>
-            <input
-              type="text"
-              className="border rounded w-full px-2 py-1 text-sm"
-              value={deliveryArea}
-              onFocus={(e) => {
-                setDeliveryArea(e.target.value);
-                onOpenSearchLocation();
+            <label className="block font-medium text-amber-900">Provinsi</label>
+            <select
+              value={selectedProvinceId}
+              onChange={(e) => {
+                setSelectedProvinceId(e.target.value);
+                setSelectedRegencyId("");
+                setSelectedDistrictId("");
+                setSelectedVillageId("");
               }}
+              className="w-full p-3 border border-amber-300 rounded-md shadow mb-2 focus:outline-none focus:ring-2 focus:ring-amber-400"
               required
-            />
+            >
+              <option value="">Pilih Provinsi</option>
+              {provinces.map((p) => (
+                <option key={p.id} value={p.id}>
+                  {p.name}
+                </option>
+              ))}
+            </select>
           </div>
 
+          {/* Select Kabupaten */}
           <div>
-            <label className="block text-gray-700 text-sm mb-1">
-              Alamat Lengkap *
+            <label className="block font-medium text-amber-900">
+              Kabupaten/Kota
+            </label>
+            <select
+              value={selectedRegencyId}
+              onChange={(e) => {
+                setSelectedRegencyId(e.target.value);
+                setSelectedDistrictId("");
+                setSelectedVillageId("");
+              }}
+              className="w-full p-3 border border-amber-300 rounded-md shadow mb-2 focus:outline-none focus:ring-2 focus:ring-amber-400"
+              disabled={!selectedProvinceId}
+              required
+            >
+              <option value="">Pilih Kabupaten/Kota</option>
+              {regencies.map((r) => (
+                <option key={r.id} value={r.id}>
+                  {r.name}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          {/* Select Kecamatan */}
+          <div>
+            <label className="block font-medium text-amber-900">
+              Kecamatan
+            </label>
+            <select
+              value={selectedDistrictId}
+              onChange={(e) => {
+                setSelectedDistrictId(e.target.value);
+                setSelectedVillageId("");
+              }}
+              className="w-full p-3 border border-amber-300 rounded-md shadow mb-2 focus:outline-none focus:ring-2 focus:ring-amber-400"
+              disabled={!selectedRegencyId}
+              required
+            >
+              <option value="">Pilih Kecamatan</option>
+              {districts.map((d) => (
+                <option key={d.id} value={d.id}>
+                  {d.name}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          {/* Select Kelurahan */}
+          <div>
+            <label className="block font-medium text-amber-900">
+              Kelurahan/Desa
+            </label>
+            <select
+              value={selectedVillageId}
+              onChange={(e) => setSelectedVillageId(e.target.value)}
+              className="w-full p-3 border border-amber-300 rounded-md shadow mb-2 focus:outline-none focus:ring-2 focus:ring-amber-400"
+              disabled={!selectedDistrictId}
+              required
+            >
+              <option value="">Pilih Kelurahan/Desa</option>
+              {villages.map((v) => (
+                <option key={v.id} value={v.id}>
+                  {v.name}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          {/* Detail Alamat */}
+          <div>
+            <label className="block font-medium text-amber-900">
+              Detail Alamat
             </label>
             <input
               type="text"
-              className="border rounded w-full px-2 py-1 text-sm"
-              value={completeAddress}
-              onChange={(e) => setCompleteAddress(e.target.value)}
+              value={detailAddress}
+              onChange={(e) => setDetailAddress(e.target.value)}
               required
+              className="w-full p-3 border border-amber-300 rounded-md shadow focus:outline-none focus:ring-2 focus:ring-amber-400"
+              placeholder="Contoh: Jl. Merdeka No. 10 RT 01/RW 02"
             />
           </div>
-          <div>
-            <label className="block text-gray-700 text-sm mb-1">
-              Address Type
-            </label>
-            <div className="flex items-center space-x-4">
-              {["Home", "Work", "Hotel", "Other"].map((type) => (
-                <label
-                  key={type}
-                  className="inline-flex items-center text-sm text-gray-700"
-                >
-                  <input
-                    type="radio"
-                    className="mr-1"
-                    name="addressType"
-                    value={type}
-                    checked={addressType === type}
-                    onChange={() => setAddressType(type)}
-                  />
-                  {type}
-                </label>
-              ))}
-            </div>
+
+          {/* Alamat Lengkap */}
+          <div className="bg-gray-100 text-sm p-2 rounded">
+            <strong>Alamat Lengkap:</strong>
+            <p>{getFullAddress()}</p>
           </div>
 
+          {/* Simpan */}
           <div className="flex justify-end mt-6">
             <button
               type="submit"
               className="px-4 py-2 bg-amber-800 text-white rounded text-sm font-medium hover:bg-amber-900"
             >
-              Save and proceed
+              Simpan Alamat
             </button>
           </div>
         </form>

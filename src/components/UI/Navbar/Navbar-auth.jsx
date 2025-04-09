@@ -5,7 +5,7 @@ import { useAuth } from "../../../context/UseAuth";
 import LogoutModal from "../LogoutModal";
 
 const NavbarAuth = () => {
-  const { isAuthenticated, user } = useAuth();
+  const { isAuthenticated, user, profile, loading } = useAuth();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setMenuOpen] = useState(false);
   const [isProfileOpen, setProfileOpen] = useState(false);
@@ -33,6 +33,8 @@ const NavbarAuth = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  if (loading) return null; // Tambahan penting!
+
   return (
     <>
       <nav
@@ -42,7 +44,10 @@ const NavbarAuth = () => {
       >
         <div className="max-w-screen-xl mx-auto px-4 sm:px-6 flex justify-between items-center py-4 border-b">
           <div className="text-2xl font-bold text-primary">
-            <Link to="/" className="hover:opacity-80 transition-opacity duration-300">
+            <Link
+              to="/"
+              className="hover:opacity-80 transition-opacity duration-300"
+            >
               CultureConnect.
             </Link>
           </div>
@@ -54,9 +59,11 @@ const NavbarAuth = () => {
                   onClick={() => setProfileOpen(!isProfileOpen)}
                   className="flex items-center space-x-2 cursor-pointer"
                 >
-                  <span className="text-primary">Hi {user?.name.split(" ")[0]}!</span>
+                  <span className="text-primary">
+                    Hi {user?.name?.split(" ")[0]}!
+                  </span>
                   <img
-                    src="https://picsum.photos/50"
+                    src={profile?.profilePic || "/default-avatar.png"}
                     alt="User Profile"
                     className="w-8 h-8 rounded-full border"
                   />
@@ -74,7 +81,10 @@ const NavbarAuth = () => {
               </div>
             ) : (
               <>
-                <button onClick={() => setModalOpen(true)} className="cursor-pointer">
+                <button
+                  onClick={() => setModalOpen(true)}
+                  className="cursor-pointer"
+                >
                   Masuk
                 </button>
                 <Link
@@ -87,19 +97,22 @@ const NavbarAuth = () => {
             )}
           </div>
 
-          <button className="md:hidden text-primary cursor-pointer" onClick={() => setMenuOpen(!isMenuOpen)}>
+          <button
+            className="md:hidden text-primary cursor-pointer"
+            onClick={() => setMenuOpen(!isMenuOpen)}
+          >
             {isMenuOpen ? <FaTimes size={28} /> : <FaBars size={28} />}
           </button>
         </div>
 
         <div className="hidden md:flex space-x-6 text-primary justify-center py-2">
-          <Link to="/dashboard" className="hover:text-secondary transition-colors duration-300">
+          <Link to="/dashboard" className="hover:text-secondary">
             Dashboard
           </Link>
-          <Link to="/maps" className="hover:text-secondary transition-colors duration-300">
+          <Link to="/maps" className="hover:text-secondary">
             Peta
           </Link>
-          <Link to="/profile" className="hover:text-secondary transition-colors duration-300">
+          <Link to="/profile" className="hover:text-secondary">
             Profile
           </Link>
         </div>
@@ -109,25 +122,30 @@ const NavbarAuth = () => {
             ref={menuRef}
             className="md:hidden bg-white shadow-md p-4 absolute top-full left-0 w-full flex flex-col space-y-4"
           >
-            <Link to="/dashboard" className="text-primary hover:text-secondary transition-colors duration-300" onClick={() => setMenuOpen(false)}>
+            <Link to="/dashboard" onClick={() => setMenuOpen(false)}>
               Dashboard
             </Link>
-            <Link to="/maps" className="text-primary hover:text-secondary transition-colors duration-300" onClick={() => setMenuOpen(false)}>
+            <Link to="/maps" onClick={() => setMenuOpen(false)}>
               Peta
             </Link>
-            <Link to="/profile" className="text-primary hover:text-secondary transition-colors duration-300" onClick={() => setMenuOpen(false)}>
+            <Link to="/profile" onClick={() => setMenuOpen(false)}>
               Profile
             </Link>
             {isAuthenticated && (
-              <button onClick={() => setModalOpen(true)} className="text-red-600 hover:text-red-800 cursor-pointer">
+              <button
+                onClick={() => setModalOpen(true)}
+                className="text-red-600 hover:text-red-800 cursor-pointer"
+              >
                 Keluar
               </button>
             )}
           </div>
         )}
       </nav>
-      
-      {isModalOpen && <LogoutModal isOpen={isModalOpen} onClose={() => setModalOpen(false)} />}
+
+      {isModalOpen && (
+        <LogoutModal isOpen={isModalOpen} onClose={() => setModalOpen(false)} />
+      )}
     </>
   );
 };
