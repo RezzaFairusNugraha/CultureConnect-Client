@@ -9,6 +9,7 @@ import ReusableButton from "../components/UI/Form/AllUiComponents/ReusableButton
 import MainForm from "../components/UI/Form/MainForm";
 import LayoutGuest from "../components/Layout/CommonLayout";
 import { useAuth } from "../context/UseAuth";
+import { toast } from "react-toastify";
 
 const Register = () => {
   const [form, setForm] = useState({ name: "", email: "", password: "" });
@@ -52,10 +53,10 @@ const Register = () => {
       setIsAuthenticated(true);
       setUser(response.user); // Tambahkan ini untuk memperbarui user di AuthContext
 
-      alert("Registrasi berhasil!");
+      toast.success("Registrasi berhasil!");
       navigate("/fill-user-data");
     } catch (err) {
-      setErrors(err);
+      toast.error(err);
     } finally {
       setPending(false);
     }
@@ -103,10 +104,12 @@ const Register = () => {
             required
             error={errors.password}
           />
-          <ReusableButton text="Daftar" pending={pending} className="w-full"/>
+          <ReusableButton text="Daftar" pending={pending} className="w-full" />
         </form>
       </MainForm>
-      {errors.general && <p className="text-red-500 text-center mt-2">{errors.general}</p>}
+      {errors.general && (
+        <p className="text-red-500 text-center mt-2">{errors.general}</p>
+      )}
     </LayoutGuest>
   );
 };

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { addUserProfile } from "../../api/index";
 import { motion, AnimatePresence } from "framer-motion";
+import { toast } from "react-toastify";
 
 const uploadImage = async (file) => {
   return new Promise((resolve) => {
@@ -20,8 +21,8 @@ const UserFormData = () => {
     bio: "",
     gender: "",
     age: "",
-    detailAddress: "", // input detail
-    address: "", // full address
+    detailAddress: "",
+    address: "",
     province: "",
     city: "",
     district: "",
@@ -33,7 +34,6 @@ const UserFormData = () => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  // Wilayah data
   const [provinces, setProvinces] = useState([]);
   const [regencies, setRegencies] = useState([]);
   const [districts, setDistricts] = useState([]);
@@ -214,10 +214,10 @@ const UserFormData = () => {
     }
     try {
       await addUserProfile({ ...profile, age: parseInt(profile.age, 10) });
-      alert("Profil berhasil dibuat!");
+      toast.success("Profil berhasil dibuat!");
       navigate("/dashboard");
     } catch {
-      setError("Gagal membuat profil pengguna");
+      toast.error("Gagal membuat profil pengguna");
     } finally {
       setLoading(false);
     }
