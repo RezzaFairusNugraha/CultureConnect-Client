@@ -9,9 +9,12 @@ import {
   CiEdit,
 } from "react-icons/ci";
 import { useAuth } from "../../../../context/UseAuth";
+import { updateUserProfile } from "../../../../api/index";
+import { toast } from "react-toastify";
 
 const DetailProfileModal = ({ show, onClose }) => {
-  const { user, profile } = useAuth();
+  const { user, profile, setProfile, setUser } = useAuth();
+  const [loading, setLoading] = useState(false);
 
   const [editableFields, setEditableFields] = useState({
     name: false,
@@ -27,7 +30,6 @@ const DetailProfileModal = ({ show, onClose }) => {
     age: profile?.age || "",
   });
 
-  // Cek apakah ada yang sedang diedit
   const isEditing = Object.values(editableFields).some((v) => v);
 
   const toggleEdit = (field) => {
@@ -38,17 +40,40 @@ const DetailProfileModal = ({ show, onClose }) => {
     setLocalProfile((prev) => ({ ...prev, [field]: value }));
   };
 
-  const handleSave = () => {
-    // TODO: Tambahkan fungsi simpan ke API di sini (jika diperlukan)
-    console.log("Data yang disimpan:", localProfile);
+  const handleSave = async () => {
+    try {
+      setLoading(true);
 
-    // Setelah simpan, matikan semua mode edit
-    setEditableFields({
-      name: false,
-      bio: false,
-      gender: false,
-      age: false,
-    });
+      await updateUserProfile(localProfile);
+
+      setUser((prev) => {
+        const updatedUser = { ...prev, name: localProfile.name };
+        localStorage.setItem("user", JSON.stringify(updatedUser));
+        return updatedUser;
+      });
+
+      setProfile((prev) => ({
+        ...prev,
+        bio: localProfile.bio,
+        gender: localProfile.gender,
+        age: localProfile.age,
+      }));
+
+      setEditableFields({
+        name: false,
+        bio: false,
+        gender: false,
+        age: false,
+      });
+
+      toast.success("Profil berhasil diperbarui!");
+      onClose();
+    } catch (error) {
+      console.error("Gagal update profile:", error);
+      toast.error("Gagal menyimpan perubahan.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   if (!show) return null;
@@ -162,7 +187,9 @@ const DetailProfileModal = ({ show, onClose }) => {
                   <input
                     type="number"
                     value={localProfile.age}
-                    onChange={(e) => handleChange("age", e.target.value)}
+                    onChange={(e) =>
+                      handleChange("age", parseInt(e.target.value))
+                    }
                     className="w-full border-b border-gray-300 focus:outline-none"
                   />
                 ) : (
