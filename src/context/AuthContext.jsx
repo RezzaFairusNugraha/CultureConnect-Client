@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
 import { AuthContext } from "./AuthContext";
-import { login, logout, getUserProfile } from "../api"; // pastikan getUserProfile sudah diimpor
+import { login, logout, getUserProfile } from "../api";
 
 export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(null);
-  const [profile, setProfile] = useState(null); // ✅ Tambahkan state profile
+  const [profile, setProfile] = useState(null);
 
   useEffect(() => {
     const verifyAuth = async () => {
@@ -41,7 +41,7 @@ export const AuthProvider = ({ children }) => {
       setUser(response.user);
       localStorage.setItem("user", JSON.stringify(response.user));
 
-      const profileData = await getUserProfile(); // ✅ Ambil profile saat login juga
+      const profileData = await getUserProfile();
       setProfile(profileData);
 
       return response;
@@ -55,7 +55,7 @@ export const AuthProvider = ({ children }) => {
       await logout();
       setIsAuthenticated(false);
       setUser(null);
-      setProfile(null); // ✅ Hapus juga profile
+      setProfile(null);
       localStorage.removeItem("user");
     } catch (error) {
       console.error("Logout gagal:", error);
@@ -69,8 +69,8 @@ export const AuthProvider = ({ children }) => {
         setIsAuthenticated,
         user,
         setUser,
-        profile, // ✅ Jangan lupa expose di context
-        setProfile, // ✅ Supaya bisa update dari komponen
+        profile,
+        setProfile,
         handleLogin,
         handleLogout,
         loading,
