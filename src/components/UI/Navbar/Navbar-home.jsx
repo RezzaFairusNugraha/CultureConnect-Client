@@ -4,6 +4,7 @@ import LogoutModal from "../LogoutModal";
 import { FaBars, FaTimes } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../../context/UseAuth";
+import logo from "../../../../public/images/logo.png";
 
 const NavbarGuest = () => {
   const { isAuthenticated, profile } = useAuth();
@@ -40,12 +41,18 @@ const NavbarGuest = () => {
         }`}
       >
         <div className="max-w-screen-xl mx-auto px-4 sm:px-6 flex justify-between items-center py-4">
-          <div className="text-2xl font-bold text-primary">
+          <div className="flex items-center space-x-2 text-2xl font-bold text-primary">
             <Link
               to="/"
-              className="hover:opacity-80 transition-opacity duration-300"
+              className="flex items-center space-x-2 hover:opacity-80 transition-opacity duration-300"
             >
-              CultureConnect.
+              <img
+                src={logo}
+                alt="CultureConnect Logo"
+                className="w-10 h-10 object-contain"
+              />
+
+              <span>CultureConnect.</span>
             </Link>
           </div>
 

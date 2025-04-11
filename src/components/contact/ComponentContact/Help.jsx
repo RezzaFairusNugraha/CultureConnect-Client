@@ -1,8 +1,15 @@
 import React from "react";
+import { motion } from "framer-motion";
 
 function Help() {
   return (
-    <div className="text-center mt-15 mb-8 mx-auto px-4 sm:px-6 lg:px-8">
+    <motion.div
+      className="text-center mt-15 mb-8 mx-auto px-4 sm:px-6 lg:px-8"
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6, ease: "easeOut" }}
+      viewport={{ once: true }}
+    >
       <h3 className="text-2xl md:text-3xl font-bold mt-1">
         Bagaimana kami bisa membantu Anda?
       </h3>
@@ -12,7 +19,7 @@ function Help() {
         tambahan, jangan ragu untuk menghubungi kami. Kami berkomitmen untuk
         menjawab setiap pertanyaan Anda dengan cepat dan tepat.
       </p>
-    </div>
+    </motion.div>
   );
 }
 

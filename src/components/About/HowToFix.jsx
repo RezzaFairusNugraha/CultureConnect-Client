@@ -1,19 +1,56 @@
+import { motion } from "framer-motion";
 import { solutions } from "../../constants/text.jsx";
+
+const containerVariants = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.2,
+    },
+  },
+};
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 50, scale: 0.95 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: {
+      duration: 0.6,
+      ease: "easeOut",
+    },
+  },
+};
 
 const HowToFix = () => {
   return (
     <div className="bg-[#f7f7f7]">
       <div className="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
+        <motion.div
+          className="text-center mb-12"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          viewport={{ once: true }}
+        >
           <h2 className="text-4xl font-semibold leading-tight tracking-tight text-gray-900">
             Bagaimana CultureConnect Mengatasi Masalah Ini?
           </h2>
-        </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6 place-items-center">
+        </motion.div>
+
+        <motion.div
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6 place-items-center"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+        >
           {solutions.map((solution, index) => (
-            <div
+            <motion.div
               key={index}
               className="w-full max-w-md p-6 bg-white border border-gray-200 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 h-full flex flex-col"
+              variants={cardVariants}
             >
               <div className="flex items-center mb-4">
                 <div className={`p-3 ${solution.bgColor} rounded-full`}>
@@ -30,9 +67,9 @@ const HowToFix = () => {
               >
                 {solution.linkText}
               </a>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </div>
   );

@@ -10,7 +10,7 @@ import ExploreCulinary from "../components/Landing/ExploreCulinary";
 const Landing = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, []); 
+  }, []);
   return (
     <>
       <LayoutGuest>
