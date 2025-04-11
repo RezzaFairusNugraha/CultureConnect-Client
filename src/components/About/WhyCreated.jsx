@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import CultureHeritageImage from "/images/budaya-nusantara.png";
 import CulturalDestinationImage from "/images/destinasi-budaya.png";
 import LocalCulinaryImage1 from "/images/kuliner-nusantara-1.png";
@@ -7,17 +8,28 @@ const WhyCreated = () => {
   return (
     <>
       <div className="mx-auto max-w-screen-xl px-4 py-15 sm:px-6 lg:px-8">
-        <div>
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7 }}
+          viewport={{ once: true }}
+        >
           <h2 className="text-4xl font-semibold leading-tight tracking-tight md:text-4xl">
             Mengapa CultureConnect
             <br />
             Diciptakan?
           </h2>
-        </div>
+        </motion.div>
       </div>
       <div className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
         <ol className="relative border-s border-amber-800">
-          <li className="mb-10 ms-4 flex flex-col md:flex-row md:items-center">
+          <motion.li
+            className="mb-10 ms-4 flex flex-col md:flex-row md:items-center"
+            initial={{ opacity: 0, x: -50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+          >
             <div className="absolute w-3 h-3 bg-amber-800 rounded-full mt-1.5 -start-1.5 border border-white"></div>
             <div className="md:w-2/3">
               <time className="text-2xl font-bold leading-none">
@@ -36,8 +48,15 @@ const WhyCreated = () => {
               alt="Cultural Heritage"
               className="w-full max-w-[250px] md:max-w-[300px] mx-auto md:ms-6 rounded-lg"
             />
-          </li>
-          <li className="mb-10 ms-4 flex flex-col md:flex-row md:items-center">
+          </motion.li>
+
+          <motion.li
+            className="mb-10 ms-4 flex flex-col md:flex-row md:items-center"
+            initial={{ opacity: 0, x: 50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            viewport={{ once: true }}
+          >
             <div className="absolute w-3 h-3 bg-amber-800 rounded-full mt-1.5 -start-1.5 border border-white"></div>
             <div className="md:w-2/3">
               <time className="text-2xl font-bold leading-none mb-3">
@@ -54,10 +73,17 @@ const WhyCreated = () => {
               alt="Cultural Destination"
               className="w-full max-w-[250px] md:max-w-[300px] mx-auto md:ms-6 rounded-lg"
             />
-          </li>
-          <li className="mb-10 ms-4 flex flex-col md:flex-row md:items-center">
+          </motion.li>
+
+          <motion.li
+            className="mb-10 ms-4 flex flex-col md:flex-row md:items-center"
+            initial={{ opacity: 0, x: -50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+            viewport={{ once: true }}
+          >
             <div className="absolute w-3 h-3 bg-amber-800 rounded-full mt-1.5 -start-1.5 border border-white"></div>
-            <div className="md:w-2/3" >
+            <div className="md:w-2/3">
               <time className="text-2xl font-bold leading-none mb-3">
                 Meningkatkan penjualan UMKM
               </time>
@@ -72,8 +98,15 @@ const WhyCreated = () => {
               alt="Local Culinary 1"
               className="w-full max-w-[250px] md:max-w-[300px] mx-auto md:ms-6 rounded-lg"
             />
-          </li>
-          <li className="mb-10 ms-4 flex flex-col md:flex-row md:items-center">
+          </motion.li>
+
+          <motion.li
+            className="mb-10 ms-4 flex flex-col md:flex-row md:items-center"
+            initial={{ opacity: 0, x: 50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6, delay: 0.6 }}
+            viewport={{ once: true }}
+          >
             <div className="absolute w-3 h-3 bg-amber-800 rounded-full mt-1.5 -start-1.5 border border-white"></div>
             <div className="md:w-2/3">
               <time className="text-2xl font-bold leading-none mb-3">
@@ -90,7 +123,7 @@ const WhyCreated = () => {
               alt="Local Culinary 2"
               className="w-full max-w-[250px] md:max-w-[300px] mx-auto md:ms-6 rounded-lg"
             />
-          </li>
+          </motion.li>
         </ol>
       </div>
     </>

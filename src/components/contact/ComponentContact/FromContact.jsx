@@ -1,4 +1,5 @@
 import React from "react";
+import { motion } from "framer-motion";
 import useContactForm from "../../../hooks/UseContactForm";
 import Alert from "./Alerts/Alerts";
 import InputField from "../../UI/Form/AllUiComponents/InputField";
@@ -8,7 +9,13 @@ function FormContact() {
   const { form, loading, alert, handleChange, handleSubmit } = useContactForm();
 
   return (
-    <div className="max-w-3xl mx-auto pb-10">
+    <motion.div
+      className="max-w-3xl mx-auto pb-10"
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.7, ease: "easeOut" }}
+      viewport={{ once: true }}
+    >
       <form
         className="space-y-6 bg-white p-8 rounded-lg shadow-md"
         onSubmit={handleSubmit}
@@ -48,7 +55,7 @@ function FormContact() {
           <ReusableButton text="Kirim Pesan" pending={loading} />
         </div>
       </form>
-    </div>
+    </motion.div>
   );
 }
 

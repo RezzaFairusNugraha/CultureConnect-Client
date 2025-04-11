@@ -1,57 +1,60 @@
 import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import logoSplashScreen from "../../../public/images/logoSplashScreen.png";
 
 function Landing() {
   const [hideIntro, setHideIntro] = useState(false);
-  const [animate, setAnimate] = useState(false);
-  const [fade, setFade] = useState(false);
 
   useEffect(() => {
-    const animateTimer = setTimeout(() => setAnimate(true), 400);
-    const fadeTimer = setTimeout(() => setFade(true), 2000);
-    const hideTimer = setTimeout(() => setHideIntro(true), 2500);
-    return () => {
-      clearTimeout(animateTimer);
-      clearTimeout(fadeTimer);
-      clearTimeout(hideTimer);
-    };
+    const timer = setTimeout(() => setHideIntro(true), 2000); // Durasi jadi 2 detik
+    return () => clearTimeout(timer);
   }, []);
 
   return (
-    <>
-      <div className="relative">
+    <div className="relative">
+      <AnimatePresence>
         {!hideIntro && (
-          <div
-            className={`
-              fixed inset-0 flex items-center justify-center
-              bg-[#973c00] transition-all duration-1000 z-50
-              ${fade ? "opacity-0" : "opacity-100"}
-              ${animate ? "translate-y-0" : "-translate-y-full"}
-            `}
+          <motion.div
+            initial={{ opacity: 1 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 1 }}
+            className="fixed inset-0 flex flex-col items-center justify-center bg-[#973c00] z-50"
           >
-            <h1 className="text-white text-4xl font-bold">
-              <span
-                className={`inline-block transition-all duration-700 ${
-                  animate
-                    ? "opacity-100 translate-y-0"
-                    : "opacity-0 translate-y-5"
-                }`}
-              >
-                Culture
-              </span>
-              <span
-                className={`inline-block transition-all duration-700 delay-500 ${
-                  animate
-                    ? "opacity-100 translate-y-0"
-                    : "opacity-0 translate-y-5"
-                }`}
-              >
-                Connect.
-              </span>
-            </h1>
-          </div>
+            {/* LOGO ANIMATION */}
+            <motion.img
+              src={logoSplashScreen}
+              alt="Logo"
+              initial={{ scale: 0, rotate: -45, opacity: 0 }}
+              animate={{
+                scale: [0, 1.2, 1],
+                rotate: [0, 10, -10, 0],
+                opacity: 1,
+              }}
+              transition={{
+                duration: 1.2,
+                ease: "easeOut",
+              }}
+              className="w-24 h-24 md:w-32 md:h-32 object-contain mb-6 drop-shadow-[0_0_30px_rgba(255,255,255,0.9)]"
+            />
+
+            {/* TEXT ANIMATION */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{
+                delay: 0.8,
+                duration: 0.8,
+                ease: "easeOut",
+              }}
+              className="text-white text-4xl md:text-5xl font-bold"
+            >
+              CultureConnect
+            </motion.div>
+          </motion.div>
         )}
-      </div>
-    </>
+      </AnimatePresence>
+    </div>
   );
 }
 

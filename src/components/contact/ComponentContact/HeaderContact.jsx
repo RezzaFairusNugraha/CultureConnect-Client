@@ -1,5 +1,6 @@
 import React from "react";
-import { FiMail, FiPhoneCall, FiMapPin } from "react-icons/fi";
+import { FiMail, FiPhoneCall } from "react-icons/fi";
+import { motion } from "framer-motion";
 
 function HeaderContact() {
   const contactItems = [
@@ -15,29 +16,54 @@ function HeaderContact() {
     },
   ];
 
+  const container = {
+    hidden: {},
+    visible: {
+      transition: {
+        staggerChildren: 0.2,
+      },
+    },
+  };
+
+  const item = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.6, ease: "easeOut" },
+    },
+  };
+
   return (
     <div className="max-w-7xl mx-auto pt-10">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {contactItems.map((item, index) => (
-          <div
+      <motion.div
+        className="grid grid-cols-1 md:grid-cols-2 gap-6"
+        variants={container}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true }}
+      >
+        {contactItems.map((itemData, index) => (
+          <motion.div
             key={index}
             className="flex flex-col items-center text-center p-6 md:p-8 bg-white md:bg-transparent rounded-lg shadow-md md:shadow-none"
+            variants={item}
           >
             <div className="bg-amber-100 text-amber-800 p-4 rounded-full mb-3">
-              {item.icon}
+              {itemData.icon}
             </div>
-            <h3 className="text-lg font-semibold mb-2">{item.title}</h3>
+            <h3 className="text-lg font-semibold mb-2">{itemData.title}</h3>
             <p className="text-gray-600">
-              {item.details.map((line, idx) => (
+              {itemData.details.map((line, idx) => (
                 <span key={idx}>
                   {line}
                   <br />
                 </span>
               ))}
             </p>
-          </div>
+          </motion.div>
         ))}
-      </div>
+      </motion.div>
     </div>
   );
 }
