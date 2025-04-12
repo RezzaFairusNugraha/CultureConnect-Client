@@ -202,8 +202,8 @@ const SingleDestination = () => {
           <h2 className="text-2xl font-bold text-amber-800 mb-4">
             Peta Lokasi
           </h2>
-          <div className="w-full h-[65vh] rounded-2xl shadow-xl ring-4 ring-amber-300 overflow-hidden mb-6">
-            <div id="map" className="w-full h-full" />
+          <div className="relative w-full h-[65vh] rounded-2xl shadow-xl ring-4 ring-amber-300 overflow-hidden">
+            <div id="map" className="absolute inset-0 z-0 w-full h-full" />
           </div>
         </div>
       </div>
