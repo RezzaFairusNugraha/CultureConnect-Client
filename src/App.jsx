@@ -8,6 +8,7 @@ import Landing from "./pages/Landing";
 import NotFound from "./pages/NotFound";
 import AboutPage from "./pages/About";
 import Contact from "./pages/Contact";
+import Maps from "./pages/Auth/Maps";
 import SingleDestination from "./pages/Auth/SingleDestination";
 import UserFormData from "./pages/Auth/UserFormData";
 import { ToastContainer } from "react-toastify";
@@ -23,6 +24,7 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/maps" element={<Maps />} />
           <Route
             path="/fill-user-data"
             element={
