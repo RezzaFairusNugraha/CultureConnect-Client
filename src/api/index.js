@@ -38,7 +38,7 @@ const login = async (email, password) => {
 const fetchDashboardData = async () => {
   try {
     const token = localStorage.getItem("token");
-    const response = await api.get("/dashboard", {
+    const response = await api.get("/user", {
       headers: { Authorization: `Bearer ${token}` },
     });
     return response.data;
@@ -71,7 +71,7 @@ const getDestinationById = async (id) => {
   }
 };
 
-export const getSavedDestinations = async (userId) => {
+const getSavedDestinations = async (userId) => {
   try {
     const response = await api.get(`/destinations/saved/${userId}`);
     return response.data;
@@ -81,7 +81,7 @@ export const getSavedDestinations = async (userId) => {
   }
 };
 
-export const saveDestination = async (userId, destinationId) => {
+const saveDestination = async (userId, destinationId) => {
   try {
     const response = await api.post(`/destinations/save`, {
       userId,
@@ -94,7 +94,7 @@ export const saveDestination = async (userId, destinationId) => {
   }
 };
 
-export const deleteSavedDestination = async (userId, destinationId) => {
+const deleteSavedDestination = async (userId, destinationId) => {
   try {
     const response = await api.delete(`/destinations/saved/delete`, {
       data: { userId, destinationId },
@@ -122,10 +122,10 @@ const logout = async () => {
   }
 };
 
-export const getUserProfile = async () => {
+const getUserProfile = async () => {
   try {
     const token = localStorage.getItem("token");
-    const response = await api.get("/profile", {
+    const response = await api.get("/user", {
       headers: { Authorization: `Bearer ${token}` },
     });
     return response.data;
@@ -135,7 +135,7 @@ export const getUserProfile = async () => {
   }
 };
 
-export const updateUserProfile = async (profileData) => {
+const updateUserProfile = async (profileData) => {
   try {
     const token = localStorage.getItem("token");
     const response = await api.put("/profile", profileData, {
@@ -148,7 +148,7 @@ export const updateUserProfile = async (profileData) => {
   }
 };
 
-export const addUserProfile = async (profileData) => {
+const addUserProfile = async (profileData) => {
   try {
     const token = localStorage.getItem("token");
     const response = await api.post("/profile", profileData, {
@@ -161,11 +161,35 @@ export const addUserProfile = async (profileData) => {
   }
 };
 
+const uploadUserProfile = async (formData) => {
+  try {
+    const token = localStorage.getItem("token");
+    const response = await api.post("/upload/profile-picture", formData, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Gagal upload profil:", error);
+    throw error;
+  }
+};
+
+
 export {
   login,
   register,
   getAllDestinations,
   getDestinationById,
+  getSavedDestinations,
+  saveDestination,
+  deleteSavedDestination,
+  getUserProfile,
+  updateUserProfile,
+  addUserProfile,
   fetchDashboardData,
   logout,
+  uploadUserProfile,
 };

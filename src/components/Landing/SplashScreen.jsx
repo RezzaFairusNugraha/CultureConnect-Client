@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import logoSplashScreen from "../../../public/images/logoSplashScreen.png";
+import logoSplashScreen from "/images/logoSplashScreen.png";
 
 function Landing() {
   const [hideIntro, setHideIntro] = useState(false);
@@ -49,7 +49,7 @@ function Landing() {
               }}
               className="text-white text-4xl md:text-5xl font-bold"
             >
-              CultureConnect
+              CultureConnect.
             </motion.div>
           </motion.div>
         )}

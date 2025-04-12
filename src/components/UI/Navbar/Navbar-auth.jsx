@@ -3,9 +3,11 @@ import { Link } from "react-router-dom";
 import { FaBars, FaTimes } from "react-icons/fa";
 import { useAuth } from "../../../context/UseAuth";
 import LogoutModal from "../LogoutModal";
+import defaultAvatar from "/images/default-avatar-icon.jpg";
+import logo from "/images/logo.png";
 
 const NavbarAuth = () => {
-  const { isAuthenticated, user, profile, loading } = useAuth();
+  const { isAuthenticated, profile, loading } = useAuth();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setMenuOpen] = useState(false);
   const [isProfileOpen, setProfileOpen] = useState(false);
@@ -33,8 +35,7 @@ const NavbarAuth = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  if (loading) return null; // Tambahan penting!
-
+  if (loading) return null;
   return (
     <>
       <nav
@@ -43,12 +44,17 @@ const NavbarAuth = () => {
         }`}
       >
         <div className="max-w-screen-xl mx-auto px-4 sm:px-6 flex justify-between items-center py-4 border-b">
-          <div className="text-2xl font-bold text-primary">
+          <div className="flex items-center space-x-2">
             <Link
               to="/"
-              className="hover:opacity-80 transition-opacity duration-300"
+              className="hover:opacity-80 transition-opacity duration-300 flex items-center space-x-2"
             >
-              CultureConnect.
+              <img
+                src={logo}
+                alt="CultureConnect Logo"
+                className="w-10 h-10 object-contain"
+              />
+              <span className="text-2xl font-bold text-primary">CultureConnect.</span>
             </Link>
           </div>
 
@@ -60,10 +66,10 @@ const NavbarAuth = () => {
                   className="flex items-center space-x-2 cursor-pointer"
                 >
                   <span className="text-primary">
-                    Hi {user?.name?.split(" ")[0]}!
+                    Hi {profile?.name?.split(" ")[0]}!
                   </span>
                   <img
-                    src={profile?.profilePic || "/default-avatar.png"}
+                    src={profile?.profilePic || defaultAvatar}
                     alt="User Profile"
                     className="w-8 h-8 rounded-full border"
                   />

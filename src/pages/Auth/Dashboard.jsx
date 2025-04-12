@@ -37,7 +37,6 @@ const Dashboard = () => {
   }, [isAuthenticated, navigate]);
 
   if (isLoading) return <LoadingAnimation />;
-
   return (
     <LayoutAuth name={data.user.name}>
       <Hero />

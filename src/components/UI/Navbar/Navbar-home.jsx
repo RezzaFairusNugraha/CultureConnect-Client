@@ -4,7 +4,7 @@ import LogoutModal from "../LogoutModal";
 import { FaBars, FaTimes } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../../context/UseAuth";
-import logo from "../../../../public/images/logo.png";
+import logo from "/images/logo.png";
 
 const NavbarGuest = () => {
   const { isAuthenticated, profile } = useAuth();
@@ -51,7 +51,6 @@ const NavbarGuest = () => {
                 alt="CultureConnect Logo"
                 className="w-10 h-10 object-contain"
               />
-
               <span>CultureConnect.</span>
             </Link>
           </div>

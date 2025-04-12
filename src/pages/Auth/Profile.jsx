@@ -1,15 +1,12 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { fetchDashboardData } from "../../api";
+import { getUserProfile } from "../../api";
 import { useAuth } from "../../context/UseAuth";
 import LayoutAuth from "../../components/Layout/AuthLayout";
 import LoadingAnimation from "../../components/UI/LoadingAnimation";
-import UserProfile from "../../components/UI/UserProfile";
 
 const Dashboard = () => {
   const { isAuthenticated } = useAuth();
-  const [data, setData] = useState(null);
-  const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
 
@@ -22,7 +19,7 @@ const Dashboard = () => {
     const fetchDashboard = async () => {
       try {
         setIsLoading(true);
-        const result = await fetchDashboardData();
+        const result = await getUserProfile();
         setData(result);
       } catch (err) {
         setError(err.message);
@@ -39,7 +36,8 @@ const Dashboard = () => {
   return (
     <div className="overflow-x-hidden">
       <LayoutAuth>
-        <UserProfile name={data.user.name} />
+        {/* <UserProfile name={data.user.name} /> */}
+        INI HALAMAN UNTUK PROFILE
       </LayoutAuth>
     </div>
   );

@@ -115,7 +115,6 @@ const DeliveryLocationModal = ({ show, onClose }) => {
             handleSave();
           }}
         >
-          {/* Select Provinsi */}
           <div>
             <label className="block font-medium text-amber-900">Provinsi</label>
             <select
@@ -138,7 +137,6 @@ const DeliveryLocationModal = ({ show, onClose }) => {
             </select>
           </div>
 
-          {/* Select Kabupaten */}
           <div>
             <label className="block font-medium text-amber-900">
               Kabupaten/Kota
@@ -163,7 +161,6 @@ const DeliveryLocationModal = ({ show, onClose }) => {
             </select>
           </div>
 
-          {/* Select Kecamatan */}
           <div>
             <label className="block font-medium text-amber-900">
               Kecamatan
@@ -187,7 +184,6 @@ const DeliveryLocationModal = ({ show, onClose }) => {
             </select>
           </div>
 
-          {/* Select Kelurahan */}
           <div>
             <label className="block font-medium text-amber-900">
               Kelurahan/Desa
@@ -208,7 +204,6 @@ const DeliveryLocationModal = ({ show, onClose }) => {
             </select>
           </div>
 
-          {/* Detail Alamat */}
           <div>
             <label className="block font-medium text-amber-900">
               Detail Alamat
@@ -223,13 +218,11 @@ const DeliveryLocationModal = ({ show, onClose }) => {
             />
           </div>
 
-          {/* Alamat Lengkap */}
           <div className="bg-gray-100 text-sm p-2 rounded">
             <strong>Alamat Lengkap:</strong>
             <p>{getFullAddress()}</p>
           </div>
 
-          {/* Simpan */}
           <div className="flex justify-end mt-6">
             <button
               type="submit"

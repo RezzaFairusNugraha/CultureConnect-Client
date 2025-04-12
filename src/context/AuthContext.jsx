@@ -18,8 +18,8 @@ export const AuthProvider = ({ children }) => {
           const userData = JSON.parse(localStorage.getItem("user"));
           setUser(userData);
 
-          const profileData = await getUserProfile(); // ✅ Ambil data profil
-          setProfile(profileData);
+          const profileData = await getUserProfile();
+          setProfile(profileData.user);
         }
       } catch (error) {
         console.error("Error verifying auth:", error);
@@ -42,7 +42,7 @@ export const AuthProvider = ({ children }) => {
       localStorage.setItem("user", JSON.stringify(response.user));
 
       const profileData = await getUserProfile();
-      setProfile(profileData);
+      setProfile(profileData.user); 
 
       return response;
     } catch (error) {
@@ -57,6 +57,7 @@ export const AuthProvider = ({ children }) => {
       setUser(null);
       setProfile(null);
       localStorage.removeItem("user");
+      localStorage.removeItem("token");
     } catch (error) {
       console.error("Logout gagal:", error);
     }

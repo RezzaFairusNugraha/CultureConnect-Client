@@ -45,14 +45,11 @@ const Register = () => {
     try {
       const response = await register(form.name, form.email, form.password);
 
-      // Simpan token dan data pengguna
       localStorage.setItem("token", response.token);
       localStorage.setItem("user", JSON.stringify(response.user));
 
-      // Perbarui AuthContext
       setIsAuthenticated(true);
-      setUser(response.user); // Tambahkan ini untuk memperbarui user di AuthContext
-
+      setUser(response.user); 
       toast.success("Registrasi berhasil!");
       navigate("/fill-user-data");
     } catch (err) {

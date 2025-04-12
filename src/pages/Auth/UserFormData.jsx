@@ -1,22 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { addUserProfile } from "../../api/index";
+import { addUserProfile, uploadUserProfile, getUserProfile } from "../../api/index";
 import { motion, AnimatePresence } from "framer-motion";
 import { toast } from "react-toastify";
-
-const uploadImage = async (file) => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve(URL.createObjectURL(file));
-    }, 1000);
-  });
-};
+import { useAuth } from "../../context/UseAuth"; // Tambahkan ini
 
 const steps = ["Foto", "Bio", "Data Pribadi", "Alamat"];
 
 const UserFormData = () => {
+  const { setProfile } = useAuth(); // Ambil setProfile dari AuthContext
   const navigate = useNavigate();
-  const [profile, setProfile] = useState({
+  const [profile, setProfileState] = useState({
     profilePic: "",
     bio: "",
     gender: "",
@@ -30,6 +24,7 @@ const UserFormData = () => {
   });
 
   const [previewImage, setPreviewImage] = useState(null);
+  const [selectedImageFile, setSelectedImageFile] = useState(null);
   const [step, setStep] = useState(0);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -39,21 +34,18 @@ const UserFormData = () => {
   const [districts, setDistricts] = useState([]);
   const [villages, setVillages] = useState([]);
 
-  // Selected IDs
   const [selectedProvinceId, setSelectedProvinceId] = useState("");
   const [selectedRegencyId, setSelectedRegencyId] = useState("");
   const [selectedDistrictId, setSelectedDistrictId] = useState("");
   const [selectedVillageId, setSelectedVillageId] = useState("");
 
-  // Load provinces
   useEffect(() => {
     fetch("https://www.emsifa.com/api-wilayah-indonesia/api/provinces.json")
       .then((res) => res.json())
       .then(setProvinces)
-      .catch((err) => console.error("Gagal memuat provinsi:", err));
+      .catch(() => {});
   }, []);
 
-  // Load regencies
   useEffect(() => {
     if (!selectedProvinceId) return setRegencies([]);
     fetch(
@@ -61,10 +53,9 @@ const UserFormData = () => {
     )
       .then((res) => res.json())
       .then(setRegencies)
-      .catch((err) => console.error("Gagal memuat kabupaten:", err));
+      .catch(() => {});
   }, [selectedProvinceId]);
 
-  // Load districts
   useEffect(() => {
     if (!selectedRegencyId) return setDistricts([]);
     fetch(
@@ -72,10 +63,9 @@ const UserFormData = () => {
     )
       .then((res) => res.json())
       .then(setDistricts)
-      .catch((err) => console.error("Gagal memuat kecamatan:", err));
+      .catch(() => {});
   }, [selectedRegencyId]);
 
-  // Load villages
   useEffect(() => {
     if (!selectedDistrictId) return setVillages([]);
     fetch(
@@ -83,48 +73,56 @@ const UserFormData = () => {
     )
       .then((res) => res.json())
       .then(setVillages)
-      .catch((err) => console.error("Gagal memuat kelurahan:", err));
+      .catch(() => {});
   }, [selectedDistrictId]);
 
-  // Navigation
   const handleNext = () => {
     const fields = [
-      ["profilePic"],
+      [],
       ["bio"],
       ["gender", "age"],
       ["province", "city", "district", "village", "detailAddress", "address"],
     ][step];
+
     if (!fields.every((f) => profile[f])) {
       setError("Mohon lengkapi data terlebih dahulu.");
       return;
     }
+
     setError("");
     setStep((s) => Math.min(s + 1, steps.length - 1));
   };
+
   const handlePrev = () => {
     setError("");
     setStep((s) => Math.max(s - 1, 0));
   };
 
-  // Handlers
-  const handleImageChange = async (e) => {
+  const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (!file) return;
-    const url = await uploadImage(file);
-    setPreviewImage(url);
-    setProfile((p) => ({ ...p, profilePic: url }));
+
+    const validImageTypes = ["image/jpeg", "image/png", "image/jpg"];
+    if (!validImageTypes.includes(file.type)) {
+      setError("Format gambar tidak valid. Mohon unggah file JPG atau PNG.");
+      return;
+    }
+
+    setError("");
+    setSelectedImageFile(file);
+    setPreviewImage(URL.createObjectURL(file));
   };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setProfile((p) => ({ ...p, [name]: value }));
+    setProfileState((p) => ({ ...p, [name]: value }));
   };
 
   const handleProvinceChange = (e) => {
     const id = e.target.value;
     const name = provinces.find((p) => p.id === id)?.name || "";
     setSelectedProvinceId(id);
-    setProfile((p) => ({
+    setProfileState((p) => ({
       ...p,
       province: name,
       city: "",
@@ -142,7 +140,7 @@ const UserFormData = () => {
     const id = e.target.value;
     const name = regencies.find((r) => r.id === id)?.name || "";
     setSelectedRegencyId(id);
-    setProfile((p) => ({
+    setProfileState((p) => ({
       ...p,
       city: name,
       district: "",
@@ -158,7 +156,7 @@ const UserFormData = () => {
     const id = e.target.value;
     const name = districts.find((d) => d.id === id)?.name || "";
     setSelectedDistrictId(id);
-    setProfile((p) => ({
+    setProfileState((p) => ({
       ...p,
       district: name,
       village: "",
@@ -172,19 +170,18 @@ const UserFormData = () => {
     const id = e.target.value;
     const name = villages.find((v) => v.id === id)?.name || "";
     setSelectedVillageId(id);
-    setProfile((p) => ({
+    setProfileState((p) => ({
       ...p,
       village: name,
       detailAddress: "",
-      address: "", // clear full address until detail entered
+      address: "",
     }));
   };
 
   const handleDetailAddressChange = (e) => {
     const detail = e.target.value;
-    // only build full address when detail typed
     const full = `${detail}, ${profile.village}, ${profile.district}, ${profile.city}, ${profile.province}`;
-    setProfile((p) => ({
+    setProfileState((p) => ({
       ...p,
       detailAddress: detail,
       address: full,
@@ -195,29 +192,52 @@ const UserFormData = () => {
     e.preventDefault();
     setLoading(true);
     setError("");
-    const req = [
-      "profilePic",
-      "bio",
-      "gender",
-      "age",
-      "province",
-      "city",
-      "district",
-      "village",
-      "detailAddress",
-      "address",
-    ];
-    if (!req.every((f) => profile[f])) {
-      setError("Mohon lengkapi semua data terlebih dahulu.");
-      setLoading(false);
-      return;
-    }
+
+    const defaultImageUrl = "./images/default-avatar-icon.jpg";
+
     try {
-      await addUserProfile({ ...profile, age: parseInt(profile.age, 10) });
+      let uploadedImageUrl = profile.profilePic;
+      if (selectedImageFile) {
+        const formData = new FormData();
+        formData.append("image", selectedImageFile);
+
+        const response = await uploadUserProfile(formData);
+        uploadedImageUrl = response.imageUrl;
+      }
+
+      const finalProfilePic = uploadedImageUrl || defaultImageUrl;
+
+      const req = [
+        "bio",
+        "gender",
+        "age",
+        "province",
+        "city",
+        "district",
+        "village",
+        "detailAddress",
+        "address",
+      ];
+
+      if (!req.every((f) => profile[f])) {
+        setError("Mohon lengkapi semua data terlebih dahulu.");
+        setLoading(false);
+        return;
+      }
+
+      await addUserProfile({
+        ...profile,
+        profilePic: finalProfilePic,
+        age: parseInt(profile.age, 10),
+      });
+
+      const updatedProfile = await getUserProfile();
+      setProfile(updatedProfile.user); 
+
       toast.success("Profil berhasil dibuat!");
       navigate("/dashboard");
     } catch {
-      toast.error("Gagal membuat profil pengguna");
+      toast.error("Gagal membuat profil pengguna. Coba lagi nanti.");
     } finally {
       setLoading(false);
     }
@@ -275,17 +295,25 @@ const UserFormData = () => {
                   </label>
                   <input
                     type="file"
-                    accept="image/*"
+                    accept="image/png, image/jpeg, image/jpg"
+                    name="profilePic"
                     onChange={handleImageChange}
-                    required
                     className="w-full p-2 border rounded-md shadow focus:outline-none focus:ring-2 focus:ring-amber-400 cursor-pointer"
                   />
-                  {previewImage && (
+                  {previewImage ? (
                     <div className="mt-4 text-center">
                       <img
                         src={previewImage}
                         alt="Preview"
                         className="w-28 h-28 rounded-full object-cover border-2 border-amber-700 mx-auto shadow"
+                      />
+                    </div>
+                  ) : (
+                    <div className="mt-4 text-center">
+                      <img
+                        src="./images/default-avatar-icon.jpg"
+                        alt="Default"
+                        className="w-28 h-28 rounded-full object-cover border-2 border-gray-300 mx-auto shadow"
                       />
                     </div>
                   )}
