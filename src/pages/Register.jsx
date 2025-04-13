@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { register } from "../api/index";
 import { useNavigate } from "react-router-dom";
 import LayoutGuest from "../components/Layout/CommonLayout";
 import MainForm from "../components/UI/Form/MainForm";
@@ -10,7 +9,7 @@ import { toast } from "react-toastify";
 const Register = () => {
   const [pending, setPending] = useState(false);
   const [formErrors, setFormErrors] = useState({});
-  const { setIsAuthenticated, setUser } = useAuth();
+  const { handleRegister } = useAuth();
   const navigate = useNavigate();
 
   const handleSubmit = async (form) => {
@@ -18,13 +17,7 @@ const Register = () => {
     setFormErrors({});
 
     try {
-      const response = await register(form.name, form.email, form.password);
-
-      localStorage.setItem("token", response.token);
-      localStorage.setItem("user", JSON.stringify(response.user));
-
-      setIsAuthenticated(true);
-      setUser(response.user);
+      const response = await handleRegister(form.name, form.email, form.password);
       toast.success("Registrasi berhasil!");
       navigate("/fill-user-data");
     } catch (err) {
@@ -51,7 +44,7 @@ const Register = () => {
         <RegisterForm
           onSubmit={handleSubmit}
           pending={pending}
-          errors={formErrors} 
+          errors={formErrors}
         />
       </MainForm>
     </LayoutGuest>

@@ -3,6 +3,7 @@ import { toTitleCase } from "../../../utils/TextFormatters";
 import { updateUserProfile } from "../../../api";
 import InputField from "./AllUiComponents/InputField";
 import ReusableButton from "./AllUiComponents/ReusableButton";
+import { toast } from "react-toastify";
 
 const toUpperCase = (text) => text?.toString().toUpperCase().trim();
 
@@ -29,71 +30,106 @@ const ProfileForm = memo(({ profile, userData }) => {
   const [selectedVillageId, setSelectedVillageId] = useState("");
 
   useEffect(() => {
+    const province = profile?.province ?? "";
+    const city = profile?.city ?? "";
+    const district = profile?.district ?? "";
+    const village = profile?.village ?? "";
+  
     setFormData({
       name: profile?.name ?? userData?.name ?? "",
       bio: profile?.bio ?? "",
       age: profile?.age ?? "",
       gender: profile?.gender ?? "",
-      province: profile?.province ?? "",
-      city: profile?.city ?? "",
-      district: profile?.district ?? "",
-      village: profile?.village ?? "",
+      province,
+      city,
+      district,
+      village,
     });
-    setDetailAddress(profile?.detailAddress ?? "");
+  
+    const address = profile?.address ?? "";
+    const knownParts = [village, district, city, province]
+      .filter(Boolean)
+      .map((s) => toUpperCase(s));
+  
+    const addressParts = address.split(",").map((s) => s.trim());
+    const unknownParts = addressParts.filter(
+      (part) => !knownParts.includes(toUpperCase(part))
+    );
+  
+    setDetailAddress(unknownParts.join(", "));
   }, [profile, userData]);
+  
 
   useEffect(() => {
     fetch("https://www.emsifa.com/api-wilayah-indonesia/api/provinces.json")
-      .then((r) => r.json())
+      .then((res) => res.json())
       .then((data) => {
-        const formatted = data.map((i) => ({ ...i, name: toTitleCase(i.name) }));
+        const formatted = data.map((item) => ({
+          ...item,
+          name: toTitleCase(item.name),
+        }));
         setProvinces(formatted);
-        if (profile?.province) {
-          const found = formatted.find(p => toUpperCase(p.name) === toUpperCase(profile.province));
-          if (found) setSelectedProvinceId(found.id);
-        }
+        const match = formatted.find(
+          (p) => toUpperCase(p.name) === toUpperCase(profile?.province)
+        );
+        if (match) setSelectedProvinceId(match.id);
       });
   }, [profile?.province]);
 
   useEffect(() => {
     if (!selectedProvinceId) return setRegencies([]);
-    fetch(`https://www.emsifa.com/api-wilayah-indonesia/api/regencies/${selectedProvinceId}.json`)
-      .then((r) => r.json())
+    fetch(
+      `https://www.emsifa.com/api-wilayah-indonesia/api/regencies/${selectedProvinceId}.json`
+    )
+      .then((res) => res.json())
       .then((data) => {
-        const formatted = data.map((i) => ({ ...i, name: toTitleCase(i.name) }));
+        const formatted = data.map((item) => ({
+          ...item,
+          name: toTitleCase(item.name),
+        }));
         setRegencies(formatted);
-        if (profile?.city) {
-          const found = formatted.find(r => toUpperCase(r.name) === toUpperCase(profile.city));
-          if (found) setSelectedRegencyId(found.id);
-        }
+        const match = formatted.find(
+          (r) => toUpperCase(r.name) === toUpperCase(profile?.city)
+        );
+        if (match) setSelectedRegencyId(match.id);
       });
   }, [selectedProvinceId, profile?.city]);
 
   useEffect(() => {
     if (!selectedRegencyId) return setDistricts([]);
-    fetch(`https://www.emsifa.com/api-wilayah-indonesia/api/districts/${selectedRegencyId}.json`)
-      .then((r) => r.json())
+    fetch(
+      `https://www.emsifa.com/api-wilayah-indonesia/api/districts/${selectedRegencyId}.json`
+    )
+      .then((res) => res.json())
       .then((data) => {
-        const formatted = data.map((i) => ({ ...i, name: toTitleCase(i.name) }));
+        const formatted = data.map((item) => ({
+          ...item,
+          name: toTitleCase(item.name),
+        }));
         setDistricts(formatted);
-        if (profile?.district) {
-          const found = formatted.find(d => toUpperCase(d.name) === toUpperCase(profile.district));
-          if (found) setSelectedDistrictId(found.id);
-        }
+        const match = formatted.find(
+          (d) => toUpperCase(d.name) === toUpperCase(profile?.district)
+        );
+        if (match) setSelectedDistrictId(match.id);
       });
   }, [selectedRegencyId, profile?.district]);
 
   useEffect(() => {
     if (!selectedDistrictId) return setVillages([]);
-    fetch(`https://www.emsifa.com/api-wilayah-indonesia/api/villages/${selectedDistrictId}.json`)
-      .then((r) => r.json())
+    fetch(
+      `https://www.emsifa.com/api-wilayah-indonesia/api/villages/${selectedDistrictId}.json`
+    )
+      .then((res) => res.json())
       .then((data) => {
-        const formatted = data.map((i) => ({ ...i, name: toTitleCase(i.name) }));
+        const formatted = data.map((item) => ({
+          ...item,
+          name: toTitleCase(item.name),
+        }));
         setVillages(formatted);
-        if (profile?.village) {
-          const found = formatted.find(v => toUpperCase(v.name) === toUpperCase(profile.village));
-          if (found) setSelectedVillageId(found.id);
-        }
+        const match = formatted.find(
+          (v) => toUpperCase(v.name) === toUpperCase(profile?.village)
+        );
+        if (match) setSelectedVillageId(match.id);
       });
   }, [selectedDistrictId, profile?.village]);
 
@@ -104,7 +140,7 @@ const ProfileForm = memo(({ profile, userData }) => {
     formData.city,
     formData.province,
   ]
-    .filter((p) => p && p.trim())
+    .filter((item) => item && item.trim())
     .join(", ");
 
   const handleInputChange = useCallback((e) => {
@@ -185,9 +221,12 @@ const ProfileForm = memo(({ profile, userData }) => {
           detailAddress,
           address: fullAddress,
         });
-        alert("Profil berhasil diperbarui!");
-      } catch (err) {
-        console.error("Gagal memperbarui profil:", err);
+        toast.success("Profil berhasil diperbarui!");
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
+      } catch (error) {
+        console.error("Gagal memperbarui profil:", error);
         alert("Terjadi kesalahan saat memperbarui profil.");
       }
     },
@@ -199,27 +238,9 @@ const ProfileForm = memo(({ profile, userData }) => {
       onSubmit={handleFormSubmit}
       className="space-y-4 py-4 px-6 bg-white rounded-2xl border border-amber-800 shadow-md"
     >
-      <InputField
-        label="Nama"
-        name="name"
-        type="text"
-        value={formData.name}
-        onChange={handleInputChange}
-      />
-      <InputField
-        label="Bio"
-        name="bio"
-        type="textarea"
-        value={formData.bio}
-        onChange={handleInputChange}
-      />
-      <InputField
-        label="Umur"
-        name="age"
-        type="number"
-        value={formData.age}
-        onChange={handleInputChange}
-      />
+      <InputField label="Nama" name="name" type="text" value={formData.name} onChange={handleInputChange} />
+      <InputField label="Bio" name="bio" type="textarea" value={formData.bio} onChange={handleInputChange} />
+      <InputField label="Umur" name="age" type="number" value={formData.age} onChange={handleInputChange} />
       <InputField
         label="Jenis Kelamin"
         name="gender"
@@ -282,8 +303,7 @@ const ProfileForm = memo(({ profile, userData }) => {
       <ReusableButton
         text="Simpan Perubahan"
         className="w-full py-2 rounded-lg font-medium transition-colors duration-300 bg-amber-800 text-white hover:bg-amber-900"
-      >
-      </ReusableButton>
+      />
     </form>
   );
 });

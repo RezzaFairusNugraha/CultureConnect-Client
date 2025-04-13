@@ -56,7 +56,6 @@ const UserProfile = () => {
   }, []);
 
   const isDestinationsTab = activeTab === "destinations";
-  console.log(mergedProfile);
   return (
     <div className="min-h-screen bg-gray-100 p-6">
       <div className="max-w-7xl mx-auto flex flex-col lg:flex-row gap-8 items-start">
@@ -67,7 +66,7 @@ const UserProfile = () => {
               <button
                 key={tab}
                 onClick={() => setActiveTab(tab)}
-                className={`px-5 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
+                className={`px-5 py-2 rounded-full text-sm font-medium transition-all duration-300 cursor-pointer ${
                   activeTab === tab
                     ? "bg-amber-800 text-white shadow-sm"
                     : "bg-gray-200 text-gray-800 hover:bg-gray-300"

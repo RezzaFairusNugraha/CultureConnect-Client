@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { AuthContext } from "./AuthContext";
-import { login, logout, getUserData } from "../api";
+import { login, logout, getUserData, register } from "../api";
 
 export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -32,6 +32,19 @@ export const AuthProvider = ({ children }) => {
 
     verifyAuth();
   }, []);
+
+  const handleRegister = async (name, email, password) => {
+    try {
+      const response = await register(name, email, password);
+      localStorage.setItem("token", response.token);
+      localStorage.setItem("user", JSON.stringify(response.user));
+      setIsAuthenticated(true);
+      setUser(response.user);
+      return response;
+    } catch (error) {
+      throw error;
+    }
+  }
 
   const handleLogin = async (email, password) => {
     try {
@@ -71,6 +84,7 @@ export const AuthProvider = ({ children }) => {
         setUser,
         profile,
         setProfile,
+        handleRegister,
         handleLogin,
         handleLogout,
         loading,

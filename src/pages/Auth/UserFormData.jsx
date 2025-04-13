@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { addUserProfile, uploadUserProfile, getUserProfile } from "../../api/index";
+import { addUserProfile, uploadUserProfile, getUserData } from "../../api/index";
 // eslint-disable-next-line no-unused-vars
 import { motion, AnimatePresence } from "framer-motion";
 import { toast } from "react-toastify";
@@ -19,8 +19,8 @@ const toPascalCase = (text) => {
 };
 
 const UserFormData = () => {
-  const { profile } = useAuth();
-  const { setProfile, setUser } = useAuth();
+  const { user } = useAuth();
+  const { setProfile } = useAuth();
   const navigate = useNavigate();
   const [profileState, setProfileState] = useState({
     profilePic: "",
@@ -272,10 +272,8 @@ const UserFormData = () => {
         age: parseInt(profileState.age, 10),
       });
 
-      const updatedProfile = await getUserProfile();
+      const updatedProfile = await getUserData();
       setProfile(updatedProfile.user);
-      setUser(updatedProfile.user);
-
       toast.success("Profil berhasil dibuat!");
       navigate("/dashboard");
     } catch {
@@ -289,7 +287,7 @@ const UserFormData = () => {
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-white via-amber-100 to-amber-200 p-6">
       <div className="bg-white/90 border border-amber-200 backdrop-blur-md rounded-2xl shadow-2xl p-8 w-full max-w-lg">
         <h1 className="text-3xl font-bold text-center text-amber-900 mb-2">
-          Hai {profile?.name?.split(" ")[0] || "User"}!
+          Hai {user?.name?.split(" ")[0] || "User"}!
         </h1>
         <p className="text-center text-amber-800 mb-2">
           Selamat datang di CultureConnect!
