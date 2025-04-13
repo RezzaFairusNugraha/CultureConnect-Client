@@ -6,7 +6,7 @@ function Landing() {
   const [hideIntro, setHideIntro] = useState(false);
 
   useEffect(() => {
-    const timer = setTimeout(() => setHideIntro(true), 2000); // Durasi jadi 2 detik
+    const timer = setTimeout(() => setHideIntro(true), 2000);
     return () => clearTimeout(timer);
   }, []);
 
@@ -21,7 +21,6 @@ function Landing() {
             transition={{ duration: 1 }}
             className="fixed inset-0 flex flex-col items-center justify-center bg-[#973c00] z-50"
           >
-            {/* LOGO ANIMATION */}
             <motion.img
               src={logoSplashScreen}
               alt="Logo"
@@ -37,8 +36,6 @@ function Landing() {
               }}
               className="w-24 h-24 md:w-32 md:h-32 object-contain mb-6 drop-shadow-[0_0_30px_rgba(255,255,255,0.9)]"
             />
-
-            {/* TEXT ANIMATION */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}

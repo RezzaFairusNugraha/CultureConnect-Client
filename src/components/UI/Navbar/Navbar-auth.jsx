@@ -4,7 +4,7 @@ import { FaBars, FaTimes } from "react-icons/fa";
 import { useAuth } from "../../../context/UseAuth";
 import LogoutModal from "../LogoutModal";
 import defaultAvatar from "/images/default-avatar-icon.jpg";
-import logo from "/images/logo.png";
+import logo from "../../../images/logo.png";
 
 const NavbarAuth = () => {
   const { isAuthenticated, profile, loading } = useAuth();

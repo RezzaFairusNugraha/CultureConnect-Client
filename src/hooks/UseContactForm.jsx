@@ -4,7 +4,7 @@ import emailjs from "@emailjs/browser";
 const useContactForm = () => {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
   const [loading, setLoading] = useState(false);
-  const [alert, setAlert] = useState({ type: "", message: "" }); // State untuk alert
+  const [alert, setAlert] = useState({ type: "", message: "" }); 
 
   const handleChange = (e) => {
     const { name, value } = e.target;

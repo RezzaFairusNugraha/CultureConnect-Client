@@ -3,24 +3,25 @@ import { useNavigate } from "react-router-dom";
 import { addUserProfile, uploadUserProfile, getUserProfile } from "../../api/index";
 import { motion, AnimatePresence } from "framer-motion";
 import { toast } from "react-toastify";
-import { useAuth } from "../../context/UseAuth"; // Tambahkan ini
+import { useAuth } from "../../context/UseAuth";
+import InputField from "../../components/UI/Form/AllUiComponents/InputField";
+import FileInput from "../../components/UI/Form/AllUiComponents/FileInput";
 
 const steps = ["Foto", "Bio", "Data Pribadi", "Alamat"];
 
-const toCamelCase = (text) => {
+const toPascalCase = (text) => {
   return text
     .toLowerCase()
     .split(" ")
-    .map((word, index) =>
-      index === 0 ? word : word.charAt(0).toUpperCase() + word.slice(1)
-    )
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
     .join(" ");
 };
 
 const UserFormData = () => {
+  const { profile } = useAuth();
   const { setProfile, setUser } = useAuth();
   const navigate = useNavigate();
-  const [profile, setProfileState] = useState({
+  const [profileState, setProfileState] = useState({
     profilePic: "",
     bio: "",
     gender: "",
@@ -53,7 +54,7 @@ const UserFormData = () => {
     fetch("https://www.emsifa.com/api-wilayah-indonesia/api/provinces.json")
       .then((res) => res.json())
       .then((data) =>
-        setProvinces(data.map((item) => ({ ...item, name: toCamelCase(item.name) })))
+        setProvinces(data.map((item) => ({ ...item, name: toPascalCase(item.name) })))
       )
       .catch(() => {});
   }, []);
@@ -65,7 +66,7 @@ const UserFormData = () => {
     )
       .then((res) => res.json())
       .then((data) =>
-        setRegencies(data.map((item) => ({ ...item, name: toCamelCase(item.name) })))
+        setRegencies(data.map((item) => ({ ...item, name: toPascalCase(item.name) })))
       )
       .catch(() => {});
   }, [selectedProvinceId]);
@@ -77,7 +78,7 @@ const UserFormData = () => {
     )
       .then((res) => res.json())
       .then((data) =>
-        setDistricts(data.map((item) => ({ ...item, name: toCamelCase(item.name) })))
+        setDistricts(data.map((item) => ({ ...item, name: toPascalCase(item.name) })))
       )
       .catch(() => {});
   }, [selectedRegencyId]);
@@ -89,7 +90,7 @@ const UserFormData = () => {
     )
       .then((res) => res.json())
       .then((data) =>
-        setVillages(data.map((item) => ({ ...item, name: toCamelCase(item.name) })))
+        setVillages(data.map((item) => ({ ...item, name: toPascalCase(item.name) })))
       )
       .catch(() => {});
   }, [selectedDistrictId]);
@@ -110,17 +111,19 @@ const UserFormData = () => {
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [step, profile]);
+  }, [step, profileState]);
 
   const handleNext = () => {
+    if (step === steps.length - 1) return;
+
     const fields = [
       [],
       ["bio"],
       ["gender", "age"],
-      ["province", "city", "district", "village", "detailAddress", "address"],
+      ["province", "city", "district", "village", "detailAddress"],
     ][step];
 
-    const invalidField = fields.find((f) => !profile[f]);
+    const invalidField = fields.find((f) => !profileState[f]);
     if (invalidField) {
       setError({ field: invalidField, message: "Mohon lengkapi data ini." });
       return;
@@ -217,7 +220,7 @@ const UserFormData = () => {
 
   const handleDetailAddressChange = (e) => {
     const detail = e.target.value;
-    const full = `${detail}, ${profile.village}, ${profile.district}, ${profile.city}, ${profile.province}`;
+    const full = `${detail}, ${profileState.village}, ${profileState.district}, ${profileState.city}, ${profileState.province}`;
     setProfileState((p) => ({
       ...p,
       detailAddress: detail,
@@ -230,10 +233,27 @@ const UserFormData = () => {
     setLoading(true);
     setError(null);
 
-    const defaultImageUrl = "./images/default-avatar-icon.jpg";
+    const requiredFields = [
+      "bio",
+      "gender",
+      "age",
+      "province",
+      "city",
+      "district",
+      "village",
+      "detailAddress",
+      "address",
+    ];
+
+    const invalidField = requiredFields.find((f) => !profileState[f]);
+    if (invalidField) {
+      setError({ field: invalidField, message: "Mohon lengkapi semua data." });
+      setLoading(false);
+      return;
+    }
 
     try {
-      let uploadedImageUrl = profile.profilePic;
+      let uploadedImageUrl = profileState.profilePic;
       if (selectedImageFile) {
         const formData = new FormData();
         formData.append("image", selectedImageFile);
@@ -242,35 +262,17 @@ const UserFormData = () => {
         uploadedImageUrl = response.imageUrl;
       }
 
-      const finalProfilePic = uploadedImageUrl || defaultImageUrl;
-
-      const req = [
-        "bio",
-        "gender",
-        "age",
-        "province",
-        "city",
-        "district",
-        "village",
-        "detailAddress",
-        "address",
-      ];
-
-      if (!req.every((f) => profile[f])) {
-        setError({ field: "form", message: "Mohon lengkapi semua data." });
-        setLoading(false);
-        return;
-      }
+      const finalProfilePic = uploadedImageUrl || "../images/default-avatar-icon.jpg";
 
       await addUserProfile({
-        ...profile,
+        ...profileState,
         profilePic: finalProfilePic,
-        age: parseInt(profile.age, 10),
+        age: parseInt(profileState.age, 10),
       });
 
       const updatedProfile = await getUserProfile();
-      setProfile(updatedProfile.user); // Perbarui state `profile` di AuthContext
-      setUser(updatedProfile.user); // Perbarui state `user` di AuthContext
+      setProfile(updatedProfile.user);
+      setUser(updatedProfile.user);
 
       toast.success("Profil berhasil dibuat!");
       navigate("/dashboard");
@@ -285,7 +287,7 @@ const UserFormData = () => {
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-white via-amber-100 to-amber-200 p-6">
       <div className="bg-white/90 border border-amber-200 backdrop-blur-md rounded-2xl shadow-2xl p-8 w-full max-w-lg">
         <h1 className="text-3xl font-bold text-center text-amber-900 mb-2">
-          Hai User!
+          Hai {profile?.name?.split(" ")[0] || "User"}!
         </h1>
         <p className="text-center text-amber-800 mb-2">
           Selamat datang di CultureConnect!
@@ -328,15 +330,12 @@ const UserFormData = () => {
             >
               {step === 0 && (
                 <>
-                  <label className="block font-semibold text-amber-900 cursor-pointer">
-                    Foto Profil
-                  </label>
-                  <input
-                    type="file"
-                    accept="image/png, image/jpeg, image/jpg"
+                  <FileInput
+                    label="Foto Profil"
                     name="profilePic"
                     onChange={handleImageChange}
-                    className="w-full p-2 border rounded-md shadow focus:outline-none focus:ring-2 focus:ring-amber-400 cursor-pointer"
+                    className="w-full"
+                    error={error?.field === "profilePic" ? error.message : null}
                   />
                   {previewImage ? (
                     <div className="mt-4 text-center">
@@ -359,155 +358,118 @@ const UserFormData = () => {
               )}
 
               {step === 1 && (
-                <>
-                  <label className="block font-medium text-amber-900 cursor-pointer">
-                    Bio
-                  </label>
-                  <textarea
-                    name="bio"
-                    value={profile.bio}
-                    onChange={handleChange}
-                    onFocus={() => setError(null)}
-                    required
-                    className={`w-full p-3 border rounded-md shadow focus:outline-none focus:ring-2 ${
-                      error?.field === "bio" ? "border-red-500 focus:ring-red-400" : "border-amber-300 focus:ring-amber-400"
-                    }`}
-                    placeholder="Tulis bio Anda"
-                  />
-                  {error?.field === "bio" && (
-                    <p className="text-red-500 text-sm mt-1">{error.message}</p>
-                  )}
-                </>
+                <InputField
+                  label="Bio"
+                  type="textarea"
+                  name="bio"
+                  value={profileState.bio}
+                  onChange={handleChange}
+                  placeholder="Tulis bio Anda"
+                  required
+                  className={`w-full ${
+                    error?.field === "bio" ? "border-red-500" : "border-amber-300"
+                  }`}
+                  error={error?.field === "bio" ? error.message : null}
+                />
               )}
 
               {step === 2 && (
                 <>
-                  <label className="block font-medium text-amber-900 mb-1 cursor-pointer">
-                    Jenis Kelamin
-                  </label>
-                  <select
+                  <InputField
+                    label="Jenis Kelamin"
+                    type="select"
                     name="gender"
-                    value={profile.gender}
+                    value={profileState.gender}
                     onChange={handleChange}
                     required
-                    className="w-full p-3 border border-amber-300 rounded-md shadow focus:outline-none focus:ring-2 focus:ring-amber-400"
-                  >
-                    <option value="">Pilih Jenis Kelamin</option>
-                    <option value="Laki-laki">Laki-laki</option>
-                    <option value="Perempuan">Perempuan</option>
-                  </select>
-                  <label className="block font-medium text-amber-900 mt-4 mb-1 cursor-pointer">
-                    Umur
-                  </label>
-                  <input
+                    options={[
+                      { value: "", label: "Pilih Jenis Kelamin" },
+                      { value: "Laki-laki", label: "Laki-laki" },
+                      { value: "Perempuan", label: "Perempuan" },
+                    ]}
+                  />
+                  <InputField
+                    label="Umur"
                     type="number"
                     name="age"
-                    value={profile.age}
+                    value={profileState.age}
                     onChange={handleChange}
-                    required
-                    className="w-full p-3 border border-amber-300 rounded-md shadow focus:outline-none focus:ring-2 focus:ring-amber-400"
                     placeholder="Masukkan umur Anda"
+                    required
                   />
                 </>
               )}
 
               {step === 3 && (
                 <>
-                  <label className="block font-medium text-amber-900 cursor-pointer">
-                    Provinsi
-                  </label>
-                  <select
+                  <InputField
+                    label="Provinsi"
+                    type="select"
+                    name="province"
                     value={selectedProvinceId}
                     onChange={handleProvinceChange}
                     required
-                    className="w-full p-3 border border-amber-300 rounded-md shadow mb-2 focus:outline-none focus:ring-2 focus:ring-amber-400"
-                  >
-                    <option value="">Pilih Provinsi</option>
-                    {provinces.map((p) => (
-                      <option key={p.id} value={p.id}>
-                        {p.name}
-                      </option>
-                    ))}
-                  </select>
-
-                  <label className="block font-medium text-amber-900">
-                    Kota/Kabupaten
-                  </label>
-                  <select
+                    options={[
+                      { value: "", label: "Pilih Provinsi" },
+                      ...provinces.map((p) => ({ value: p.id, label: p.name })),
+                    ]}
+                  />
+                  <InputField
+                    label="Kota/Kabupaten"
+                    type="select"
+                    name="city"
                     value={selectedRegencyId}
                     onChange={handleRegencyChange}
                     required
                     disabled={!selectedProvinceId}
-                    className="w-full p-3 border border-amber-300 rounded-md shadow mb-2 focus:outline-none focus:ring-2 focus:ring-amber-400"
-                  >
-                    <option value="">Pilih Kabupaten/Kota</option>
-                    {regencies.map((r) => (
-                      <option key={r.id} value={r.id}>
-                        {r.name}
-                      </option>
-                    ))}
-                  </select>
-
-                  <label className="block font-medium text-amber-900">
-                    Kecamatan
-                  </label>
-                  <select
+                    options={[
+                      { value: "", label: "Pilih Kabupaten/Kota" },
+                      ...regencies.map((r) => ({ value: r.id, label: r.name })),
+                    ]}
+                  />
+                  <InputField
+                    label="Kecamatan"
+                    type="select"
+                    name="district"
                     value={selectedDistrictId}
                     onChange={handleDistrictChange}
                     required
                     disabled={!selectedRegencyId}
-                    className="w-full p-3 border border-amber-300 rounded-md shadow mb-2 focus:outline-none focus:ring-2 focus:ring-amber-400"
-                  >
-                    <option value="">Pilih Kecamatan</option>
-                    {districts.map((d) => (
-                      <option key={d.id} value={d.id}>
-                        {d.name}
-                      </option>
-                    ))}
-                  </select>
-
-                  <label className="block font-medium text-amber-900">
-                    Kelurahan/Desa
-                  </label>
-                  <select
+                    options={[
+                      { value: "", label: "Pilih Kecamatan" },
+                      ...districts.map((d) => ({ value: d.id, label: d.name })),
+                    ]}
+                  />
+                  <InputField
+                    label="Kelurahan/Desa"
+                    type="select"
+                    name="village"
                     value={selectedVillageId}
                     onChange={handleVillageChange}
                     required
                     disabled={!selectedDistrictId}
-                    className="w-full p-3 border border-amber-300 rounded-md shadow mb-2 focus:outline-none focus:ring-2 focus:ring-amber-400"
-                  >
-                    <option value="">Pilih Kelurahan/Desa</option>
-                    {villages.map((v) => (
-                      <option key={v.id} value={v.id}>
-                        {v.name}
-                      </option>
-                    ))}
-                  </select>
-
-                  <label className="block font-medium text-amber-900 cursor-pointer">
-                    Detail Alamat
-                  </label>
-                  <input
+                    options={[
+                      { value: "", label: "Pilih Kelurahan/Desa" },
+                      ...villages.map((v) => ({ value: v.id, label: v.name })),
+                    ]}
+                  />
+                  <InputField
+                    label="Detail Alamat"
                     type="text"
                     name="detailAddress"
-                    value={profile.detailAddress}
+                    value={profileState.detailAddress}
                     onChange={handleDetailAddressChange}
-                    required
-                    className="w-full p-3 border border-amber-300 rounded-md shadow focus:outline-none focus:ring-2 focus:ring-amber-400"
                     placeholder="Contoh: Jl. Merdeka No. 10 RT 01/RW 02"
+                    required
                   />
-
-                  <label className="block font-medium text-amber-900 cursor-pointer">
-                    Alamat Lengkap
-                  </label>
-                  <input
+                  <InputField
+                    label="Alamat Lengkap"
                     type="text"
                     name="address"
-                    value={profile.address}
+                    value={profileState.address}
                     readOnly
                     required
-                    className="w-full p-3 border border-amber-300 rounded-md shadow focus:outline-none focus:ring-2 focus:ring-amber-400 bg-gray-100"
-                    placeholder="Alamat lengkap akan terisi otomatis"
+                    className="bg-gray-100"
                   />
                 </>
               )}
@@ -528,8 +490,25 @@ const UserFormData = () => {
             )}
             {step < steps.length - 1 ? (
               <button
-                type="button"
-                onClick={handleNext}
+                type="button" 
+                onClick={(e) => {
+                  e.preventDefault(); 
+                  const fields = [
+                    [],
+                    ["bio"],
+                    ["gender", "age"],
+                    ["province", "city", "district", "village", "detailAddress"],
+                  ][step];
+
+                  const invalidField = fields.find((f) => !profileState[f]);
+                  if (invalidField) {
+                    setError({ field: invalidField, message: "Mohon lengkapi data ini." });
+                    return;
+                  }
+
+                  setError(null);
+                  setStep((s) => Math.min(s + 1, steps.length - 1));
+                }}
                 className="ml-auto px-4 py-2 rounded-lg bg-amber-700 text-white hover:bg-amber-800 transition"
               >
                 Lanjut

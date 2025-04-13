@@ -92,13 +92,11 @@ const SingleDestination = () => {
         }
       ).addTo(map);
 
-      // Marker utama
       L.marker([latitude, longitude])
         .addTo(map)
         .bindPopup(`<strong>${destination.name}</strong>`)
         .openPopup();
 
-      // Marker lainnya
       try {
         const raw = await getAllDestinations();
         const all = Object.values(raw);

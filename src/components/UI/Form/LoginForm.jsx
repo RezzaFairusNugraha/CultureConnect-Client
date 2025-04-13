@@ -4,7 +4,7 @@ import { MdAlternateEmail } from "react-icons/md";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import { useAuth } from "../../../context/UseAuth";  
 import InputField from "./AllUiComponents/InputField";
-import PasswordInput from ".//AllUiComponents/PasswordInput";
+import PasswordInput from "./AllUiComponents/PasswordInput";
 import ReusableButton from "./AllUiComponents/ReusableButton";
 
 const LoginForm = () => {
