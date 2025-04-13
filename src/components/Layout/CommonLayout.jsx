@@ -1,4 +1,4 @@
-import Footer from "../UI/Footer";
+import Footer from "../Footer";
 import NavbarGuest from "../UI/Navbar/Navbar-home";
 
 const LayoutGuest = ({ children }) => {

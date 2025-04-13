@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 const Card = ({ item }) => {
   return (
-    <div className="flex flex-col rounded overflow-hidden shadow-lg h-full">
+    <div className="flex flex-col rounded bg-white overflow-hidden shadow-lg h-full">
       <img
         className="w-full h-48 object-cover"
         src={item.imageUrl}

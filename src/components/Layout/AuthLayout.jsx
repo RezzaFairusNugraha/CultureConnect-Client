@@ -1,5 +1,5 @@
 import NavbarAuth from "../UI/Navbar/Navbar-auth";
-import Footer from "../UI/Footer";
+import Footer from "../Footer";
 
 const LayoutAuth = ({ children }) => {
     return (

@@ -1,4 +1,5 @@
 import LodgingImage from "/images/Indonesia-Bandung-4.jpg";
+// eslint-disable-next-line no-unused-vars
 import { motion } from "framer-motion";
 
 const containerVariants = {

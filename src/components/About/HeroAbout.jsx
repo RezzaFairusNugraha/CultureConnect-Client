@@ -1,4 +1,5 @@
 import PetaIndonesia from "/images/peta_indonesia.png";
+// eslint-disable-next-line no-unused-vars
 import { motion } from "framer-motion";
 
 const fadeUp = {

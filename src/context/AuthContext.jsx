@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { AuthContext } from "./AuthContext";
-import { login, logout, getUserProfile } from "../api";
+import { login, logout, getUserData } from "../api";
 
 export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -18,11 +18,10 @@ export const AuthProvider = ({ children }) => {
           const userData = JSON.parse(localStorage.getItem("user"));
           setUser(userData);
 
-          const profileData = await getUserProfile();
+          const profileData = await getUserData();
           setProfile(profileData.user);
         }
       } catch (error) {
-        console.error("Error verifying auth:", error);
         setIsAuthenticated(false);
         setUser(null);
         setProfile(null);
@@ -41,7 +40,7 @@ export const AuthProvider = ({ children }) => {
       setUser(response.user);
       localStorage.setItem("user", JSON.stringify(response.user));
 
-      const profileData = await getUserProfile();
+      const profileData = await getUserData();
       setProfile(profileData.user); 
 
       return response;

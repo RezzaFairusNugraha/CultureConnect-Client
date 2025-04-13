@@ -1,4 +1,5 @@
 import CultureImage from "/images/indonesia-traditional-culture.jpg";
+// eslint-disable-next-line no-unused-vars
 import { motion } from "framer-motion";
 
 const containerVariants = {

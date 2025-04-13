@@ -7,8 +7,18 @@ import { useAuth } from "../../context/UseAuth"; // Tambahkan ini
 
 const steps = ["Foto", "Bio", "Data Pribadi", "Alamat"];
 
+const toCamelCase = (text) => {
+  return text
+    .toLowerCase()
+    .split(" ")
+    .map((word, index) =>
+      index === 0 ? word : word.charAt(0).toUpperCase() + word.slice(1)
+    )
+    .join(" ");
+};
+
 const UserFormData = () => {
-  const { setProfile } = useAuth(); // Ambil setProfile dari AuthContext
+  const { setProfile, setUser } = useAuth();
   const navigate = useNavigate();
   const [profile, setProfileState] = useState({
     profilePic: "",
@@ -26,7 +36,7 @@ const UserFormData = () => {
   const [previewImage, setPreviewImage] = useState(null);
   const [selectedImageFile, setSelectedImageFile] = useState(null);
   const [step, setStep] = useState(0);
-  const [error, setError] = useState("");
+  const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
 
   const [provinces, setProvinces] = useState([]);
@@ -42,7 +52,9 @@ const UserFormData = () => {
   useEffect(() => {
     fetch("https://www.emsifa.com/api-wilayah-indonesia/api/provinces.json")
       .then((res) => res.json())
-      .then(setProvinces)
+      .then((data) =>
+        setProvinces(data.map((item) => ({ ...item, name: toCamelCase(item.name) })))
+      )
       .catch(() => {});
   }, []);
 
@@ -52,7 +64,9 @@ const UserFormData = () => {
       `https://www.emsifa.com/api-wilayah-indonesia/api/regencies/${selectedProvinceId}.json`
     )
       .then((res) => res.json())
-      .then(setRegencies)
+      .then((data) =>
+        setRegencies(data.map((item) => ({ ...item, name: toCamelCase(item.name) })))
+      )
       .catch(() => {});
   }, [selectedProvinceId]);
 
@@ -62,7 +76,9 @@ const UserFormData = () => {
       `https://www.emsifa.com/api-wilayah-indonesia/api/districts/${selectedRegencyId}.json`
     )
       .then((res) => res.json())
-      .then(setDistricts)
+      .then((data) =>
+        setDistricts(data.map((item) => ({ ...item, name: toCamelCase(item.name) })))
+      )
       .catch(() => {});
   }, [selectedRegencyId]);
 
@@ -72,9 +88,29 @@ const UserFormData = () => {
       `https://www.emsifa.com/api-wilayah-indonesia/api/villages/${selectedDistrictId}.json`
     )
       .then((res) => res.json())
-      .then(setVillages)
+      .then((data) =>
+        setVillages(data.map((item) => ({ ...item, name: toCamelCase(item.name) })))
+      )
       .catch(() => {});
   }, [selectedDistrictId]);
+
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === "Enter" && step < steps.length - 1) {
+        e.preventDefault();
+        handleNext();
+      } else if (e.key === "ArrowLeft") {
+        handlePrev();
+      } else if (e.key === "ArrowRight" && step < steps.length - 1) {
+        handleNext();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [step, profile]);
 
   const handleNext = () => {
     const fields = [
@@ -84,17 +120,18 @@ const UserFormData = () => {
       ["province", "city", "district", "village", "detailAddress", "address"],
     ][step];
 
-    if (!fields.every((f) => profile[f])) {
-      setError("Mohon lengkapi data terlebih dahulu.");
+    const invalidField = fields.find((f) => !profile[f]);
+    if (invalidField) {
+      setError({ field: invalidField, message: "Mohon lengkapi data ini." });
       return;
     }
 
-    setError("");
+    setError(null);
     setStep((s) => Math.min(s + 1, steps.length - 1));
   };
 
   const handlePrev = () => {
-    setError("");
+    setError(null);
     setStep((s) => Math.max(s - 1, 0));
   };
 
@@ -104,11 +141,11 @@ const UserFormData = () => {
 
     const validImageTypes = ["image/jpeg", "image/png", "image/jpg"];
     if (!validImageTypes.includes(file.type)) {
-      setError("Format gambar tidak valid. Mohon unggah file JPG atau PNG.");
+      setError({ field: "profilePic", message: "Format gambar tidak valid. Mohon unggah file JPG atau PNG." });
       return;
     }
 
-    setError("");
+    setError(null);
     setSelectedImageFile(file);
     setPreviewImage(URL.createObjectURL(file));
   };
@@ -191,7 +228,7 @@ const UserFormData = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setError("");
+    setError(null);
 
     const defaultImageUrl = "./images/default-avatar-icon.jpg";
 
@@ -220,7 +257,7 @@ const UserFormData = () => {
       ];
 
       if (!req.every((f) => profile[f])) {
-        setError("Mohon lengkapi semua data terlebih dahulu.");
+        setError({ field: "form", message: "Mohon lengkapi semua data." });
         setLoading(false);
         return;
       }
@@ -232,7 +269,8 @@ const UserFormData = () => {
       });
 
       const updatedProfile = await getUserProfile();
-      setProfile(updatedProfile.user); 
+      setProfile(updatedProfile.user); // Perbarui state `profile` di AuthContext
+      setUser(updatedProfile.user); // Perbarui state `user` di AuthContext
 
       toast.success("Profil berhasil dibuat!");
       navigate("/dashboard");
@@ -329,10 +367,16 @@ const UserFormData = () => {
                     name="bio"
                     value={profile.bio}
                     onChange={handleChange}
+                    onFocus={() => setError(null)}
                     required
-                    className="w-full p-3 border border-amber-300 rounded-md shadow focus:outline-none focus:ring-2 focus:ring-amber-400"
+                    className={`w-full p-3 border rounded-md shadow focus:outline-none focus:ring-2 ${
+                      error?.field === "bio" ? "border-red-500 focus:ring-red-400" : "border-amber-300 focus:ring-amber-400"
+                    }`}
                     placeholder="Tulis bio Anda"
                   />
+                  {error?.field === "bio" && (
+                    <p className="text-red-500 text-sm mt-1">{error.message}</p>
+                  )}
                 </>
               )}
 
@@ -470,7 +514,7 @@ const UserFormData = () => {
             </motion.div>
           </AnimatePresence>
 
-          {error && <p className="text-red-500 text-sm text-center">{error}</p>}
+          {error && <p className="text-red-500 text-sm text-center">{error.message}</p>}
 
           <div className="flex justify-between items-center mt-6">
             {step > 0 && (

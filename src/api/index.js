@@ -35,7 +35,7 @@ const login = async (email, password) => {
   }
 };
 
-const fetchDashboardData = async () => {
+const getUserData = async () => {
   try {
     const token = localStorage.getItem("token");
     const response = await api.get("/user", {
@@ -125,7 +125,7 @@ const logout = async () => {
 const getUserProfile = async () => {
   try {
     const token = localStorage.getItem("token");
-    const response = await api.get("/user", {
+    const response = await api.get("/profile", {
       headers: { Authorization: `Bearer ${token}` },
     });
     return response.data;
@@ -189,7 +189,7 @@ export {
   getUserProfile,
   updateUserProfile,
   addUserProfile,
-  fetchDashboardData,
+  getUserData,
   logout,
   uploadUserProfile,
 };

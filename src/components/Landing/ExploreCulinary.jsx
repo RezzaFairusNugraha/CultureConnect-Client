@@ -1,4 +1,5 @@
 import CulinaryImage from "/images/menu-khas-jawa-barat.png";
+// eslint-disable-next-line no-unused-vars
 import { motion } from "framer-motion";
 
 const containerVariants = {

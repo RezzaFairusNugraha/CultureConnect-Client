@@ -1,5 +1,6 @@
-import { motion } from "framer-motion";
 import { solutions } from "../../constants/text.jsx";
+// // eslint-disable-next-line no-unused-vars
+import { motion } from "framer-motion";
 
 const containerVariants = {
   hidden: {},

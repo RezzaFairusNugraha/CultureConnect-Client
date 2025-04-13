@@ -1,5 +1,6 @@
-import { motion } from "framer-motion";
 import HeroImage from "/images/Ilustrasi-kuliner-nusantara.jpeg";
+// eslint-disable-next-line no-unused-vars
+import { motion } from "framer-motion";
 
 const Banner = () => {
   return (

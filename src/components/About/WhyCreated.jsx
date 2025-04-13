@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-unused-vars
 import { motion } from "framer-motion";
 import CultureHeritageImage from "/images/budaya-nusantara.png";
 import CulturalDestinationImage from "/images/destinasi-budaya.png";
