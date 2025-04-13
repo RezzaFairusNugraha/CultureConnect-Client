@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { addUserProfile, uploadUserProfile, getUserProfile } from "../../api/index";
+// eslint-disable-next-line no-unused-vars
 import { motion, AnimatePresence } from "framer-motion";
 import { toast } from "react-toastify";
 import { useAuth } from "../../context/UseAuth";
@@ -111,6 +112,7 @@ const UserFormData = () => {
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
+    // eslint-disable-next-line
   }, [step, profileState]);
 
   const handleNext = () => {
@@ -336,6 +338,7 @@ const UserFormData = () => {
                     onChange={handleImageChange}
                     className="w-full"
                     error={error?.field === "profilePic" ? error.message : null}
+                    accept={"image/jpeg, image/png, image/jpg"}
                   />
                   {previewImage ? (
                     <div className="mt-4 text-center">
@@ -483,7 +486,7 @@ const UserFormData = () => {
               <button
                 type="button"
                 onClick={handlePrev}
-                className="px-4 py-2 rounded-lg text-amber-800 hover:text-amber-900 hover:underline transition"
+                className="px-4 py-2 rounded-lg text-amber-800 hover:text-amber-900 hover:underline transition cursor-pointer"
               >
                 Kembali
               </button>
@@ -509,7 +512,7 @@ const UserFormData = () => {
                   setError(null);
                   setStep((s) => Math.min(s + 1, steps.length - 1));
                 }}
-                className="ml-auto px-4 py-2 rounded-lg bg-amber-700 text-white hover:bg-amber-800 transition"
+                className="ml-auto px-4 py-2 rounded-lg bg-amber-700 text-white hover:bg-amber-800 transition cursor-pointer"
               >
                 Lanjut
               </button>
@@ -517,7 +520,7 @@ const UserFormData = () => {
               <button
                 type="submit"
                 disabled={loading}
-                className="ml-auto px-6 py-2 bg-amber-800 text-white rounded-lg font-semibold hover:opacity-90 transition flex items-center gap-2 disabled:cursor-not-allowed"
+                className="ml-auto px-6 py-2 bg-amber-800 text-white rounded-lg font-semibold hover:opacity-90 transition flex items-center gap-2 disabled:cursor-not-allowed cursor-pointer"
               >
                 {loading ? (
                   <>

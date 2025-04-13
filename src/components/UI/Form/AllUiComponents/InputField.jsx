@@ -18,7 +18,7 @@ const InputField = ({
         {label}
       </label>
       <div className="relative">
-        {Icon && <Icon className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />}
+        {Icon && <Icon className="absolute left-3 top-1/2 transform -translate-y-1/2 text-amber-800" />}
         {type === "textarea" ? (
           <textarea
             name={name}
@@ -28,7 +28,7 @@ const InputField = ({
             placeholder={placeholder}
             required={required}
             readOnly={readOnly} 
-            className={`bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ${className}`}
+            className={`bg-amber-50 border border-amber-800 text-gray-900 text-sm rounded-lg focus:ring-amber-900 focus:border-amber-900 block w-full p-2.5 ${className}`}
           />
         ) : type === "select" ? (
           <select
@@ -38,7 +38,7 @@ const InputField = ({
             onChange={onChange}
             required={required}
             disabled={readOnly} 
-            className={`bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ${className}`}
+            className={`bg-amber-50 border border-amber-800 text-gray-900 text-sm rounded-lg focus:ring-amber-900 focus:border-amber-900 block w-full p-2.5 ${className}`}
           >
             {options.map((option, index) => (
               <option key={index} value={option.value}>
@@ -56,7 +56,7 @@ const InputField = ({
             placeholder={placeholder}
             required={required}
             readOnly={readOnly} 
-            className={`bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ${Icon ? 'pl-10' : ''} ${className}`}
+            className={`bg-amber-50 border border-amber-800 text-gray-900 text-sm rounded-lg focus:ring-amber-900 focus:border-amber-900 block w-full p-2.5 ${Icon ? 'pl-10' : ''} ${className}`}
           />
         )}
       </div>

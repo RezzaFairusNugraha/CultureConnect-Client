@@ -5,7 +5,7 @@ const Profile = () => {
   return (
       <LayoutAuth>
         <UserProfile />
-        </LayoutAuth>
+      </LayoutAuth>
   );
 };
 
