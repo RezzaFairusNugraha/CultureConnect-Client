@@ -27,6 +27,7 @@ const SingleDestination = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [bookmarked, setBookmarked] = useState(false);
+  // eslint-disable-next-line
   const [bookmarkLoading, setBookmarkLoading] = useState(false);
   const [tempIcon, setTempIcon] = useState(null);
 

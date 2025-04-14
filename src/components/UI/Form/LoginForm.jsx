@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { MdAlternateEmail } from "react-icons/md";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import { useAuth } from "../../../context/UseAuth";  
+import { toast } from "react-toastify";
 import InputField from "./AllUiComponents/InputField";
 import PasswordInput from "./AllUiComponents/PasswordInput";
 import ReusableButton from "./AllUiComponents/ReusableButton";
@@ -31,8 +32,10 @@ const LoginForm = () => {
       const result = await handleLogin(form.email, form.password);
   
       if (result.needFillProfile) {
+        toast.warning("Anda belum melengkapi profil, silakan melengkapi terlebih dahulu.");
         navigate("/fill-user-data");
       } else {
+        toast.success("Login berhasil! Selamat datang di CultureConnect.");
         navigate("/dashboard");
       }
     } catch (err) {

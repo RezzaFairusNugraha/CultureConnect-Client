@@ -12,6 +12,13 @@ const InputField = ({
   options = [], 
   readOnly = false 
 }) => {
+  
+  // Handler internal untuk mengubah string ke number jika perlu
+  const handleChange = (e) => {
+    const inputValue = type === "number" ? Number(e.target.value) : e.target.value;
+    onChange({ target: { name, value: inputValue } });
+  };
+
   return (
     <div className="relative">
       <label htmlFor={name} className="block mb-2 text-sm font-medium">
@@ -52,10 +59,12 @@ const InputField = ({
             name={name}
             id={`input-${name}`}
             value={value}
-            onChange={onChange}
+            onChange={handleChange}
             placeholder={placeholder}
             required={required}
-            readOnly={readOnly} 
+            readOnly={readOnly}
+            min={type === "number" ? 10 : undefined}
+            max={type === "number" ? 100 : undefined}
             className={`bg-amber-50 border border-amber-800 text-gray-900 text-sm rounded-lg focus:ring-amber-900 focus:border-amber-900 block w-full p-2.5 ${Icon ? 'pl-10' : ''} ${className}`}
           />
         )}

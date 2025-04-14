@@ -17,6 +17,7 @@ const Register = () => {
     setFormErrors({});
 
     try {
+      // eslint-disable-next-line
       const response = await handleRegister(form.name, form.email, form.password);
       toast.success("Registrasi berhasil!");
       navigate("/fill-user-data");
