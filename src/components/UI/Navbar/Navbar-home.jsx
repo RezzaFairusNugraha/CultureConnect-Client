@@ -5,6 +5,7 @@ import { FaBars, FaTimes } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../../context/UseAuth";
 import logo from "../../../images/logo.png";
+import defaultAvatar from "/images/default-avatar-icon.jpg";
 
 const NavbarGuest = () => {
   const { isAuthenticated, profile } = useAuth();
@@ -85,7 +86,7 @@ const NavbarGuest = () => {
                 >
                   <span className="text-primary">Profil</span>
                   <img
-                    src={profile?.profilePic}
+                    src={profile?.profilePic || defaultAvatar}
                     alt="User Profile"
                     className="w-8 h-8 rounded-full border"
                   />

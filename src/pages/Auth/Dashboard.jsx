@@ -16,6 +16,7 @@ const Dashboard = () => {
   const [category, setCategory] = useState("kuliner");
 
   useEffect(() => {
+    // Jika belum login, arahkan ke halaman login
     if (!isAuthenticated) {
       navigate("/");
       return;
@@ -25,9 +26,16 @@ const Dashboard = () => {
       try {
         setIsLoading(true);
         const result = await getUserData();
+        
+        if (!result.user?.name || !result.user?.email) {
+          navigate("/fill-user-data");
+          return;
+        }
+
         setData(result);
-      } catch {
-        setIsLoading(false);
+      } catch (error) {
+        console.error("Gagal mengambil data pengguna:", error);
+        navigate("/fill-user-data");
       } finally {
         setIsLoading(false);
       }
@@ -37,8 +45,9 @@ const Dashboard = () => {
   }, [isAuthenticated, navigate]);
 
   if (isLoading) return <LoadingAnimation />;
+
   return (
-    <LayoutAuth name={data.user.name}>
+    <LayoutAuth>
       <Hero />
       <SavedDestination userId={data.user.id} />
       <Destination category={category} setCategory={setCategory} />

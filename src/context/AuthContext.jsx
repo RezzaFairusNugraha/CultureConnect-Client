@@ -22,6 +22,7 @@ export const AuthProvider = ({ children }) => {
           setProfile(profileData.user);
         }
       } catch (error) {
+        console.error("Error verifying authentication:", error);
         setIsAuthenticated(false);
         setUser(null);
         setProfile(null);
@@ -42,25 +43,48 @@ export const AuthProvider = ({ children }) => {
       setUser(response.user);
       return response;
     } catch (error) {
+      console.error("Registrasi gagal:", error);
       throw error;
     }
   }
 
   const handleLogin = async (email, password) => {
     try {
-      const response = await login(email, password);
+      const response = await login(email, password); 
       setIsAuthenticated(true);
       setUser(response.user);
       localStorage.setItem("user", JSON.stringify(response.user));
-
-      const profileData = await getUserData();
-      setProfile(profileData.user); 
-
-      return response;
+  
+      try {
+        const profileData = await getUserData(response.user.id);
+  
+        if (!profileData || !profileData.user) {
+          return {
+            ...response,
+            needFillProfile: true,
+          };
+        }
+  
+        setProfile(profileData.user);
+  
+        return {
+          ...response,
+          profile: profileData.user,
+        };
+      } catch (profileError) {
+        console.warn("Profil belum lengkap:", profileError);
+        return {
+          ...response,
+          needFillProfile: true,
+        };
+      }
+  
     } catch (error) {
+      console.error("Login gagal:", error);
       throw error;
     }
   };
+  
 
   const handleLogout = async () => {
     try {

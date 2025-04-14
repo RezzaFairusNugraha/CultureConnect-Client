@@ -28,8 +28,13 @@ const LoginForm = () => {
     setPending(true);
   
     try {
-      await handleLogin(form.email, form.password);
-      navigate("/dashboard");
+      const result = await handleLogin(form.email, form.password);
+  
+      if (result.needFillProfile) {
+        navigate("/fill-user-data");
+      } else {
+        navigate("/dashboard");
+      }
     } catch (err) {
       setPending(false);
       if (err.email || err.password || err.general) {
@@ -39,7 +44,6 @@ const LoginForm = () => {
       }
     }
   };
-  
 
   return (
     <form className="space-y-4" onSubmit={handleSubmit}>
