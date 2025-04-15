@@ -27,8 +27,8 @@ function Hero() {
           setLocationName(`${city}, ${state}`);
         }
       } catch (error) {
-        console.error("Gagal mendapatkan nama lokasi:", error);
-        setError("Gagal mendapatkan nama lokasi.");
+        console.error("Gagal mendapatkan lokasi:", error);
+        setError("Gagal mendapatkan lokasi.");
       }
     };
 

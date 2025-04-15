@@ -234,78 +234,112 @@ const ProfileForm = memo(({ profile, userData }) => {
   );
 
   return (
-    <form
-      onSubmit={handleFormSubmit}
-      className="space-y-4 py-4 px-6 bg-white rounded-2xl border border-amber-800 shadow-md"
-    >
-      <InputField label="Nama" name="name" type="text" value={formData.name} onChange={handleInputChange} />
-      <InputField label="Bio" name="bio" type="textarea" value={formData.bio} onChange={handleInputChange} />
-      <InputField label="Umur" name="age" type="number" value={formData.age} onChange={handleInputChange} />
-      <InputField
-        label="Jenis Kelamin"
-        name="gender"
-        type="select"
-        value={formData.gender}
-        onChange={handleInputChange}
-        options={[
-          { value: "", label: "Pilih" },
-          { value: "Laki-laki", label: "Laki-laki" },
-          { value: "Perempuan", label: "Perempuan" },
-        ]}
-      />
-      <InputField
-        label="Provinsi"
-        type="select"
-        name="province"
-        value={selectedProvinceId}
-        onChange={handleProvinceChange}
-        options={[{ value: "", label: "Pilih Provinsi" }, ...provinces.map((p) => ({ value: p.id, label: p.name }))]}
-      />
-      <InputField
-        label="Kota/Kabupaten"
-        type="select"
-        name="city"
-        value={selectedRegencyId}
-        onChange={handleRegencyChange}
-        options={[{ value: "", label: "Pilih Kota/Kabupaten" }, ...regencies.map((r) => ({ value: r.id, label: r.name }))]}
-      />
-      <InputField
-        label="Kecamatan"
-        type="select"
-        name="district"
-        value={selectedDistrictId}
-        onChange={handleDistrictChange}
-        options={[{ value: "", label: "Pilih Kecamatan" }, ...districts.map((d) => ({ value: d.id, label: d.name }))]}
-      />
-      <InputField
-        label="Kelurahan/Desa"
-        type="select"
-        name="village"
-        value={selectedVillageId}
-        onChange={handleVillageChange}
-        options={[{ value: "", label: "Pilih Kelurahan/Desa" }, ...villages.map((v) => ({ value: v.id, label: v.name }))]}
-      />
-      <InputField
-        label="Detail Alamat"
-        name="detailAddress"
-        type="text"
-        value={detailAddress}
-        onChange={handleDetailAddressChange}
-        placeholder="Contoh: Jl. Merdeka No. 123"
-      />
-      <InputField
-        label="Alamat Lengkap"
-        name="address"
-        type="text"
-        value={fullAddress}
-        readOnly
-      />
-      <ReusableButton
-        text="Simpan Perubahan"
-        className="w-full py-2 rounded-lg font-medium transition-colors duration-300 bg-amber-800 text-white hover:bg-amber-900"
-      />
-    </form>
+    <div className="w-full bg-white p-8 rounded-2xl shadow-md border border-amber-800 mx-auto">
+      <form onSubmit={handleFormSubmit} className="space-y-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <InputField
+          label="Nama"
+          name="name"
+          type="text"
+          value={formData.name}
+          onChange={handleInputChange}
+        />
+        <InputField
+          label="Umur"
+          name="age"
+          type="number"
+          value={formData.age}
+          onChange={handleInputChange}
+          min={10}
+          max={100}
+          required
+          customValidation={(val) => {
+            if (val < 10) return "Umur minimal 10 tahun";
+            if (val > 100) return "Umur maksimal 100 tahun";
+            return "";
+          }}
+        />
+        <InputField
+          label="Jenis Kelamin"
+          name="gender"
+          type="select"
+          value={formData.gender}
+          onChange={handleInputChange}
+          options={[
+            { value: "", label: "Pilih" },
+            { value: "Laki-laki", label: "Laki-laki" },
+            { value: "Perempuan", label: "Perempuan" },
+          ]}
+        />
+        <InputField
+          label="Bio"
+          name="bio"
+          type="textarea"
+          value={formData.bio}
+          onChange={handleInputChange}
+          className="md:col-span-2"
+        />
+        <InputField
+          label="Provinsi"
+          type="select"
+          name="province"
+          value={selectedProvinceId}
+          onChange={handleProvinceChange}
+          options={[{ value: "", label: "Pilih Provinsi" }, ...provinces.map((p) => ({ value: p.id, label: p.name }))]}
+        />
+        <InputField
+          label="Kota/Kabupaten"
+          type="select"
+          name="city"
+          value={selectedRegencyId}
+          onChange={handleRegencyChange}
+          options={[{ value: "", label: "Pilih Kota/Kabupaten" }, ...regencies.map((r) => ({ value: r.id, label: r.name }))]}
+        />
+        <InputField
+          label="Kecamatan"
+          type="select"
+          name="district"
+          value={selectedDistrictId}
+          onChange={handleDistrictChange}
+          options={[{ value: "", label: "Pilih Kecamatan" }, ...districts.map((d) => ({ value: d.id, label: d.name }))]}
+        />
+        <InputField
+          label="Kelurahan/Desa"
+          type="select"
+          name="village"
+          value={selectedVillageId}
+          onChange={handleVillageChange}
+          options={[{ value: "", label: "Pilih Kelurahan/Desa" }, ...villages.map((v) => ({ value: v.id, label: v.name }))]}
+        />
+        <InputField
+          label="Detail Alamat"
+          name="detailAddress"
+          type="text"
+          value={detailAddress}
+          onChange={handleDetailAddressChange}
+          placeholder="Contoh: Jl. Merdeka No. 123"
+          className="md:col-span-2"
+        />
+        <InputField
+          label="Alamat Lengkap"
+          name="address"
+          type="text"
+          value={fullAddress}
+          readOnly
+          className="md:col-span-2"
+        />
+        </div>
+
+        <div className="pt-4">
+          <ReusableButton
+            text="Simpan Perubahan"
+            className="w-full py-3 rounded-lg font-semibold text-white bg-amber-800 hover:bg-amber-900 transition duration-300"
+          />
+        </div>
+      </form>
+    </div>
   );
+  
 });
 
 export default ProfileForm;

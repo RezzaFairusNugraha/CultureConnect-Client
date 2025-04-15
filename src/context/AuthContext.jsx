@@ -7,6 +7,7 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(null);
   const [profile, setProfile] = useState(null);
+  const [justFilledProfile, setJustFilledProfile] = useState(false); // ✅ Tambahan
 
   useEffect(() => {
     const verifyAuth = async () => {
@@ -46,27 +47,27 @@ export const AuthProvider = ({ children }) => {
       console.error("Registrasi gagal:", error);
       throw error;
     }
-  }
+  };
 
   const handleLogin = async (email, password) => {
     try {
-      const response = await login(email, password); 
+      const response = await login(email, password);
       setIsAuthenticated(true);
       setUser(response.user);
       localStorage.setItem("user", JSON.stringify(response.user));
-  
+
       try {
         const profileData = await getUserData(response.user.id);
-  
+
         if (!profileData || !profileData.user) {
           return {
             ...response,
             needFillProfile: true,
           };
         }
-  
+
         setProfile(profileData.user);
-  
+
         return {
           ...response,
           profile: profileData.user,
@@ -78,13 +79,11 @@ export const AuthProvider = ({ children }) => {
           needFillProfile: true,
         };
       }
-  
     } catch (error) {
       console.error("Login gagal:", error);
       throw error;
     }
   };
-  
 
   const handleLogout = async () => {
     try {
@@ -108,6 +107,8 @@ export const AuthProvider = ({ children }) => {
         setUser,
         profile,
         setProfile,
+        justFilledProfile,
+        setJustFilledProfile,
         handleRegister,
         handleLogin,
         handleLogout,

@@ -397,6 +397,13 @@ const UserFormData = () => {
                     onChange={handleChange}
                     placeholder="Masukkan umur Anda"
                     required
+                    min={10}
+                    max={100}
+                    customValidation={(val) => {
+                      if (val < 10) return "Umur minimal 10 tahun";
+                      if (val > 100) return "Umur maksimal 100 tahun";
+                      return "";
+                    }}
                   />
                 </>
               )}

@@ -2,9 +2,10 @@ import React, { useState, useMemo, useEffect } from "react";
 import { IoMdRestaurant } from "react-icons/io";
 import { GiCommercialAirplane } from "react-icons/gi";
 import { getAllDestinations } from "../../../api";
+import { getAllRecommendedDestinations } from "../../../api/recommendations";
 import Card from "../../Card";
 
-const Collections = ({ category, setCategory }) => {
+const Collections = ({ category, setCategory, userId }) => {
   const [destinations, setDestinations] = useState([]);
   const [pages, setPages] = useState({ kuliner: 1, wisata: 1 });
   const [loading, setLoading] = useState(false);
@@ -14,21 +15,47 @@ const Collections = ({ category, setCategory }) => {
 
   useEffect(() => {
     const fetchDestinations = async () => {
+      if (!userId) return;
+  
       try {
         setLoading(true);
         setError(false);
-        const data = await getAllDestinations();
-        setDestinations(data);
-      } catch (error) {
-        console.error("Gagal mengambil data destinasi:", error.message);
-        setError(true);
+  
+        const kategori = ["Kuliner", "Wisata"];
+        const deskripsi = "unik dan menarik";
+        const rating = 4.0;
+  
+        const recommended = await getAllRecommendedDestinations(userId, kategori, deskripsi, rating);
+        const recommendedIds = (recommended.rekomendasi || []).map((item) => item.id);
+  
+        const allDestinations = await getAllDestinations();
+  
+        // Buat Map untuk lookup cepat
+        const destinationMap = new Map(allDestinations.map((item) => [item.id, item]));
+  
+        // Urutkan berdasarkan ID dari rekomendasi
+        const orderedDestinations = recommendedIds
+          .map((id) => destinationMap.get(id))
+          .filter(Boolean);
+  
+        setDestinations(orderedDestinations);
+      } catch (err) {
+        console.error("Gagal mengambil data:", err.message);
+        try {
+          const fallback = await getAllDestinations();
+          setDestinations(fallback);
+        } catch (fallbackErr) {
+          console.error("Gagal mengambil semua destinasi:", fallbackErr.message);
+          setError(true);
+        }
       } finally {
         setLoading(false);
       }
     };
-
+  
     fetchDestinations();
-  }, []);
+  }, [userId]);
+  
 
   const filteredDestinations = useMemo(() => {
     return destinations.filter((item) =>
@@ -97,6 +124,7 @@ const Collections = ({ category, setCategory }) => {
             : "Temukan destinasi wisata terbaik dan tempat-tempat menarik untuk dikunjungi."}
         </p>
       </div>
+
       <div className="mt-6">
         {error ? (
           <p className="text-red-500 text-center">Gagal menampilkan rekomendasi.</p>
@@ -114,6 +142,7 @@ const Collections = ({ category, setCategory }) => {
           </div>
         )}
       </div>
+
       {!error && displayedDestinations.length < filteredDestinations.length && (
         <div className="text-center mt-6">
           <button

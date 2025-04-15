@@ -7,16 +7,19 @@ import LoadingAnimation from "../../components/UI/LoadingAnimation";
 import Hero from "../../components/UI/Dashboard/Hero";
 import Destination from "../../components/UI/Dashboard/Destination";
 import SavedDestination from "../../components/UI/Dashboard/SavedDestination";
+import PreferenceModal from "./PreferenceModal";
+import { hasPreferences } from "../../utils/Preferences"; 
 
 const Dashboard = () => {
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, setProfile } = useAuth();
+  const navigate = useNavigate();
+
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-  const navigate = useNavigate();
+  const [showModal, setShowModal] = useState(false);
   const [category, setCategory] = useState("kuliner");
 
   useEffect(() => {
-    // Jika belum login, arahkan ke halaman login
     if (!isAuthenticated) {
       navigate("/");
       return;
@@ -26,13 +29,19 @@ const Dashboard = () => {
       try {
         setIsLoading(true);
         const result = await getUserData();
-        
+
         if (!result.user?.name || !result.user?.email) {
           navigate("/fill-user-data");
           return;
         }
 
         setData(result);
+        setProfile(result.user);
+
+        const preferencesExist = await hasPreferences(result.user.id);
+        if (!preferencesExist) {
+          setShowModal(true);
+        }
       } catch (error) {
         console.error("Gagal mengambil data pengguna:", error);
         navigate("/fill-user-data");
@@ -42,15 +51,27 @@ const Dashboard = () => {
     };
 
     fetchDashboard();
-  }, [isAuthenticated, navigate]);
+  }, [isAuthenticated, navigate, setProfile]);
+
+  const handleModalClose = async () => {
+    const updated = await getUserData();
+    setProfile(updated.user);
+    setData(updated);
+    setShowModal(false);
+  };
 
   if (isLoading) return <LoadingAnimation />;
 
   return (
     <LayoutAuth>
+      {showModal && <PreferenceModal onClose={handleModalClose} />}
       <Hero />
       <SavedDestination userId={data.user.id} />
-      <Destination category={category} setCategory={setCategory} />
+      <Destination
+        category={category}
+        setCategory={setCategory}
+        userId={data.user.id}
+      />
     </LayoutAuth>
   );
 };
